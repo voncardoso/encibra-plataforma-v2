@@ -22,12 +22,21 @@ export const UserStorageLogin = ({children}) =>{
             const apiKey = 'ZW5jaWJyYV9zZXJ2aWNlX2FwaV9rZXk='
             const config = {
                 headers: { 
-                    "Content-Type": "application/json",
                     'x-api-key': 'ZW5jaWJyYV9zZXJ2aWNlX2FwaV9rZXk=',
                 },
               };
            
-            const response = await api.post("auth/login", data, config )
+            const response = await api.post("auth/login", {
+              data: {
+                email: "teste.seguranca3@example.com",
+                password: "securepassword",
+              }
+              },{
+                headers: { 
+                  'x-api-key': 'ZW5jaWJyYV9zZXJ2aWNlX2FwaV9rZXk=',
+                }
+              }
+            )
             console.log(response)
         }catch{
 
