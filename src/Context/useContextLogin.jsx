@@ -15,24 +15,14 @@ export const UserStorageLogin = ({children}) =>{
     async function userLogin(){
         try{
             console.log("context")
-            const data = {
-                email: "teste.seguranca3@example.com",
-                password: "securepassword",
-            }
-            const apiKey = 'ZW5jaWJyYV9zZXJ2aWNlX2FwaV9rZXk='
-            const config = {
-                headers: { 
-                    'x-api-key': 'ZW5jaWJyYV9zZXJ2aWNlX2FwaV9rZXk=',
-                },
-              };
-           
             const response = await api.post("auth/login", {
               data: {
                 email: "teste.seguranca3@example.com",
                 password: "securepassword",
               }
               },{
-                headers: { 
+                headers: {
+                  'Content-Type': 'application/json',
                   'x-api-key': 'ZW5jaWJyYV9zZXJ2aWNlX2FwaV9rZXk=',
                 }
               }
