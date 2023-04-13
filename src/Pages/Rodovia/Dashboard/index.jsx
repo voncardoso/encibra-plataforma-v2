@@ -25,11 +25,11 @@ export function Dashboard() {
     },
 
     1200: {
-      slidesPerView: 4,
+      slidesPerView: 3.8,
     },
 
     1800: {
-      slidesPerView: 6,
+      slidesPerView: 6.5,
     },
   };
   return (
@@ -43,7 +43,7 @@ export function Dashboard() {
       </header>
 
       <Swiper
-        spaceBetween={30}
+        spaceBetween={20}
         slidesPerView={4.5}
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
@@ -52,104 +52,170 @@ export function Dashboard() {
       >
         <SwiperSlide
           width={200}
-          className="w-72 bg-gray-300 min-w-52 p-4 rounded-lg text-center  border-b-4 border-white rounded-md text-center border-b-8 "
+          className="w-72 bg-gray-300 min-w-52 p-4 rounded-lg text-center text-text-100 border-b-4 border-white rounded-md  border-b-8 "
         >
           <h1 className="text-xl font-bold">Total de Rodovias</h1>
-          <h2 className="pt-2 text-3xl font-bold">10</h2>
-          <p>total</p>
-          <div>
-            <p> 10 Estaduais</p>
-            <p>10 Federais</p>
+          <h2 className="pt-2.5 text-3xl font-bold">10</h2>
+          <p className="mb-2.5">Total</p>
+          <div className="flex justify-center gap-8">
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Estaduais</span>
+            </p>
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Federais</span>
+            </p>
           </div>
         </SwiperSlide>
-        <SwiperSlide className="w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+        <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg  border-b-4 rounded-md text-center border-b-8 border-gray-300">
           <h1 className="text-xl font-bold">Núcleo Regional 01</h1>
-          <h2 className="pt-2 text-3xl font-bold">10</h2>
-          <p>total</p>
-          <div>
-            <p> 10 Estaduais</p>
-            <p>10 Federais</p>
+          <h2 className="pt-2.5 text-3xl font-bold">10</h2>
+          <p className="mb-2.5">Total</p>
+          <div className="flex justify-center gap-8">
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Estaduais</span>
+            </p>
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Federais</span>
+            </p>
           </div>
         </SwiperSlide>
-        <SwiperSlide className=" w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+        <SwiperSlide className="text-gray-400  w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
           <h1 className="text-xl font-bold">Núcleo Regional 02</h1>
-          <h2 className="pt-2 text-3xl font-bold">10</h2>
-          <p>total</p>
-          <div>
-            <p> 10 Estaduais</p>
-            <p>10 Federais</p>
+          <h2 className="pt-2.5 text-3xl font-bold">10</h2>
+          <p className="mb-2.5">Total</p>
+          <div className="flex justify-center gap-8">
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Estaduais</span>
+            </p>
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Federais</span>
+            </p>
           </div>
         </SwiperSlide>
-        <SwiperSlide className="w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+        <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
           <h1 className="text-xl font-bold">Núcleo Regional 03</h1>
-          <h2 className="pt-2 text-3xl font-bold">10</h2>
-          <p>total</p>
-          <div>
-            <p> 10 Estaduais</p>
-            <p>10 Federais</p>
+          <h2 className="pt-2.5 text-3xl font-bold">10</h2>
+          <p className="mb-2.5">Total</p>
+          <div className="flex justify-center gap-8">
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Estaduais</span>
+            </p>
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Federais</span>
+            </p>
           </div>
         </SwiperSlide>
-        <SwiperSlide className="w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+        <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
           <h1 className="text-xl font-bold">Núcleo Regional 04</h1>
-          <h2 className="pt-2 text-3xl font-bold">10</h2>
-          <p>total</p>
-          <div>
-            <p> 10 Estaduais</p>
-            <p>10 Federais</p>
+          <h2 className="pt-2.5 text-3xl font-bold">10</h2>
+          <p className="mb-2.5">Total</p>
+          <div className="flex justify-center gap-8">
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Estaduais</span>
+            </p>
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Federais</span>
+            </p>
           </div>
         </SwiperSlide>
-        <SwiperSlide className="w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+        <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
           <h1 className="text-xl font-bold">Núcleo Regional 05</h1>
-          <h2 className="pt-2 text-3xl font-bold">10</h2>
-          <p>total</p>
-          <div>
-            <p> 10 Estaduais</p>
-            <p>10 Federais</p>
+          <h2 className="pt-2.5 text-3xl font-bold">10</h2>
+          <p className="mb-2.5">Total</p>
+          <div className="flex justify-center gap-8">
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Estaduais</span>
+            </p>
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Federais</span>
+            </p>
           </div>
         </SwiperSlide>
-        <SwiperSlide className="w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+        <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
           <h1 className="text-xl font-bold">Núcleo Regional 06</h1>
-          <h2 className="pt-2 text-3xl font-bold">10</h2>
-          <p>total</p>
-          <div>
-            <p> 10 Estaduais</p>
-            <p>10 Federais</p>
+          <h2 className="pt-2.5 text-3xl font-bold">10</h2>
+          <p className="mb-2.5">Total</p>
+          <div className="flex justify-center gap-8">
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Estaduais</span>
+            </p>
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Federais</span>
+            </p>
           </div>
         </SwiperSlide>
-        <SwiperSlide className="w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+        <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
           <h1 className="text-xl font-bold">Núcleo Regional 07</h1>
-          <h2 className="pt-2 text-3xl font-bold">10</h2>
-          <p>total</p>
-          <div>
-            <p> 10 Estaduais</p>
-            <p>10 Federais</p>
+          <h2 className="pt-2.5 text-3xl font-bold">10</h2>
+          <p className="mb-2.5">Total</p>
+          <div className="flex justify-center gap-8">
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Estaduais</span>
+            </p>
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Federais</span>
+            </p>
           </div>
         </SwiperSlide>
-        <SwiperSlide className="w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+        <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
           <h1 className="text-xl font-bold">Núcleo Regional 08</h1>
-          <h2 className="pt-2 text-3xl font-bold">10</h2>
-          <p>total</p>
-          <div>
-            <p> 10 Estaduais</p>
-            <p>10 Federais</p>
+          <h2 className="pt-2.5 text-3xl font-bold">10</h2>
+          <p className="mb-2.5">Total</p>
+          <div className="flex justify-center gap-8">
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Estaduais</span>
+            </p>
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Federais</span>
+            </p>
           </div>
         </SwiperSlide>
-        <SwiperSlide className="w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+        <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
           <h1 className="text-xl font-bold">Núcleo Regional 09</h1>
-          <h2 className="pt-2 text-3xl font-bold">10</h2>
-          <p>total</p>
-          <div>
-            <p> 10 Estaduais</p>
-            <p>10 Federais</p>
+          <h2 className="pt-2.5 text-3xl font-bold">10</h2>
+          <p className="mb-2.5">Total</p>
+          <div className="flex justify-center gap-8">
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Estaduais</span>
+            </p>
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Federais</span>
+            </p>
           </div>
         </SwiperSlide>
-        <SwiperSlide className="w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+        <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
           <h1 className="text-xl font-bold">Núcleo Regional 10</h1>
-          <h2 className="pt-2 text-3xl font-bold">10</h2>
-          <p>total</p>
-          <div>
-            <p> 10 Estaduais</p>
-            <p>10 Federais</p>
+          <h2 className="pt-2.5 text-3xl font-bold">10</h2>
+          <p className="mb-2.5">Total</p>
+          <div className="flex justify-center gap-8">
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Estaduais</span>
+            </p>
+            <p className="flex flex-col">
+              {" "}
+              <span>10</span> <span>Federais</span>
+            </p>
           </div>
         </SwiperSlide>
       </Swiper>
