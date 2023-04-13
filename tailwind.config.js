@@ -11,6 +11,7 @@ export default {
       "gold-300": "#F6B766",
       "gold-400": "#E2942F",
 
+      "gray-300": "#E6E6E6",
       "gray-400": "#A8A8A8",
       "gray-500": "#68635F",
       "gray-input": "#E5E5E3",
@@ -33,12 +34,18 @@ export default {
 
       mx: { max: "100vh" },
     },
-    extend: {},
+    extend: {
+      minWidth: {
+        320: "320px",
+      },
+    },
+    fontFamily: {
+      sans: ["Roboto", "sans-serif"],
+    },
   },
   plugins: [
-    require('postcss-import'),
-    require('tailwindcss'),
-    require('autoprefixer')
+    require("postcss-import"),
+    require("tailwindcss"),
+    require("autoprefixer"),
   ],
-}
-
+};

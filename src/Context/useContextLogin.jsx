@@ -4,42 +4,29 @@ import { useNavigate } from "react-router-dom";
 
 export const UserContextLogin = createContext();
 
+export const UserStorageLogin = ({ children }) => {
+  const [login, setLogin] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-export const UserStorageLogin = ({children}) =>{
-    const [login, setLogin] = useState(null);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+  async function userLogin() {
+    try {
+      console.log("context");
+      const data = {
+        email: "teste.seguranca3@example.com",
+        password: "securepassword",
+      };
+      const response = await api.post("/auth/login", data);
+      console.log(response);
+    } catch {
+    } finally {
+    }
+  }
 
-
-    async function userLogin(){
-        try{
-            console.log("context")
-            const response = await api.post("auth/login", {
-              data: {
-                email: "teste.seguranca3@example.com",
-                password: "securepassword",
-              }
-              },{
-                headers: {
-                  'Content-Type': 'application/json',
-                  'x-api-key': 'ZW5jaWJyYV9zZXJ2aWNlX2FwaV9rZXk=',
-                }
-              }
-            )
-            console.log(response)
-        }catch{
-
-        }finally{
-
-        }
-    } 
-
-    return (
-        <UserContextLogin.Provider
-          value={{userLogin}}
-        >
-          {children}
-        </UserContextLogin.Provider>
-      );
-}
+  return (
+    <UserContextLogin.Provider value={{ userLogin }}>
+      {children}
+    </UserContextLogin.Provider>
+  );
+};
