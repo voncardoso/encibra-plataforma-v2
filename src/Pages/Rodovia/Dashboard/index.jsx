@@ -234,11 +234,11 @@ export function Dashboard() {
             <th className="p-2">Latitude</th>
             <th className="p-2">Longitude</th>
             <th className="p-2">UF</th>
-            <th className="p-2 rounded-se-md"></th>
+            <th className="p-2 rounded-se-md text-center"></th>
           </tr>
         </thead>
         <tbody>
-          <tr className=" bg-white hover:bg-gold-300 cursor-pointer">
+          <tr className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
             <td className="p-2  ">PA-999</td>
             <td className="p-2  ">Estadual</td>
             <td className="p-2  ">10</td>
@@ -246,12 +246,12 @@ export function Dashboard() {
             <td className="p-2  ">10</td>
             <td className="p-2  ">10</td>
             <td className="p-2  ">
-              <Link to={``}>
+                <Link className="flex justify-center" to={``}>
                 <CaretRight size={20} />
               </Link>
             </td>
           </tr>
-          <tr className=" bg-white hover:bg-gold-300 cursor-pointer">
+          <tr className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200 ">
             <td className="p-2">PA-999</td>
             <td className="p-2">Estadual</td>
             <td className="p-2">10</td>
@@ -259,10 +259,13 @@ export function Dashboard() {
             <td className="p-2">10</td>
             <td className="p-2">10</td>
             <td className="p-2">
-              <Link to={``}>
+              <Link className="flex justify-center" to={``}>
                 <CaretRight size={20} />
               </Link>
             </td>
+          </tr>
+          <tr className=" bg-gray-300 border-b-2 border-gray-200 ">
+            <td colSpan={7} className="p-2 rounded-ee-md rounded-es-md"></td>
           </tr>
         </tbody>
             </table>

@@ -11,6 +11,7 @@ export default {
       "gold-300": "#F6B766",
       "gold-400": "#E2942F",
 
+      "gray-200": "#F2F2F2",
       "gray-300": "#E6E6E6",
       "gray-400": "#A8A8A8",
       "gray-500": "#68635F",
