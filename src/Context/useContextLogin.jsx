@@ -6,26 +6,38 @@ export const UserContextLogin = createContext();
 
 export const UserStorageLogin = ({ children }) => {
   const [login, setLogin] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [errorAuth, setErrorAuth] = useState(null);
+  const [loadingAuth, setLoadingAuth] = useState(false);
   const navigate = useNavigate();
 
-  async function userLogin() {
-    try {
-      console.log("context");
-      const data = {
-        email: "teste.seguranca3@example.com",
-        password: "securepassword",
-      };
-      const response = await api.post("/auth/login", data);
-      console.log(response);
-    } catch {
-    } finally {
+  async function userLogin(email, password) {
+    if(email){
+      try {
+        setLoadingAuth(true)
+        const data = {
+          email: `${email}`,
+          password: `${password}`,
+        };
+        const response = await api.post("/auth/login", data);
+        if(response.status === 200){
+          window.localStorage.setItem("encibraapptoken-v2", response.data.token)
+          navigate('/rodovias')
+          setErrorAuth(false)
+        }else{
+          console.log("error")
+          setLoadingAuth(false)
+        }
+      } catch {
+        console.log("error")
+        setErrorAuth(true)
+      } finally {
+        
+      }
     }
   }
 
   return (
-    <UserContextLogin.Provider value={{ userLogin }}>
+    <UserContextLogin.Provider value={{ userLogin, errorAuth, loadingAuth }}>
       {children}
     </UserContextLogin.Provider>
   );
