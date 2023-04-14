@@ -32,8 +32,9 @@ export function Dashboard() {
       slidesPerView: 6.5,
     },
   };
+
   return (
-    <section className="w-full overflow-y-scroll">
+    <section className="w-full overflow-y-scroll ">
       <header className="flex justify-between pr-5 pt-8 pb-8 items-center">
         <strong className="text-2xl">Rodovias</strong>
         <NavLink className="flex items-center gap-1 hover:text-gold-400 hover:underline">
@@ -43,13 +44,14 @@ export function Dashboard() {
       </header>
 
       {/**Slider */}
-      <Swiper
+        <nav className="pr-5">
+            <Swiper
         spaceBetween={20}
         slidesPerView={4.5}
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
         breakpoints={breakpoints}
-        className=" mb-8 cursor-pointer"
+        className=" mb-8 cursor-pointer pr-5"
       >
         <SwiperSlide
           width={200}
@@ -219,9 +221,11 @@ export function Dashboard() {
             </p>
           </div>
         </SwiperSlide>
-      </Swiper>
+            </Swiper>
+        </nav>
 
-      <table className="w-full text-center">
+        <div className="pr-5">
+            <table className="w-full text-center">
         <thead>
           <tr className="bg-gray-300 ">
             <th className="p-2 rounded-ss-md">Rodovia</th>
@@ -261,7 +265,8 @@ export function Dashboard() {
             </td>
           </tr>
         </tbody>
-      </table>
+            </table>
+        </div>
     </section>
   );
 }
