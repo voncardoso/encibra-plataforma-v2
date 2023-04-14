@@ -4,11 +4,15 @@ import { UserContextLogin } from "../../Context/useContextLogin"
 
 export function PrivateRoutes({children}){
     const {autoLogin, validateTokenLogin} = useContext(UserContextLogin)
+    const token = window.localStorage.getItem('encibraapptoken-v2');
 
     useEffect(() =>{
         autoLogin()
     }, [])
 
 
-    return validateTokenLogin ? children : <Navigate to="/"/>
+ 
+    if(validateTokenLogin){
+        return validateTokenLogin ? children : <Navigate to="/"/>
+    }
 }
