@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { UserContextLogin } from "../../Context/useContextLogin";
 
 export function Login(){
-    const {userLogin, errorAuth} = useContext(UserContextLogin)
+    const {userLogin, errorAuth, loadingAuth} = useContext(UserContextLogin)
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [typeInput, setTypeInput] = useState("password");
 
@@ -21,10 +21,11 @@ export function Login(){
         }
     }
 
-    function handleLogin(data){
+    const handleLogin = (data) =>{
         console.log(data)
         userLogin(data.email, data.password)
     }
+    console.log(errors)
 
     return(
         <main className="container mx-auto h-screen grid grid-cols-2 lg:grid-cols-1 gap-4 min-h-full items-center justify-center bg-background">
@@ -72,13 +73,21 @@ export function Login(){
                 />
               )}
             </label>
-  
-            <button
+                
+            {loadingAuth === true ?             
+              <button
                 className="w-full mt-10 bg-gold-400 text-xl py-2.5 rounded-md text-white hover:bg-gold-300"
                 onClick={handleLogin}
                 >
-              Entrar
-            </button>
+                  Entrando...
+              </button> 
+              :             
+              <button
+                className="w-full mt-10 bg-gold-400 text-xl py-2.5 rounded-md text-white hover:bg-gold-300"
+                onClick={handleLogin}
+                >
+                Entrar
+              </button>}
           </form>
         </section>
         <img
