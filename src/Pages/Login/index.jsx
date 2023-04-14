@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Eye, EyeSlash } from "@phosphor-icons/react";
 import Backgorund from "../../assets/Background-login.png";
 import Logo from "../../assets/Logo.svg"
@@ -6,8 +7,11 @@ import { useContext } from "react";
 import { UserContextLogin } from "../../Context/useContextLogin";
 
 export function Login(){
-  const [typeInput, setTypeInput] = useState("password");
-    const {userLogin} = useContext(UserContextLogin)
+    const {userLogin, errorAuth} = useContext(UserContextLogin)
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [typeInput, setTypeInput] = useState("password");
+
+    console.log(errorAuth)
 
     function handleTypeInput() {
         if (typeInput === "password") {
@@ -17,9 +21,9 @@ export function Login(){
         }
     }
 
-    function handleLogin(event){
-        event.preventDefault();
-        userLogin()
+    function handleLogin(data){
+        console.log(data)
+        userLogin(data.email, data.password)
     }
 
     return(
@@ -31,7 +35,10 @@ export function Login(){
           <h1 className="mx-auto max-w-md text-2xl mb-5 font-bold text-text-100">
             Login
           </h1>
-          <form className=" mx-auto max-w-md">
+         {errorAuth ?  <div className="mx-auto max-w-md mb-4 p-2 text-center border-2 border-red-400 rounded-md bg-red-400 font-medium ">
+            <h2>E-mail ou senha incorretos</h2>
+          </div> : ""}
+          <form className=" mx-auto max-w-md" onSubmit={handleSubmit(handleLogin)}>
             <label className="text-lg" htmlFor="">
               E-mail
             </label>
@@ -39,12 +46,15 @@ export function Login(){
               type="email"
               className="block w-full text-lg rounded-md border-0 py-3 pl-2  text-gray-900 mt-1.5  placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gold-400 sm:text-sm sm:leading-6 mb-5"
               placeholder="exemple@exemple.com.br"
+              {...register("email", {required: true})}
             />
+
             <label className="text-lg relative block" htmlFor="">
               Senha
               <input
                 type={typeInput}
                 className="block w-full text-lg rounded-md border-0 py-3 pl-2  text-gray-900 mt-1.5  placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gold-400 sm:text-sm sm:leading-6"
+                {...register("password", {required: true})}
               />
               {typeInput === "password" ? (
                 <EyeSlash
