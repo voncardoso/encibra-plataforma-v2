@@ -4,11 +4,13 @@ import { useFieldArray, useForm } from "react-hook-form";
 
 export function RegisterRoad(){
     const { register, handleSubmit, formState: { errors }, control } = useForm({
-        defaultValues: { counties: [{ name: '', extensao: ''}] },
+        defaultValues: { 
+            counties: [{ name: '', extensao: ''}],
+            points: [{tipo:'', latitude:'', loingitude: '', loingitude: '', description: '', km: ''}] 
+        },
     });
 
     const { fields, append, remove } = useFieldArray({ control, name: 'counties', extensao:'counties'})
-
     const handleRegister = (data) =>{
         console.log(data)
     }
