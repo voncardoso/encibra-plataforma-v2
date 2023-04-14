@@ -48,8 +48,7 @@ export function Dashboard() {
             <Swiper
         spaceBetween={20}
         slidesPerView={4.5}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
+
         breakpoints={breakpoints}
         className=" mb-8 cursor-pointer pr-5"
       >

@@ -16,6 +16,10 @@ export default {
       "gray-400": "#A8A8A8",
       "gray-500": "#68635F",
       "gray-input": "#E5E5E3",
+
+      "red-400": "#f87171",
+      "red-500": "#ef4444",
+      "red-800": "#991b1b"
     },
     screens: {
       "2xl": { max: "1535px" },
