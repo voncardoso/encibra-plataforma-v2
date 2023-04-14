@@ -4,16 +4,16 @@ import { useFieldArray, useForm } from "react-hook-form";
 
 export function RegisterRoad(){
     const { register, handleSubmit, formState: { errors }, control } = useForm({
-        defaultValues: { items: [{ name: '', extensao: ''}] },
+        defaultValues: { counties: [{ name: '', extensao: ''}] },
     });
 
-    const { fields, append, remove } = useFieldArray({ control, name: 'items', extensao:'items'})
+    const { fields, append, remove } = useFieldArray({ control, name: 'counties', extensao:'counties'})
 
     const handleRegister = (data) =>{
         console.log(data)
     }
 
-    const teste = useRef()
+
     
     return(
         <section className="h-screen overflow-hidden flex items-center">
@@ -121,17 +121,17 @@ export function RegisterRoad(){
                         Municipios
                     </h2>
                     {fields.map((field, index) => (
-                        <div ref={teste} key={field.id} className="grid grid-cols-3 gap-5">
+                        <div key={field.id} className="grid grid-cols-3 gap-5">
                           <input
                             name={`fields[${index}].name[${index}]`}
                             defaultValue={field.name}
-                            {...register(`items.${index}.name`)}
+                            {...register(`counties.${index}.name`)}
                             className="bg-gray-input w-full rounded-md p-2" 
                           />
                           <input
                             name={`fields[${index}].extensao[${index}]`}
                             defaultValue={field.extensao}
-                            {...register(`items.${index}.extensao`)}
+                            {...register(`counties.${index}.extensao`)}
                             className="bg-gray-input w-full rounded-md p-2" 
                           />
                           <button className="flex gap-1 text-left w-32 items-center hover:text-red-500" type="button" onClick={() => remove(index)}>
