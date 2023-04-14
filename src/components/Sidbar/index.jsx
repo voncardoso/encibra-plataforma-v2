@@ -11,24 +11,25 @@ import {
   } from "@phosphor-icons/react";
 import Logo from "../../assets/Logo-sidbar.svg"
 import LogoMobile from "../../assets/LogoSidbarMin.svg"
+import { Container } from "./style";
 
 
 export function Sidbar(){
     return(
-        <aside className="bg-white w-48 h-screen md:w-20 relative">
+        <Container className="bg-white w-48 h-screen md:w-20 relative">
         <img className="md:hidden m-auto pt-5" src={Logo} alt="" />
         <ul className="m-auto pt-5 w-40 md:w-16" >
-          <NavLink href="#">
-            <li className="md:hidden md:w-16 md:m-auto py-4 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md   ">
+
+          {/**
+           * <NavLink h className="md:hidden md:w-16 md:m-auto py-4 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md" href="/dasborad">
               <ChartBar className="ml-2" size={24} />
               <p className="md:hidden md:m-auto">Dasboard</p>
-            </li>
-          </NavLink>
-          <NavLink href="/rodovia">
-            <li className="md:hidden md:w-16 md:m-auto py-4 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md    ">
-              <Truck className="ml-2" size={24} />
-              <p className="md:hidden md:m-auto">Rodovias</p>
-            </li>
+            </NavLink> 
+          */}
+
+          <NavLink className={` md:hidden md:w-16 md:m-auto py-4 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md`} href="/">            
+            <Truck className="ml-2" size={24} />
+            <p className="md:hidden md:m-auto">Rodovias</p>     
           </NavLink>
           <li className="md:hidden md:w-16 md:m-auto py-4 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md   ">
             <Calculator className="ml-2" size={24} />
@@ -78,6 +79,6 @@ export function Sidbar(){
             <CaretRight color="#A8A8A8" size={24} weight="bold"/>
           </div>
         </div>
-      </aside>
+      </Container>
     )
 }

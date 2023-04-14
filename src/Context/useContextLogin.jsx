@@ -17,7 +17,6 @@ export const UserStorageLogin = ({ children }) => {
           const response = await api.post("/auth/validate-token", {
             token: `${token}`
           });
-          console.log(response)
           if(response.status === 200){
             navigate('/rodovias')
             setValidateTokenLogin(true)
