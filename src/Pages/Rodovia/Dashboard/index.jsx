@@ -1,6 +1,6 @@
 import { useKeenSlider } from "keen-slider/react";
-import { NavLink } from "react-router-dom";
-import { PlusCircle } from "@phosphor-icons/react";
+import { Link, NavLink } from "react-router-dom";
+import { CaretRight, PlusCircle } from "@phosphor-icons/react";
 import "../../../Global/slider.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -20,7 +20,7 @@ export function Dashboard() {
       slidesPerView: 2.5,
     },
     // Largura maior que 640 pixels
-    850: {
+    1000: {
       slidesPerView: 3.5,
     },
 
@@ -42,6 +42,7 @@ export function Dashboard() {
         </NavLink>
       </header>
 
+      {/**Slider */}
       <Swiper
         spaceBetween={20}
         slidesPerView={4.5}
@@ -219,6 +220,48 @@ export function Dashboard() {
           </div>
         </SwiperSlide>
       </Swiper>
+
+      <table className="w-full text-center">
+        <thead>
+          <tr className="bg-gray-300 ">
+            <th className="p-2 rounded-ss-md">Rodovia</th>
+            <th className="p-2">Tipo</th>
+            <th className="p-2">Extensão</th>
+            <th className="p-2">Latitude</th>
+            <th className="p-2">Longitude</th>
+            <th className="p-2">UF</th>
+            <th className="p-2 rounded-se-md"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className=" bg-white hover:bg-gold-300 cursor-pointer">
+            <td className="p-2  ">PA-999</td>
+            <td className="p-2  ">Estadual</td>
+            <td className="p-2  ">10</td>
+            <td className="p-2  ">10</td>
+            <td className="p-2  ">10</td>
+            <td className="p-2  ">10</td>
+            <td className="p-2  ">
+              <Link to={``}>
+                <CaretRight size={20} />
+              </Link>
+            </td>
+          </tr>
+          <tr className=" bg-white hover:bg-gold-300 cursor-pointer">
+            <td className="p-2">PA-999</td>
+            <td className="p-2">Estadual</td>
+            <td className="p-2">10</td>
+            <td className="p-2">10</td>
+            <td className="p-2">10</td>
+            <td className="p-2">10</td>
+            <td className="p-2">
+              <Link to={``}>
+                <CaretRight size={20} />
+              </Link>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   );
 }
