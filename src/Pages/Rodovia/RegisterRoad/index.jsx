@@ -18,9 +18,9 @@ export function RegisterRoad(){
 
     
     return(
-        <section className="h-screen overflow-hidden flex items-center">
+        <section className="h-screen  flex items-center bg-white overflow-auto">
             <form 
-                className=" h-5/6  overflow-auto scrollbar-thin mx-auto  bg-white mr-5 mt-5 rounded-xl p-5 grid grid-cols-3 gap-5 "
+                className="scrollbar-thin mx-auto  bg-white mr-5 mt-5 rounded-xl p-5 grid grid-cols-3 gap-5 "
                 onSubmit={handleSubmit(handleRegister)}    
             >
                 <h1 className="col-span-3 text-2xl font-bold text-text-100">Cadastro de Rodovias</h1>
