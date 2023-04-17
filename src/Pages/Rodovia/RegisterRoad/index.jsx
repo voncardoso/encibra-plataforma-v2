@@ -53,11 +53,12 @@ export function RegisterRoad() {
   });
 
   async function handleRegister(data) {
+    console.log(data);
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const response = await api.post(
       "/road",
       {
-        extention: data.highwayExtension,
+        extention: Number(data.highwayExtension),
         mesh: data.roadNetwork,
         regional: data.regionalCenter,
         acronym: data.road,
@@ -78,7 +79,7 @@ export function RegisterRoad() {
       }
     );
 
-    console.log(response);
+    // console.log(response);
   }
 
   return (
