@@ -1,6 +1,7 @@
 import { PlusCircle, TrashSimple } from "@phosphor-icons/react";
-import { useRef } from "react";
+import * as Dialog from "@radix-ui/react-dialog";
 import { useFieldArray, useForm } from "react-hook-form";
+import { api } from "../../../lib/api";
 
 export function RegisterRoad() {
   const {
@@ -51,12 +52,37 @@ export function RegisterRoad() {
     name: "coating",
   });
 
-  const handleRegister = (data) => {
-    console.log(data);
-  };
+  async function handleRegister(data) {
+    const token = window.localStorage.getItem("encibraapptoken-v2");
+    const response = await api.post(
+      "/road",
+      {
+        extention: data.highwayExtension,
+        mesh: data.roadNetwork,
+        regional: data.regionalCenter,
+        acronym: data.road,
+        url: "",
+        points: data.points,
+        kml: "",
+        revesment: data.coating,
+        counties: data.counties,
+        snippet: data.snippet,
+        state: data.state,
+        endLongitude: data.endLongitude,
+        endLatitude: data.endLatitude,
+        initialLatitude: data.initialLatitude,
+        initialLongitude: data.initialLongitude,
+      },
+      {
+        headers: { Authorization: "Bearer " + token },
+      }
+    );
+
+    console.log(response);
+  }
 
   return (
-    <section className="h-screen  flex items-center bg-white overflow-auto w-screen">
+    <section className="h-screen  flex items-center bg-white overflow-auto w-screen  border-t-8 border-b-8 border-background">
       <form
         className="ml-0 h-screen w-screen  bg-white mr-5 mt-5 rounded-xl p-5 grid grid-cols-3 gap-5 "
         onSubmit={handleSubmit(handleRegister)}
@@ -73,6 +99,7 @@ export function RegisterRoad() {
             {...register("rod", { required: true })}
           />
         </label>
+
         <label htmlFor="">
           Extensão em km
           <input
@@ -155,7 +182,7 @@ export function RegisterRoad() {
             <option value="TO">TO</option>
           </select>
         </label>
-
+        {/**counties */}
         <div className="col-span-3 flex flex-col gap-5">
           <h2 className="col-span-3 text-lg font-bold border-b-2 border-gray-300">
             Municipios
@@ -163,7 +190,7 @@ export function RegisterRoad() {
           {countiesFields.map((field, index) => (
             <div key={field.id} className="grid grid-cols-3 gap-5">
               <label htmlFor="">
-                Município
+                Município {index + 1}
                 <input
                   name={`fields[${index}].name[${index}]`}
                   defaultValue={field.name}
@@ -197,6 +224,8 @@ export function RegisterRoad() {
             <PlusCircle className="text-gold-400" size={22} /> Adicionar
           </button>
         </div>
+
+        {/**Points */}
         <div className="col-span-3 grid grid-cols-3 gap-5">
           <h2 className="col-span-3 text-lg font-bold border-b-2 border-gray-300">
             Pontos
@@ -207,7 +236,7 @@ export function RegisterRoad() {
               className=" grid grid-cols-3 col-span-3 gap-5 items-center"
             >
               <label htmlFor="">
-                Tipo
+                Tipo {index + 1}
                 <select
                   name={`fields[${index}].type[${index}]`}
                   defaultValue={field.type}
@@ -336,7 +365,7 @@ export function RegisterRoad() {
           </button>
         </div>
 
-        <div className="col-span-3 grid grid-cols-2 gap-5">
+        <div className="col-span-3 grid gap-5">
           <h2 className="col-span-3 text-lg font-bold">Trecho</h2>
           <label htmlFor="">
             Trecho
