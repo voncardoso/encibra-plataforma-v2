@@ -18,7 +18,6 @@ export const UserStorageLogin = ({ children }) => {
             token: `${token}`
           });
           if(response.status === 200){
-            navigate('/rodovias')
             setValidateTokenLogin(true)
           }
         }catch(err){

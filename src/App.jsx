@@ -5,6 +5,7 @@ import { UserStorageLogin } from './Context/useContextLogin'
 import { DefaultLayout } from './components/DefaultLayout'
 import { Dashboard } from './Pages/Rodovia/Dashboard'
 import { PrivateRoutes } from './components/PrivateRoutes'
+import { RegisterRoad } from './Pages/Rodovia/RegisterRoad'
 
 function App() {
   return (
@@ -16,10 +17,17 @@ function App() {
 
           <Route path="/rodovias" element={<DefaultLayout />}>
             <Route path='/rodovias' element={
-              <PrivateRoutes>
-                <Dashboard/>
-              </PrivateRoutes>
-            }/>
+                <PrivateRoutes>
+                  <Dashboard/>
+                </PrivateRoutes>
+              }
+            />
+            <Route path='/rodovias/registro' element={
+                <PrivateRoutes>
+                  <RegisterRoad/>
+                </PrivateRoutes>
+              }
+            />
           </Route>
         </Routes>
       </UserStorageLogin>

@@ -5,8 +5,10 @@ import "../../../Global/slider.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
+import { useEffect } from "react";
 
 export function Dashboard() {
+  
   //responsividade do slider
   const breakpoints = {
     // Largura mínima de 640 pixels
@@ -33,11 +35,12 @@ export function Dashboard() {
     },
   };
 
+
   return (
     <section className="w-full overflow-y-scroll ">
       <header className="flex justify-between pr-5 pt-8 pb-8 items-center">
         <strong className="text-2xl">Rodovias</strong>
-        <NavLink className="flex items-center gap-1 hover:text-gold-400 hover:underline">
+        <NavLink className="flex items-center gap-1 hover:text-gold-400 hover:underline" to="/rodovias/registro">
           <PlusCircle className="text-gold-400" size={22} />
           Cadastrar Rodovia
         </NavLink>

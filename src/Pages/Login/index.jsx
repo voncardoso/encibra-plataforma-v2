@@ -11,7 +11,6 @@ export function Login(){
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [typeInput, setTypeInput] = useState("password");
 
-    console.log(errorAuth)
 
     function handleTypeInput() {
         if (typeInput === "password") {
@@ -22,10 +21,9 @@ export function Login(){
     }
 
     const handleLogin = (data) =>{
-        console.log(data)
         userLogin(data.email, data.password)
     }
-    console.log(errors)
+    
 
     return(
         <main className="container mx-auto h-screen grid grid-cols-2 lg:grid-cols-1 gap-4 min-h-full items-center justify-center bg-background">
