@@ -26,7 +26,7 @@ export function DefaultLayoutRoad(){
             <Nav className="w-full flex gap-5 border-b border-gray-400 text-gray-400 py-1">
                 <NavLink exact className="" to={`/rodovias/information/${"PA-999"}`}>Informações</NavLink>
                 <NavLink className="" to={`/rodovias/municipios/${"PA-999"}`}>Municípios</NavLink>
-                <NavLink className="" to={"/teste"}>Pontos</NavLink>
+                <NavLink className="" to={`/rodovias/pontos/${"PA-999"}`}>Pontos</NavLink>
                 <NavLink className="" to={"/teste"}>Revestimentos</NavLink>
                 <NavLink className="" to={"/teste"}>Videos</NavLink>
                 <NavLink className="" to={"/teste"}>Igg</NavLink>

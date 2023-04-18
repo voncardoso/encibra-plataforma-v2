@@ -10,6 +10,7 @@ import { RoadCore } from "./Pages/Rodovia/RoadCore";
 import { DefaultLayoutRoad } from "./components/DefaultLayoutRoad";
 import { RoadInformation } from "./Pages/Rodovia/RoadInformation";
 import { CountyInformation } from "./Pages/Rodovia/CountyInformation";
+import { Points } from "./Pages/Rodovia/Points";
 
 function App() {
   return (
@@ -68,6 +69,14 @@ function App() {
                   element={
                     <PrivateRoutes>
                       <CountyInformation />
+                    </PrivateRoutes>
+                  }
+                />
+                <Route
+                  path="/rodovias/pontos/:id"
+                  element={
+                    <PrivateRoutes>
+                      <Points />
                     </PrivateRoutes>
                   }
                 />
