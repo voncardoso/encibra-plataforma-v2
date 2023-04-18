@@ -8,6 +8,7 @@ import { PrivateRoutes } from "./components/PrivateRoutes";
 import { RegisterRoad } from "./Pages/Rodovia/RegisterRoad";
 import { RoadCore } from "./Pages/Rodovia/RoadCore";
 import { DefaultLayoutRoad } from "./components/DefaultLayoutRoad";
+import { RoadInformation } from "./Pages/Rodovia/RoadInformation";
 
 function App() {
   return (
@@ -49,7 +50,14 @@ function App() {
                 </PrivateRoutes>
               }
               >
-
+                <Route
+                  path="/rodovias/:id"
+                  element={
+                    <PrivateRoutes>
+                      <RoadInformation />
+                    </PrivateRoutes>
+                  }
+                />
               </Route>
           </Route>
         </Routes>

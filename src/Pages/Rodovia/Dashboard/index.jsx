@@ -1,5 +1,5 @@
 import { useKeenSlider } from "keen-slider/react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { CaretRight, PlusCircle } from "@phosphor-icons/react";
 import "../../../Global/slider.css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
 export function Dashboard() {
+  const navigate = useNavigate()
   //responsividade do slider
   const breakpoints = {
     // Largura mínima de 640 pixels
@@ -259,7 +260,9 @@ export function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            <tr className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
+            <tr onClick={() =>{
+              navigate(`/rodovias/${"PA-999"}`)
+            }} className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
               <td className="p-2  ">PA-999</td>
               <td className="p-2  ">Estadual</td>
               <td className="p-2  ">10</td>
