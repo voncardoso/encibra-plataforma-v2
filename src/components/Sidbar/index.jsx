@@ -27,7 +27,7 @@ export function Sidbar() {
 
         <NavLink
           className={` md:hidden md:w-16 md:m-auto py-4 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md`}
-          href="/"
+          to="/rodovias"
         >
           <Truck className="ml-2" size={24} />
           <p className="md:hidden md:m-auto">Rodovias</p>
