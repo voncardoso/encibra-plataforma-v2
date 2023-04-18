@@ -1,6 +1,6 @@
 import { PlusCircle, TrashSimple, Lock, PencilLine, LockOpen } from "@phosphor-icons/react";
 import { useState } from "react";
-import { Link } from "react-router-dom"
+
 
 export function CountyInformation(){
   const [lock, setLock] = useState(false)
