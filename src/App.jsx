@@ -9,6 +9,7 @@ import { RegisterRoad } from "./Pages/Rodovia/RegisterRoad";
 import { RoadCore } from "./Pages/Rodovia/RoadCore";
 import { DefaultLayoutRoad } from "./components/DefaultLayoutRoad";
 import { RoadInformation } from "./Pages/Rodovia/RoadInformation";
+import { CountyInformation } from "./Pages/Rodovia/CountyInformation";
 
 function App() {
   return (
@@ -42,22 +43,35 @@ function App() {
                 </PrivateRoutes>
               }
             />
+
             <Route
-              path="/rodovias/:id"
+              path="/rodovias/"
+              exact
               element={
                 <PrivateRoutes>
                   <DefaultLayoutRoad />
                 </PrivateRoutes>
               }
               >
+                
                 <Route
-                  path="/rodovias/:id"
+                  path="/rodovias/information/:id"
+                  exact
                   element={
                     <PrivateRoutes>
                       <RoadInformation />
                     </PrivateRoutes>
                   }
                 />
+                <Route
+                  path="/rodovias/municipios/:id"
+                  element={
+                    <PrivateRoutes>
+                      <CountyInformation />
+                    </PrivateRoutes>
+                  }
+                />
+                
               </Route>
           </Route>
         </Routes>

@@ -7,7 +7,7 @@ export function RoadCore() {
   return (
     <section className="w-full overflow-y-scroll ">
       {/**Navegação */}
-      <header className="flex justify-between pr-5 pt-8 pb-8 items-center">
+      <header className="flex justify-between pr-5 pt-5 pb-8 items-center">
         <nav>
           <NavLink to={"/rodovias"}>
             <strong className="text-2xl hover:underline">Rodovias </strong>

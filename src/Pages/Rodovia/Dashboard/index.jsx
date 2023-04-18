@@ -36,7 +36,7 @@ export function Dashboard() {
 
   return (
     <section className="w-full overflow-y-scroll ">
-      <header className="flex justify-between pr-5 pt-8 pb-8 items-center">
+      <header className="flex justify-between pr-5 pt-5 pb-8 items-center">
         <strong className="text-2xl">Rodovias</strong>
         <NavLink
           className="flex items-center gap-1 hover:text-gold-400 hover:underline"
@@ -261,7 +261,7 @@ export function Dashboard() {
           </thead>
           <tbody>
             <tr onClick={() =>{
-              navigate(`/rodovias/${"PA-999"}`)
+              navigate(`/rodovias/information/${"PA-999"}`)
             }} className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
               <td className="p-2  ">PA-999</td>
               <td className="p-2  ">Estadual</td>
