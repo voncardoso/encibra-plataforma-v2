@@ -55,31 +55,46 @@ export function RegisterRoad() {
   async function handleRegister(data) {
     console.log(data);
     const token = window.localStorage.getItem("encibraapptoken-v2");
-    const response = await api.post(
+    console.log(JSON.stringify(data.points));
+    {
+      /**    const response = await api.post(
       "/road",
       {
         extention: Number(data.highwayExtension),
         mesh: data.roadNetwork,
         regional: data.regionalCenter,
         acronym: data.road,
-        url: "",
-        points: data.points,
-        kml: "",
-        revesment: data.coating,
-        counties: data.counties,
-        snippet: data.snippet,
-        state: data.state,
-        endLongitude: data.endLongitude,
-        endLatitude: data.endLatitude,
-        initialLatitude: data.initialLatitude,
-        initialLongitude: data.initialLongitude,
+        url: "https://example.com/abc",
+        points: JSON.stringify(data.points),
+        kml: "<kml></kml>",
+        revesment: "string",
+        stretch: "Some stretch",
+        otherDefects: "Some other defects",
+
+        //  extention: Number(data.highwayExtension),
+        //  mesh: data.roadNetwork,
+        //  regional: data.regionalCenter,
+        //  acronym: data.road,
+        //  url: "",
+        //  points: data.points,
+        //  kml: "",
+        //  revesment: data.coating,
+        //  stretch: "",
+        //  cities: data.counties,
+        // snippet: data.snippet,
+        //  state: data.state,
+        // endLongitude: data.endLongitude,
+        //  endLatitude: data.endLatitude,
+        // initialLatitude: data.initialLatitude,
+        //  initialLongitude: data.initialLongitude,
       },
       {
         headers: { Authorization: "Bearer " + token },
       }
     );
 
-    // console.log(response);
+    console.log(response); */
+    }
   }
 
   return (
@@ -97,7 +112,7 @@ export function RegisterRoad() {
           <input
             type="text"
             className="bg-gray-input w-full rounded-md p-2"
-            {...register("rod", { required: true })}
+            {...register("road", { required: true })}
           />
         </label>
 
