@@ -77,6 +77,21 @@ model Patology {
   @@map("patology")
 }
 
+model Points {
+  id               Int    @id @default(autoincrement())
+  type             String
+  initialLatitude  String @map("initial_latitude")
+  initialLongitude String @map("initial_longitude")
+  finalLatitude    String @map("final_latitude")
+  finalLongitude   String @map("final_longitude")
+  description      String @db.Text
+  roadId           Int    @map("road_id")
+
+  road Roads @relation(fields: [roadId], references: [id])
+
+  @@map("points")
+}
+
 model Reports {
   id      Int    @id @default(autoincrement())
   userId  Int    @map("user_id")
@@ -94,6 +109,17 @@ model Reports {
   @@map("reports")
 }
 
+model Revetment {
+  id        Int    @id @default(autoincrement())
+  type      String
+  extention Int
+  roadId    Int    @map("road_id")
+
+  road Roads @relation(fields: [roadId], references: [id])
+
+  @@map("revetments")
+}
+
 model Roads {
   id           Int    @id @default(autoincrement())
   extention    Int
@@ -101,7 +127,6 @@ model Roads {
   regional     String
   acronym      String @unique
   url          String
-  points       String @db.Text
   kml          String @db.Text
   revesment    String @db.Text
   stretch      String @db.Text
@@ -110,6 +135,8 @@ model Roads {
   cities     City[]
   iggs       Iggs[]
   patologies Patology[]
+  points     Points[]
+  revetments Revetment[]
   videos     Videos[]
 
   @@map("roads")

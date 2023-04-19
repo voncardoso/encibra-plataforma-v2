@@ -21,7 +21,7 @@ export function RegisterRoad() {
           kilometer: "",
         },
       ],
-      coating: [{ type: "", kilometer: "" }],
+      revetment: [{ type: "", extention: "" }],
     },
   });
 
@@ -44,18 +44,18 @@ export function RegisterRoad() {
   });
 
   const {
-    fields: coatingFields,
-    append: coatingAppend,
-    remove: coatingRemove,
+    fields: revetmentFields,
+    append: revetmentAppend,
+    remove: revetmentRemove,
   } = useFieldArray({
     control,
-    name: "coating",
+    name: "revetment",
   });
 
   async function handleRegister(data) {
     console.log(data);
     const token = window.localStorage.getItem("encibraapptoken-v2");
-    console.log(JSON.stringify(data.points));
+    console.log(data);
     {
       /**    const response = await api.post(
       "/road",
@@ -198,7 +198,7 @@ export function RegisterRoad() {
             <option value="TO">TO</option>
           </select>
         </label>
-        {/**counties */}
+        {/**  Municipios */}
         <div className="col-span-3 flex flex-col gap-5">
           <h2 className="col-span-3 text-lg font-bold border-b-2 border-gray-300">
             Municipios
@@ -337,14 +337,14 @@ export function RegisterRoad() {
           <h2 className="col-span-2 text-lg font-bold border-b-2 border-gray-300">
             Revestimentos
           </h2>
-          {coatingFields.map((field, index) => (
+          {revetmentFields.map((field, index) => (
             <div key={field.id} className="grid grid-cols-3 col-span-3 gap-5">
               <label htmlFor="">
                 Tipo
                 <select
                   name={`fields[${index}].type[${index}]`}
                   defaultValue={field.type}
-                  {...register(`coating.${index}.type`)}
+                  {...register(`revetment.${index}.type`)}
                   className="bg-gray-input w-full rounded-md p-2"
                 >
                   <option value="">Selecione o revestimento</option>
@@ -357,16 +357,16 @@ export function RegisterRoad() {
                 Extensão em km
                 <input
                   type="text"
-                  name={`fields[${index}].kilometer[${index}]`}
+                  name={`fields[${index}].extention[${index}]`}
                   defaultValue={field.kilometer}
-                  {...register(`coating.${index}.kilometer`)}
+                  {...register(`revetment.${index}.extention`)}
                   className="bg-gray-input w-full rounded-md p-2"
                 />
               </label>
               <button
                 className="flex gap-1 text-left w-32 items-center hover:text-red-500"
                 type="button"
-                onClick={() => coatingRemove(index)}
+                onClick={() => revetmentRemove(index)}
               >
                 <TrashSimple className="text-red-500" size={22} /> Remover
               </button>
@@ -375,7 +375,7 @@ export function RegisterRoad() {
           <button
             className="flex gap-1 text-center w-32 hover:text-gold-400"
             type="button"
-            onClick={() => coatingAppend({ type: "", kilometer: "" })}
+            onClick={() => revetmentAppend({ type: "", extention: "" })}
           >
             <PlusCircle className="text-gold-400" size={22} /> Adicionar
           </button>
