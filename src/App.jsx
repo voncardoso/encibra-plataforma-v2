@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./global.css";
 import { Login } from "./Pages/Login";
 import { UserStorageLogin } from "./Context/useContextLogin";
 import { DefaultLayout } from "./components/DefaultLayout";
@@ -9,8 +8,10 @@ import { RegisterRoad } from "./Pages/Rodovia/RegisterRoad";
 import { RoadCore } from "./Pages/Rodovia/RoadCore";
 import { DefaultLayoutRoad } from "./components/DefaultLayoutRoad";
 import { RoadInformation } from "./Pages/Rodovia/RoadInformation";
-import { CountyInformation } from "./Pages/Rodovia/CountyInformation";
 import { Points } from "./Pages/Rodovia/Points";
+import "./global.css";
+import { Revestment } from "./Pages/Rodovia/Revestiment";
+import { CityInformation } from "./Pages/Rodovia/CityInformation";
 
 function App() {
   return (
@@ -54,7 +55,6 @@ function App() {
                 </PrivateRoutes>
               }
               >
-                
                 <Route
                   path="/rodovias/information/:id"
                   exact
@@ -68,7 +68,7 @@ function App() {
                   path="/rodovias/municipios/:id"
                   element={
                     <PrivateRoutes>
-                      <CountyInformation />
+                      <CityInformation />
                     </PrivateRoutes>
                   }
                 />
@@ -77,6 +77,14 @@ function App() {
                   element={
                     <PrivateRoutes>
                       <Points />
+                    </PrivateRoutes>
+                  }
+                />
+                <Route
+                  path="/rodovias/resvestimento/:id"
+                  element={
+                    <PrivateRoutes>
+                      <Revestment />
                     </PrivateRoutes>
                   }
                 />
