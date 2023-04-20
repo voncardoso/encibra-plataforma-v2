@@ -9,10 +9,12 @@ import { RoadCore } from "./Pages/Rodovia/RoadCore";
 import { DefaultLayoutRoad } from "./components/DefaultLayoutRoad";
 import { RoadInformation } from "./Pages/Rodovia/RoadInformation";
 import { Points } from "./Pages/Rodovia/Points";
-import "./global.css";
 import { Revestment } from "./Pages/Rodovia/Revestiment";
 import { CityInformation } from "./Pages/Rodovia/CityInformation";
-import { ListVideos } from "./Pages/Videos/ListVideos";
+import { List } from "./Pages/Videos/List";
+import { DefaultLayoutVideos } from "./components/DefaultLayoutVideos";
+import { Information } from "./Pages/Videos/Information";
+import "./global.css";
 
 function App() {
   return (
@@ -95,10 +97,28 @@ function App() {
                   path="/rodovias/videos/:id"
                   element={
                     <PrivateRoutes>
-                      <ListVideos />
+                      <List />
                     </PrivateRoutes>
                   }
                 />
+
+                <Route path="/rodovias/videos/:id/information/:video"
+                  element={
+                    <PrivateRoutes>
+                      <DefaultLayoutVideos />
+                    </PrivateRoutes>
+                  }>
+
+                <Route
+                  path="/rodovias/videos/:id/information/:video"
+                  element={
+                    <PrivateRoutes>
+                      <Information />
+                    </PrivateRoutes>
+                  }
+                />
+
+                </Route>
                 
               </Route>
           </Route>
