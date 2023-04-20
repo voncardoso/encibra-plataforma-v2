@@ -27,7 +27,7 @@ export function DefaultLayoutRoad(){
                 <NavLink exact className="" to={`/rodovias/information/${"PA-999"}`}>Informações</NavLink>
                 <NavLink className="" to={`/rodovias/municipios/${"PA-999"}`}>Municípios</NavLink>
                 <NavLink className="" to={`/rodovias/pontos/${"PA-999"}`}>Pontos</NavLink>
-                <NavLink className="" to={"/teste"}>Revestimentos</NavLink>
+                <NavLink className="" to={`/rodovias/resvestimento/${"PA-999"}`}>Revestimentos</NavLink>
                 <NavLink className="" to={"/teste"}>Videos</NavLink>
                 <NavLink className="" to={"/teste"}>Igg</NavLink>
             </Nav>

@@ -2,7 +2,7 @@ import { PlusCircle, TrashSimple, Lock, PencilLine, LockOpen } from "@phosphor-i
 import { useState } from "react";
 
 
-export function CountyInformation(){
+export function CityInformation(){
   const [lock, setLock] = useState(false)
 
   function handleLock(){
