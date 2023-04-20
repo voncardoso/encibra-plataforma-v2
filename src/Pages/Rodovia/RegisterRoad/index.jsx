@@ -11,7 +11,7 @@ export function RegisterRoad() {
     control,
   } = useForm({
     defaultValues: {
-      counties: [{ name: "", kilometer: "" }],
+      cities: [{ name: "", extention: "" }],
       points: [
         {
           type: "",
@@ -26,12 +26,12 @@ export function RegisterRoad() {
   });
 
   const {
-    fields: countiesFields,
-    append: countiesAppend,
-    remove: countiesRemove,
+    fields: citiesFields,
+    append: citiesAppend,
+    remove: citiesRemove,
   } = useFieldArray({
     control,
-    name: "counties",
+    name: "cities",
   });
 
   const {
@@ -53,24 +53,30 @@ export function RegisterRoad() {
   });
 
   async function handleRegister(data) {
-    console.log(data);
+    const stretch = {
+      description: data.snippet,
+      initialLatitude: data.initialLatitude, 
+      initialLongitude: data.initialLongitude,
+      endLatitude: data.endLatitude,
+      endLongitude: data.endLongitude,
+    }
     const token = window.localStorage.getItem("encibraapptoken-v2");
-    console.log(data);
+    console.log(data.roadNetwork);
     {
-      /**    const response = await api.post(
+      const response = await api.post(
       "/road",
       {
-        extention: Number(data.highwayExtension),
-        mesh: data.roadNetwork,
-        regional: data.regionalCenter,
-        acronym: data.road,
-        url: "https://example.com/abc",
-        points: JSON.stringify(data.points),
-        kml: "<kml></kml>",
-        revesment: "string",
-        stretch: "Some stretch",
+        extention: 1,
+        mesh: "stadual",
+        regional: "teste",
+        acronym: "teste",
+        url: "",
+       // points: data.points,
+        kml: "",
+      //  revesment: data.revetment,
+        stretch: "tese",
         otherDefects: "Some other defects",
-
+      //  cities: data.cities
         //  extention: Number(data.highwayExtension),
         //  mesh: data.roadNetwork,
         //  regional: data.regionalCenter,
@@ -93,7 +99,7 @@ export function RegisterRoad() {
       }
     );
 
-    console.log(response); */
+    console.log(response); 
     }
   }
 
@@ -198,35 +204,35 @@ export function RegisterRoad() {
             <option value="TO">TO</option>
           </select>
         </label>
-        {/**  Municipios */}
+        {/**  cities */}
         <div className="col-span-3 flex flex-col gap-5">
           <h2 className="col-span-3 text-lg font-bold border-b-2 border-gray-300">
             Municipios
           </h2>
-          {countiesFields.map((field, index) => (
+          {citiesFields.map((field, index) => (
             <div key={field.id} className="grid grid-cols-3 gap-5">
               <label htmlFor="">
                 Município {index + 1}
                 <input
                   name={`fields[${index}].name[${index}]`}
                   defaultValue={field.name}
-                  {...register(`counties.${index}.name`)}
+                  {...register(`cities.${index}.name`)}
                   className="bg-gray-input w-full rounded-md p-2"
                 />
               </label>
               <label htmlFor="">
                 Quilômetro
                 <input
-                  name={`fields[${index}].kilometer[${index}]`}
-                  defaultValue={field.kilometer}
-                  {...register(`counties.${index}.kilometer`)}
+                  name={`fields[${index}].extention[${index}]`}
+                  defaultValue={field.extention}
+                  {...register(`cities.${index}.extention`)}
                   className="bg-gray-input w-full rounded-md p-2"
                 />
               </label>
               <button
                 className="flex gap-1 text-left w-32 items-center hover:text-red-500"
                 type="button"
-                onClick={() => countiesRemove(index)}
+                onClick={() => citiesRemove(index)}
               >
                 <TrashSimple className="text-red-500" size={22} /> Remover
               </button>
@@ -235,7 +241,7 @@ export function RegisterRoad() {
           <button
             className="flex gap-1 text-center w-32 hover:text-gold-400"
             type="button"
-            onClick={() => countiesAppend({ name: "", extensao: "" })}
+            onClick={() => citiesAppend({ name: "", extensao: "" })}
           >
             <PlusCircle className="text-gold-400" size={22} /> Adicionar
           </button>
