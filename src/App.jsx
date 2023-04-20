@@ -12,6 +12,7 @@ import { Points } from "./Pages/Rodovia/Points";
 import "./global.css";
 import { Revestment } from "./Pages/Rodovia/Revestiment";
 import { CityInformation } from "./Pages/Rodovia/CityInformation";
+import { ListVideos } from "./Pages/Videos/ListVideos";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
                     </PrivateRoutes>
                   }
                 />
+
                 <Route
                   path="/rodovias/municipios/:id"
                   element={
@@ -85,6 +87,15 @@ function App() {
                   element={
                     <PrivateRoutes>
                       <Revestment />
+                    </PrivateRoutes>
+                  }
+                />
+
+                <Route
+                  path="/rodovias/videos/:id"
+                  element={
+                    <PrivateRoutes>
+                      <ListVideos />
                     </PrivateRoutes>
                   }
                 />

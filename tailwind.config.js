@@ -21,7 +21,8 @@ export default {
       "red-500": "#ef4444",
       "red-800": "#991b1b",
 
-      "sky-600": "#0284c7"
+      "sky-600": "#0284c7",
+      "emerald-500": "#10b981"
        },
     screens: {
       "2xl": { max: "1535px" },
