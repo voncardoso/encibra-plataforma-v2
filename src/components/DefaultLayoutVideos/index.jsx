@@ -6,7 +6,7 @@ export function DefaultLayoutVideos(){
         <section>
             <Nav className="w-48 m-auto my-2.5 flex justify-center gap-10  py-1">
                 <NavLink exact className="  text-gray-400" to={`/rodovias/videos/${"PA-999"}/information/${2132}`}>Informações</NavLink>
-                <NavLink className=" text-gray-400" to={`/rodovias/municipios/${"PA-999"}`}>Patologias</NavLink>
+                <NavLink className=" text-gray-400" to={`/rodovias/videos/${"PA-999"}/patology/${2132}`}>Patologias</NavLink>
             </Nav>
            
             <Outlet />

@@ -15,6 +15,7 @@ import { List } from "./Pages/Videos/List";
 import { DefaultLayoutVideos } from "./components/DefaultLayoutVideos";
 import { Information } from "./Pages/Videos/Information";
 import "./global.css";
+import { Patology } from "./Pages/Videos/Patology";
 
 function App() {
   return (
@@ -102,7 +103,7 @@ function App() {
                   }
                 />
 
-                <Route path="/rodovias/videos/:id/information/:video"
+                <Route path="/rodovias/videos/:id"
                   element={
                     <PrivateRoutes>
                       <DefaultLayoutVideos />
@@ -114,6 +115,14 @@ function App() {
                   element={
                     <PrivateRoutes>
                       <Information />
+                    </PrivateRoutes>
+                  }
+                />
+                <Route
+                  path="/rodovias/videos/:id/patology/:video"
+                  element={
+                    <PrivateRoutes>
+                      <Patology />
                     </PrivateRoutes>
                   }
                 />
