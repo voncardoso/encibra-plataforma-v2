@@ -19,24 +19,24 @@ export function Sidbar() {
       <img className="md:hidden m-auto pt-5" src={Logo} alt="" />
       <ul className="m-auto pt-5 w-40 md:w-16">
         {/**
-           * <NavLink h className="md:hidden md:w-16 md:m-auto py-4 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md" href="/dasborad">
+           * <NavLink h className="md:hidden md:w-16 md:m-auto py-2.5 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md" href="/dasborad">
               <ChartBar className="ml-2" size={24} />
               <p className="md:hidden md:m-auto">Dasboard</p>
             </NavLink> 
           */}
 
         <NavLink
-          className={` md:hidden md:w-16 md:m-auto py-4 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md`}
+          className={` md:hidden md:w-16 md:m-auto mb-1 py-2.5 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md`}
           to="/rodovias"
         >
           <Truck className="ml-2" size={24} />
           <p className="md:hidden md:m-auto">Rodovias</p>
         </NavLink>
-        <li className="md:hidden md:w-16 md:m-auto py-4 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md   ">
+        <li className="md:hidden md:w-16 md:m-auto  mb-1 py-2.5 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md   ">
           <Calculator className="ml-2" size={24} />
           <p className="md:hidden md:m-auto">IGG</p>
         </li>
-        <li className="md:hidden md:w-16 md:m-auto py-4  font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md   ">
+        <li className="md:hidden md:w-16 md:m-auto mb-1 py-2.5  font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md   ">
           <Notebook className="ml-2" size={24} />
           <p className="md:hidden  md:invisible">Contratos</p>
         </li>
