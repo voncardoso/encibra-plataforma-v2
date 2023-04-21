@@ -11,7 +11,7 @@ export function RegisterRoad() {
     control,
   } = useForm({
     defaultValues: {
-      cities: [{ name: "", extention: "" }],
+      // cities: [{ name: "", extention: 0, sequence: 0 }],
       points: [
         {
           type: "",
@@ -52,54 +52,41 @@ export function RegisterRoad() {
     name: "revetment",
   });
 
-  async function handleRegister(data) {
+  async function handleRegister(data1) {
     const stretch = {
-      description: data.snippet,
-      initialLatitude: data.initialLatitude, 
-      initialLongitude: data.initialLongitude,
-      endLatitude: data.endLatitude,
-      endLongitude: data.endLongitude,
-    }
+      description: data1.snippet,
+      initialLatitude: data1.initialLatitude,
+      initialLongitude: data1.initialLongitude,
+      endLatitude: data1.endLatitude,
+      endLongitude: data1.endLongitude,
+    };
     const token = window.localStorage.getItem("encibraapptoken-v2");
-    console.log(data.roadNetwork);
+    console.log(+data1.extention);
     {
       const response = await api.post(
-      "/road",
-      {
-        extention: 1,
-        mesh: "stadual",
-        regional: "teste",
-        acronym: "teste",
-        url: "",
-       // points: data.points,
-        kml: "",
-      //  revesment: data.revetment,
-        stretch: "tese",
-        otherDefects: "Some other defects",
-      //  cities: data.cities
-        //  extention: Number(data.highwayExtension),
-        //  mesh: data.roadNetwork,
-        //  regional: data.regionalCenter,
-        //  acronym: data.road,
-        //  url: "",
-        //  points: data.points,
-        //  kml: "",
-        //  revesment: data.coating,
-        //  stretch: "",
-        //  cities: data.counties,
-        // snippet: data.snippet,
-        //  state: data.state,
-        // endLongitude: data.endLongitude,
-        //  endLatitude: data.endLatitude,
-        // initialLatitude: data.initialLatitude,
-        //  initialLongitude: data.initialLongitude,
-      },
-      {
-        headers: { Authorization: "Bearer " + token },
-      }
-    );
+        "/road",
+        {
+          acronym: data1.acronym,
+          extention: +data1.extention,
+          mesh: "XYZ",
+          regional: "North",
+          url: "example.com",
+          kml: "9203.0",
+          revesment: "2390.0",
+          stretch: '{teste:"teste"}',
+          otherDefects: "",
+          cities: {
+            createMany: {
+              data: data1.cities,
+            },
+          },
+        },
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      );
 
-    console.log(response); 
+      console.log(response);
     }
   }
 
@@ -118,16 +105,17 @@ export function RegisterRoad() {
           <input
             type="text"
             className="bg-gray-input w-full rounded-md p-2"
-            {...register("road", { required: true })}
+            {...register("acronym", { required: true })}
           />
         </label>
 
         <label htmlFor="">
           Extensão em km
           <input
-            type="text"
+            type="number"
+            step="0.01"
             className="bg-gray-input w-full rounded-md p-2"
-            {...register("highwayExtension", { required: true })}
+            {...register("extention", { required: true })}
           />
         </label>
 
@@ -223,9 +211,20 @@ export function RegisterRoad() {
               <label htmlFor="">
                 Quilômetro
                 <input
+                  type="number"
                   name={`fields[${index}].extention[${index}]`}
                   defaultValue={field.extention}
                   {...register(`cities.${index}.extention`)}
+                  className="bg-gray-input w-full rounded-md p-2"
+                />
+              </label>
+              <label htmlFor="">
+                Quilômetro
+                <input
+                  name={`fields[${index}].sequence[${index}]`}
+                  defaultValue={field.sequence}
+                  type="number"
+                  {...register(`cities.${index}.sequence`)}
                   className="bg-gray-input w-full rounded-md p-2"
                 />
               </label>
@@ -241,7 +240,9 @@ export function RegisterRoad() {
           <button
             className="flex gap-1 text-center w-32 hover:text-gold-400"
             type="button"
-            onClick={() => citiesAppend({ name: "", extensao: "" })}
+            onClick={() =>
+              citiesAppend({ name: "", extention: 0, sequence: 0 })
+            }
           >
             <PlusCircle className="text-gold-400" size={22} /> Adicionar
           </button>
