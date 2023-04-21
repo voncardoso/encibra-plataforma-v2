@@ -1,8 +1,6 @@
 import { PlusCircle, TrashSimple } from "@phosphor-icons/react";
-import * as Dialog from "@radix-ui/react-dialog";
 import { useFieldArray, useForm } from "react-hook-form";
 import { api } from "../../../lib/api";
-import { data } from "browserslist";
 
 export function RegisterRoad() {
   const {
@@ -10,6 +8,7 @@ export function RegisterRoad() {
     handleSubmit,
     formState: { errors },
     control,
+    reset,
   } = useForm({
     defaultValues: {},
   });
@@ -51,7 +50,8 @@ export function RegisterRoad() {
     };
     const token = window.localStorage.getItem("encibraapptoken-v2");
     console.log(data1);
-    {
+
+    try {
       const response = await api.post(
         "/road",
         {
@@ -85,7 +85,14 @@ export function RegisterRoad() {
         }
       );
 
-      console.log(response);
+      if (response.status === 201) {
+        window.alert("Rodovia Castrada com sucesso");
+        reset();
+      }
+    } catch (error) {
+      window.alert(
+        "Erro ao cadastrar rodovias! Uma das causas pode ser a existencia da rodovia"
+      );
     }
   }
 
