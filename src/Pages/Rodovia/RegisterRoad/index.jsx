@@ -2,6 +2,7 @@ import { PlusCircle, TrashSimple } from "@phosphor-icons/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useFieldArray, useForm } from "react-hook-form";
 import { api } from "../../../lib/api";
+import { data } from "browserslist";
 
 export function RegisterRoad() {
   const {
@@ -10,19 +11,7 @@ export function RegisterRoad() {
     formState: { errors },
     control,
   } = useForm({
-    defaultValues: {
-      // cities: [{ name: "", extention: 0, sequence: 0 }],
-      points: [
-        {
-          type: "",
-          latitude: "",
-          longitude: "",
-          description: "",
-          kilometer: "",
-        },
-      ],
-      revetment: [{ type: "", extention: "" }],
-    },
+    defaultValues: {},
   });
 
   const {
@@ -61,23 +50,33 @@ export function RegisterRoad() {
       endLongitude: data1.endLongitude,
     };
     const token = window.localStorage.getItem("encibraapptoken-v2");
-    console.log(+data1.extention);
+    console.log(data1);
     {
       const response = await api.post(
         "/road",
         {
           acronym: data1.acronym,
-          extention: +data1.extention,
-          mesh: "XYZ",
-          regional: "North",
-          url: "example.com",
-          kml: "9203.0",
-          revesment: "2390.0",
-          stretch: '{teste:"teste"}',
-          otherDefects: "",
+          extention: data1.extention,
+          mesh: data1.mesh,
+          regional: data1.regional,
+          url: "",
+          kml: "",
+          stretch: JSON.stringify(stretch),
+          uf: data1.uf,
+          revesment: "",
           cities: {
             createMany: {
               data: data1.cities,
+            },
+          },
+          revetments: {
+            createMany: {
+              data: data1.revetment,
+            },
+          },
+          points: {
+            createMany: {
+              data: data1.points,
             },
           },
         },
@@ -112,8 +111,7 @@ export function RegisterRoad() {
         <label htmlFor="">
           Extensão em km
           <input
-            type="number"
-            step="0.01"
+            type="text"
             className="bg-gray-input w-full rounded-md p-2"
             {...register("extention", { required: true })}
           />
@@ -125,7 +123,7 @@ export function RegisterRoad() {
             name=""
             id=""
             className="bg-gray-input w-full rounded-md p-2"
-            {...register("roadNetwork", { required: true })}
+            {...register("mesh", { required: true })}
           >
             <option value="">Selecione a Malha</option>
             <option value="ESTADUAL">Estadual</option>
@@ -139,7 +137,7 @@ export function RegisterRoad() {
             name=""
             id=""
             className="bg-gray-input w-full rounded-md p-2"
-            {...register("regionalCenter", { required: true })}
+            {...register("regional", { required: true })}
           >
             <option value="">Núcleo Regional</option>
             <option value="01">01</option>
@@ -161,7 +159,7 @@ export function RegisterRoad() {
             name=""
             id=""
             className="bg-gray-input w-full rounded-md p-2"
-            {...register("state", { required: true })}
+            {...register("uf", { required: true })}
           >
             <option value="">Estado</option>
             <option value="AC">AC</option>
@@ -211,7 +209,6 @@ export function RegisterRoad() {
               <label htmlFor="">
                 Quilômetro
                 <input
-                  type="number"
                   name={`fields[${index}].extention[${index}]`}
                   defaultValue={field.extention}
                   {...register(`cities.${index}.extention`)}
@@ -223,7 +220,6 @@ export function RegisterRoad() {
                 <input
                   name={`fields[${index}].sequence[${index}]`}
                   defaultValue={field.sequence}
-                  type="number"
                   {...register(`cities.${index}.sequence`)}
                   className="bg-gray-input w-full rounded-md p-2"
                 />
@@ -241,7 +237,7 @@ export function RegisterRoad() {
             className="flex gap-1 text-center w-32 hover:text-gold-400"
             type="button"
             onClick={() =>
-              citiesAppend({ name: "", extention: 0, sequence: 0 })
+              citiesAppend({ name: "", extention: "", sequence: "" })
             }
           >
             <PlusCircle className="text-gold-400" size={22} /> Adicionar
