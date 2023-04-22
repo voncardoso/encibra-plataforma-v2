@@ -5,9 +5,11 @@ import "../../../Global/slider.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
+import { useEffect } from "react";
+import { api } from "../../../lib/api";
 
 export function Dashboard() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   //responsividade do slider
   const breakpoints = {
     // Largura mínima de 640 pixels
@@ -33,6 +35,17 @@ export function Dashboard() {
       slidesPerView: 6.5,
     },
   };
+
+  useEffect(() => {
+    async function GetRoads() {
+      const token = window.localStorage.getItem("encibraapptoken-v2");
+      const response = await api.get("/road", {
+        headers: { Authorization: "Bearer " + token },
+      });
+      console.log(response.data);
+    }
+    GetRoads();
+  }, []);
 
   return (
     <section className="w-full overflow-y-scroll ">
@@ -260,9 +273,12 @@ export function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            <tr onClick={() =>{
-              navigate(`/rodovias/information/${"PA-999"}`)
-            }} className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
+            <tr
+              onClick={() => {
+                navigate(`/rodovias/information/${"PA-999"}`);
+              }}
+              className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
+            >
               <td className="p-2  ">PA-999</td>
               <td className="p-2  ">Estadual</td>
               <td className="p-2  ">10</td>
