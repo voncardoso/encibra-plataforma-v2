@@ -1,0 +1,23 @@
+import { createContext, useEffect, useState } from "react";
+import { api } from "../lib/api";
+import { useNavigate, useParams } from "react-router-dom";
+
+export const UserContextRoad = createContext();
+
+export const UserStorageRoad = ({ children }) => {
+  const [dataRoad, setDataRoad] = useState([]);
+
+  async function Roads(id) {
+    const token = window.localStorage.getItem("encibraapptoken-v2");
+    const response = await api.get(`/road/${id}`, {
+      headers: { Authorization: "Bearer " + token },
+    });
+    setDataRoad(response.data);
+  }
+
+  return (
+    <UserContextRoad.Provider value={{ Roads, dataRoad }}>
+      {children}
+    </UserContextRoad.Provider>
+  );
+};

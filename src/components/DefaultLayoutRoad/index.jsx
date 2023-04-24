@@ -1,9 +1,18 @@
 import { BrowserRouter, NavLink, Outlet, useParams } from "react-router-dom";
 import { Nav } from "./style";
+import { useEffect, useState } from "react";
+import { api } from "../../lib/api";
+import { useContext } from "react";
+import { UserContextRoad } from "../../Context/useContextRoad";
 
 export function DefaultLayoutRoad() {
   const params = useParams();
-  console.log(params);
+  const { Roads, dataRoad } = useContext(UserContextRoad);
+
+  useEffect(() => {
+    Roads(params.id);
+  }, []);
+
   return (
     <section className="gap-5 bg-background h-screen overflow-y-scroll w-full pr-5 ">
       <div>
@@ -13,11 +22,13 @@ export function DefaultLayoutRoad() {
               <strong className="text-2xl hover:underline">Rodovias </strong>
             </NavLink>
             <NavLink to={`/rodovias/nucleo/${1}`}>
-              <strong className="text-2xl hover:underline"> | NR-01</strong>
+              <strong className="text-2xl hover:underline"> | NR-01 </strong>
             </NavLink>
-            <strong className="text-2xl">|</strong>
+            <strong className="text-2xl"> | </strong>
             <NavLink to={`#`}>
-              <strong className="text-2xl hover:underline">{params.id}</strong>
+              <strong className="text-2xl hover:underline">
+                {dataRoad.acronym}
+              </strong>
             </NavLink>
           </nav>
         </header>
