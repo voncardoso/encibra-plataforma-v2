@@ -209,8 +209,9 @@ export function Dashboard() {
     }
   );
 
-  if (data.stretch) {
-    stretch = JSON.parse(road?.stretch);
+  if (data?.stretch) {
+    stretch = JSON.parse(data?.stretch);
+    console.log("teste", stretch);
   }
 
   return (
@@ -504,8 +505,10 @@ export function Dashboard() {
           </thead>
           <tbody>
             {data.map((road) => {
+              stretch = JSON.parse(road?.stretch);
               return (
                 <tr
+                  key={road.id}
                   onClick={() => {
                     navigate(`/rodovias/information/${road.id}`);
                   }}
