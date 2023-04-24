@@ -61,15 +61,15 @@ export function RegisterRoad() {
           regional: data1.regional,
           url: "",
           kml: "",
+          revesment: "",
           stretch: JSON.stringify(stretch),
           uf: data1.uf,
-          revesment: "",
-          cities: {
+          city: {
             createMany: {
               data: data1.cities,
             },
           },
-          revetments: {
+          revetment: {
             createMany: {
               data: data1.revetment,
             },

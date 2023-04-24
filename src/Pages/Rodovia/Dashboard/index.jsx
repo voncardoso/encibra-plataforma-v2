@@ -11,6 +11,7 @@ import { api } from "../../../lib/api";
 export function Dashboard() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  let stretch = null;
   //responsividade do slider
   const breakpoints = {
     // Largura mínima de 640 pixels
@@ -207,6 +208,10 @@ export function Dashboard() {
       total: 0,
     }
   );
+
+  if (data.stretch) {
+    stretch = JSON.parse(road?.stretch);
+  }
 
   return (
     <section className="w-full overflow-y-scroll ">
@@ -499,11 +504,6 @@ export function Dashboard() {
           </thead>
           <tbody>
             {data.map((road) => {
-              let stretch = null;
-              {
-                road.stretch === "" ? "" : (stretch = JSON.parse(road.stretch));
-              }
-              console.log(stretch);
               return (
                 <tr
                   onClick={() => {
