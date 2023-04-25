@@ -11,6 +11,7 @@ import {
   LockOpen,
 } from "@phosphor-icons/react";
 import { NewModalCity } from "./NewModalCity";
+import { api } from "../../../lib/api";
 
 
 
@@ -25,6 +26,26 @@ export function CityInformation() {
     } else {
       setLock(true);
     }
+  }
+
+  async function deleteCity(id){
+    console.log(id)
+    const token = window.localStorage.getItem("encibraapptoken-v2");
+    const city = {
+
+    }
+
+    const result = window.confirm("Certeza que deseja deletar o município? ")
+   
+    if(result){
+      const response = await api.put(`/road/${params.id}/city/${id}/delete`,city ,{
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      });
+      window.location.reload()
+    }
+
   }
 
   const city = dataRoad.city
@@ -66,9 +87,6 @@ export function CityInformation() {
           return(
             <tr
               key={city.id}
-              onClick={() => {
-                navigate(`/rodovias/information/${"PA-999"}`);
-              }}
               className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
           >
             <td className="p-2  ">{city.name}</td>
@@ -81,7 +99,12 @@ export function CityInformation() {
                     <button className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
                       <PencilLine size={18} />
                     </button>
-                    <button className="flex  text-sm justify-center items-center gap-1 p-1 text-sm text-red-500 border rounded border-red-500 hover:bg-red-500 hover:text-white">
+                    <button 
+                      className="flex  text-sm justify-center items-center gap-1 p-1 text-sm text-red-500 border rounded border-red-500 hover:bg-red-500 hover:text-white"
+                      onClick={() =>{
+                        deleteCity(city.id)
+                      }}  
+                    >
                       <TrashSimple size={18} />
                     </button>
                   </>
@@ -96,7 +119,7 @@ export function CityInformation() {
         <tr className=" bg-gray-300 border-b-2 border-gray-200 ">
           <td colSpan={7} className="p-2 rounded-ee-md rounded-es-md"></td>
         </tr>
-              </tbody>
+        </tbody>
             </table>
           </div>
           <div>
@@ -105,19 +128,22 @@ export function CityInformation() {
         </section>
       :
         <section className="mt-5">
-        <div className="pr-5">
-          <table className="w-full text-center ">
+          <div className="pr-5">
+            <table className="w-full text-center ">
               <thead>
-      <tr className="bg-gray-300 ">
+                <tr className="bg-gray-300 ">
         <th className="p-2 rounded-ss-md"></th>
         <th className="p-2"></th>
         <th></th>
         <th className=" p-2 rounded-se-md text-center flex gap-3 justify-end">
           {lock ? (
-            <button className="flex justify-center items-center gap-1 p-1 text-sm text-gold-400 border rounded border-gold-400 hover:bg-gold-400 hover:text-white">
-              <PlusCircle size={18} />
-              <p className="">Inserir</p>
-            </button>
+           <Dialog>
+           <DialogTrigger className="flex justify-center items-center gap-1 p-1 text-sm text-gold-400 border rounded border-gold-400 hover:bg-gold-400 hover:text-white">
+             <PlusCircle size={18} />
+             <p className="">Inserir</p>
+           </DialogTrigger>
+           <NewModalCity/>
+         </Dialog>
           ) : (
             ""
           )}
@@ -128,25 +154,25 @@ export function CityInformation() {
             {lock ? <LockOpen size={18} /> : <Lock size={18} />}
           </button>
         </th>
-      </tr>
+                </tr>
               </thead>
               <tbody>
 
-          <tr
-            key={city.id}
-            onClick={() => {
-              navigate(`/rodovias/information/${"PA-999"}`);
-            }}
-            className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
-        >
-          <td colSpan={5} className="p-4">Não possui municípios cadastrados</td>
-        </tr>
-      <tr className=" bg-gray-300 border-b-2 border-gray-200 ">
-        <td colSpan={7} className="p-2 rounded-ee-md rounded-es-md"></td>
-      </tr>
+                <tr
+                  key={city.id}
+                  onClick={() => {
+                  navigate(`/rodovias/information/${"PA-999"}`);
+                }}
+                className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
+              >
+                <td colSpan={5} className="p-4">Não possui municípios cadastrados</td>
+                </tr>
+                <tr className=" bg-gray-300 border-b-2 border-gray-200 ">
+                  <td colSpan={7} className="p-2 rounded-ee-md rounded-es-md"></td>
+                </tr>
               </tbody>
-          </table>
-        </div>
+            </table>
+          </div>
         </section>
       }
     </>

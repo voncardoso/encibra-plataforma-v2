@@ -1,6 +1,41 @@
+import { useFieldArray, useForm } from "react-hook-form";
 import { X } from "@phosphor-icons/react";
-import { Dialog, DialogTrigger, DialogOverlay, DialogContent, DialogPortal, DialogClose } from "@radix-ui/react-dialog";
+import { DialogOverlay, DialogContent, DialogPortal, DialogClose } from "@radix-ui/react-dialog";
+import { useParams } from "react-router-dom";
+import { api } from "../../../../lib/api";
+
+
 export function NewModalCity(){
+    const params = useParams()
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+      } = useForm({
+        defaultValues: {
+            extention: "",
+            name: "",
+            sequence: "0"
+        },
+      });
+
+    async function handleRoadsCity(data) {
+        const token = window.localStorage.getItem("encibraapptoken-v2");
+
+        const response = await api.put(`/road/${params.id}/city/null/create`, {
+          extention: data.extention,
+          name: data.name,
+          sequence: data.sequence,
+          roadId: +params.id
+        }, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          }
+        });
+        }
+
+    
     return(
         <DialogPortal>
             <DialogOverlay className=" fixed inset-0 bg-black bg-opacity-50"/>
@@ -13,13 +48,14 @@ export function NewModalCity(){
                         </button>
                     </DialogClose>
                 </header>
-                <form action="">
+                <form onSubmit={handleSubmit(handleRoadsCity)} action="">
                     <label className="" htmlFor="name">
                         Nome:
                         <input
                             id="name"
                             type="text" 
                             className="mb-4 bg-gray-input w-full rounded-md p-2"
+                            {...register("name", { required: true })}
                         />
                     </label>
                     <label htmlFor="extention">
@@ -27,7 +63,8 @@ export function NewModalCity(){
                         <input 
                             id="extention"
                             type="text" 
-                            className="bg-gray-input w-full rounded-md p-2"    
+                            className="bg-gray-input w-full rounded-md p-2" 
+                            {...register("extention", { required: true })}   
                         />
                     </label>
 

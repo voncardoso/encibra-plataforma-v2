@@ -17,33 +17,10 @@ export const UserStorageRoad = ({ children }) => {
     setDataRoad(response.data);
   }
 
-  async function RoadsCity(id) {
-  const city ={
-
-  }
-    const response = await api.put(`/road/${id}/city/null/findMany`, city , {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-
-    setDataRoadCity(response.data);
-  }
-
-  async function RoadsPoints(id) {
-    const response = await api.put(`/road/${26}/points/null/findMany`, {
-      headers: { Authorization: "Bearer " + token },
-    });
-
-    setDataRoadCity(response.data);
-  }
-
-  console.log(dataRoad.city)
 
   return (
     <UserContextRoad.Provider
-      value={{ Roads, dataRoad, RoadsCity, dataRoadCity }}
+      value={{ Roads, dataRoad, dataRoadCity }}
     >
       {children}
     </UserContextRoad.Provider>
