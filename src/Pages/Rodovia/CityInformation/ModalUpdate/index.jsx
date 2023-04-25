@@ -14,15 +14,18 @@ export function ModalUpdate(data){
         reset,
       } = useForm({
         defaultValues: {
-            extention: "",
-            name: "",
-            sequence: "0"
+            extention: data.data.extention,
+            name: data.data.name,
+            sequence: "0",
+            id: data.data.id,
         },
       });
 
     async function handleRoadsCity(data) {
+        console.log(data)
         const token = window.localStorage.getItem("encibraapptoken-v2");
-        const response = await api.put(`/road/${params.id}/city/null/create`, {
+        const response = await api.put(`/road/${params.id}/city/${data.id}/update`, {
+          id: +data.id, 
           extention: data.extention,
           name: data.name,
           sequence: data.sequence,
@@ -41,7 +44,7 @@ export function ModalUpdate(data){
             <DialogOverlay className=" fixed inset-0 bg-black bg-opacity-50"/>
             <DialogContent className="fixed w-96 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-lg p-4">
                 <header className="flex mb-5 justify-between">
-                    <h1 className="text-xl text font-bold">Adicionar Município</h1>
+                    <h1 className="text-xl text font-bold">Atualizar Município</h1>
                     <DialogClose asChild>
                         <button className="relative bottom-2">
                             <X/>

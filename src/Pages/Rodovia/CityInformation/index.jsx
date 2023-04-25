@@ -12,6 +12,7 @@ import {
 } from "@phosphor-icons/react";
 import { api } from "../../../lib/api";
 import { ModalCreate } from "./ModalCreate";
+import { ModalUpdate } from "./ModalUpdate";
 
 
 
@@ -95,15 +96,20 @@ export function CityInformation() {
               <div className="flex justify gap-3">
                 {lock ? (
                   <>
-                    <button className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
-                      <PencilLine size={18} />
-                    </button>
+                      <Dialog>
+                        <DialogTrigger  className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
+                          <PencilLine size={18} />
+                        </DialogTrigger>
+                        <ModalUpdate data={city}/>
+                      </Dialog>
+                    
                     <button 
                       className="flex  text-sm justify-center items-center gap-1 p-1 text-sm text-red-500 border rounded border-red-500 hover:bg-red-500 hover:text-white"
                       onClick={() =>{
                         deleteCity(city.id)
                       }}  
                     >
+                      
                       <TrashSimple size={18} />
                     </button>
                   </>
