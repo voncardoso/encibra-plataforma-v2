@@ -29,7 +29,6 @@ export function CityInformation() {
   }
 
   async function deleteCity(id){
-    console.log(id)
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const city = {
 

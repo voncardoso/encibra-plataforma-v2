@@ -22,7 +22,6 @@ export function NewModalCity(){
 
     async function handleRoadsCity(data) {
         const token = window.localStorage.getItem("encibraapptoken-v2");
-
         const response = await api.put(`/road/${params.id}/city/null/create`, {
           extention: data.extention,
           name: data.name,
@@ -33,7 +32,8 @@ export function NewModalCity(){
             'Authorization': `Bearer ${token}`,
           }
         });
-        }
+        window.location.reload()
+    }
 
     
     return(
