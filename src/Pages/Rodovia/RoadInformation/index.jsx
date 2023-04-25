@@ -10,7 +10,6 @@ export function RoadInformation() {
     strech = JSON.parse(dataRoad?.stretch);
   }
 
-  console.log(strech);
   return (
     <section className="">
       <div className="flex flex justify-between items-end p-2.5 mt-5 bg-white rounded-md mt-2.5 shadow-lg ">
@@ -43,7 +42,7 @@ export function RoadInformation() {
             <span className="text-gray-400 tracking-wider mr-2 ">
               Descrição:
             </span>
-            {strech.description}
+            {strech?.description}
           </strong>
         </div>
         <div className="py-2 flex justify-end justify-self-end">
@@ -61,25 +60,25 @@ export function RoadInformation() {
             <span className="text-gray-400 tracking-wider mr-2">
               Latitude inicial:
             </span>
-            {strech.initialLatitude}
+            {strech?.initialLatitude}
           </strong>
           <strong className="py-2 text-text-100 ">
             <span className="text-gray-400 tracking-wider mr-2 ">
               Longitude inicial:
             </span>
-            {strech.initialLongitude}
+            {strech?.initialLongitude}
           </strong>
           <strong className="py-2 text-text-100 ">
             <span className="text-gray-400 tracking-wider mr-2 ">
               Latitude final:
             </span>
-            {strech.endLatitude}
+            {strech?.endLatitude}
           </strong>
           <strong className="py-2 text-text-100 ">
             <span className="text-gray-400 tracking-wider mr-2 ">
               Latitude final:
             </span>
-            {strech.endLongitude}
+            {strech?.endLongitude}
           </strong>
         </div>
         <div className="py-2 flex justify-end ">
