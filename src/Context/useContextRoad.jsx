@@ -1,15 +1,16 @@
 import { createContext, useEffect, useState } from "react";
 import { api } from "../lib/api";
-import { useNavigate, useParams } from "react-router-dom";
+import { json, useNavigate, useParams } from "react-router-dom";
 
 export const UserContextRoad = createContext();
 
 export const UserStorageRoad = ({ children }) => {
   const [dataRoad, setDataRoad] = useState([]);
   const [dataRoadCity, setDataRoadCity] = useState([]);
+  const token = window.localStorage.getItem("encibraapptoken-v2");
+
 
   async function Roads(id) {
-    const token = window.localStorage.getItem("encibraapptoken-v2");
     const response = await api.get(`/road/${id}`, {
       headers: { Authorization: "Bearer " + token },
     });
@@ -17,14 +18,28 @@ export const UserStorageRoad = ({ children }) => {
   }
 
   async function RoadsCity(id) {
-    const token = window.localStorage.getItem("encibraapptoken-v2");
-    const response = await api.get(`/road/${id}/city/null/findMany`, {
+  const city ={
+
+  }
+    const response = await api.put(`/road/${id}/city/null/findMany`, city , {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    setDataRoadCity(response.data);
+  }
+
+  async function RoadsPoints(id) {
+    const response = await api.put(`/road/${26}/points/null/findMany`, {
       headers: { Authorization: "Bearer " + token },
     });
 
-    console.log(response);
     setDataRoadCity(response.data);
   }
+
+  console.log(dataRoad.city)
 
   return (
     <UserContextRoad.Provider
