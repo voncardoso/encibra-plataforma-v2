@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { api } from "../../../../lib/api";
 
 
-export function NewModalCity(){
+export function ModalCreate(){
     const params = useParams()
     const {
         register,
@@ -72,7 +72,7 @@ export function NewModalCity(){
                         Adicionar
                     </button>
                 </form>
-                </DialogContent>
+            </DialogContent>
         </DialogPortal>
     )
 }

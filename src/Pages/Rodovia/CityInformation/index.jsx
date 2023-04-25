@@ -10,8 +10,8 @@ import {
   PencilLine,
   LockOpen,
 } from "@phosphor-icons/react";
-import { NewModalCity } from "./NewModalCity";
 import { api } from "../../../lib/api";
+import { ModalCreate } from "./ModalCreate";
 
 
 
@@ -67,7 +67,7 @@ export function CityInformation() {
                           <PlusCircle size={18} />
                           <p className="">Inserir</p>
                         </DialogTrigger>
-                        <NewModalCity/>
+                        <ModalCreate/>
                       </Dialog>
                     ) : (
                       ""
