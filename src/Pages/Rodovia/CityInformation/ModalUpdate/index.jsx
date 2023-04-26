@@ -80,7 +80,7 @@ export function ModalUpdate(data) {
           </label>
 
           <button className="mt-6 bg-gold-400 w-full p-2 text-white rounded hover:bg-gold-300">
-            Adicionar
+            Atualizar
           </button>
         </form>
       </DialogContent>

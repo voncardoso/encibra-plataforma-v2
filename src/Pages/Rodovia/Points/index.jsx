@@ -11,6 +11,7 @@ import {
   LockOpen,
 } from "@phosphor-icons/react";
 import { ModalUpdate } from "./ModalUpdate";
+import { api } from "../../../lib/api";
 
 export function Points() {
   const { dataRoad } = useContext(UserContextRoad);
@@ -22,6 +23,27 @@ export function Points() {
       setLock(false);
     } else {
       setLock(true);
+    }
+  }
+
+  async function deletePoint(id) {
+    console.log();
+    const token = window.localStorage.getItem("encibraapptoken-v2");
+    const city = {};
+
+    const result = window.confirm("Certeza que deseja deletar o ponto? ");
+
+    if (result) {
+      const response = await api.put(
+        `/road/${params.id}/points/${id}/delete`,
+        city,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      window.location.reload();
     }
   }
 
@@ -79,7 +101,12 @@ export function Points() {
                               </DialogTrigger>
                               <ModalUpdate data={point} />
                             </Dialog>
-                            <button className="flex  text-sm justify-center items-center gap-1 p-1 text-sm text-red-500 border rounded border-red-500 hover:bg-red-500 hover:text-white">
+                            <button
+                              className="flex  text-sm justify-center items-center gap-1 p-1 text-sm text-red-500 border rounded border-red-500 hover:bg-red-500 hover:text-white"
+                              onClick={() => {
+                                deletePoint(point.id);
+                              }}
+                            >
                               <TrashSimple size={18} />
                             </button>
                           </>
