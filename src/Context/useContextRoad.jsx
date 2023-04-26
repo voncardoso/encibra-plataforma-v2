@@ -9,7 +9,6 @@ export const UserStorageRoad = ({ children }) => {
   const [dataRoadCity, setDataRoadCity] = useState([]);
   const token = window.localStorage.getItem("encibraapptoken-v2");
 
-
   async function Roads(id) {
     const response = await api.get(`/road/${id}`, {
       headers: { Authorization: "Bearer " + token },
@@ -17,11 +16,9 @@ export const UserStorageRoad = ({ children }) => {
     setDataRoad(response.data);
   }
 
-
+  console.log("contexto", dataRoad);
   return (
-    <UserContextRoad.Provider
-      value={{ Roads, dataRoad, dataRoadCity }}
-    >
+    <UserContextRoad.Provider value={{ Roads, dataRoad, dataRoadCity }}>
       {children}
     </UserContextRoad.Provider>
   );
