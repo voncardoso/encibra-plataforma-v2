@@ -9,7 +9,7 @@ import {
 } from "@radix-ui/react-dialog";
 import { X } from "@phosphor-icons/react";
 
-export function ModalCreate() {
+export function ModalUpdate(data) {
   const params = useParams();
   const {
     register,
@@ -17,14 +17,20 @@ export function ModalCreate() {
     formState: { errors },
     reset,
   } = useForm({
-    defaultValues: {},
+    defaultValues: {
+      type: data.data.type,
+      latitude: data.data.latitude,
+      longitude: data.data.longitude,
+      description: data.data.description,
+      kilometer: data.data.kilometer,
+      id: data.data.id,
+    },
   });
-
-  async function handleCreatePoints(data) {
-    console.log(data);
+  async function handleUpdatePoints(data) {
+    console.log("teste", data);
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const response = await api.put(
-      `/road/${params.id}/points/null/create`,
+      `/road/${params.id}/points/${data.id}/update`,
       {
         type: data.type,
         latitude: data.latitude,
@@ -40,12 +46,13 @@ export function ModalCreate() {
       }
     );
 
+    console.log(response);
+
     if (response.status === 200) {
-      window.alert("Ponto cadastrado com sucesso");
+      window.alert("Ponto atualizado com sucesso");
     }
     window.location.reload();
   }
-
   return (
     <DialogPortal>
       <DialogOverlay className=" fixed inset-0 bg-black bg-opacity-50" />
@@ -58,7 +65,7 @@ export function ModalCreate() {
             </button>
           </DialogClose>
         </header>
-        <form onSubmit={handleSubmit(handleCreatePoints)} action="">
+        <form onSubmit={handleSubmit(handleUpdatePoints)} action="">
           <label htmlFor="type">
             Tipo
             <select
@@ -89,7 +96,7 @@ export function ModalCreate() {
               id="extention"
               type="text"
               className="bg-gray-input w-full rounded-md p-2 mb-4"
-              {...register("extention", { required: true })}
+              {...register("kilometer", { required: true })}
             />
           </label>
 
