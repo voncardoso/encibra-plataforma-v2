@@ -26,8 +26,27 @@ export function Revestment() {
     }
   }
 
+  async function deleteRevestment(id) {
+    const token = window.localStorage.getItem("encibraapptoken-v2");
+    const city = {};
+
+    const result = window.confirm("Certeza que deseja deletar o município? ");
+
+    if (result) {
+      const response = await api.put(
+        `/road/${params.id}/revetment/${id}/delete`,
+        city,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      window.location.reload();
+    }
+  }
+
   const revestments = dataRoad.revetment;
-  console.log(revestments);
 
   if (revestments) {
     return (
@@ -79,7 +98,12 @@ export function Revestment() {
                                   </DialogTrigger>
                                   <ModalUpdate data={revestment} />
                                 </Dialog>
-                                <button className="flex  text-sm justify-center items-center gap-1 p-1 text-sm text-red-500 border rounded border-red-500 hover:bg-red-500 hover:text-white">
+                                <button
+                                  className="flex  text-sm justify-center items-center gap-1 p-1 text-sm text-red-500 border rounded border-red-500 hover:bg-red-500 hover:text-white"
+                                  onClick={() => {
+                                    deleteRevestment(revestment.id);
+                                  }}
+                                >
                                   <TrashSimple size={18} />
                                 </button>
                               </>
