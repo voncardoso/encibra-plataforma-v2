@@ -11,6 +11,7 @@ import {
   LockOpen,
 } from "@phosphor-icons/react";
 import { ModalCreate } from "./ModalCreate";
+import { ModalUpdate } from "./ModalUpadate";
 
 export function Revestment() {
   const { dataRoad } = useContext(UserContextRoad);
@@ -64,12 +65,7 @@ export function Revestment() {
                 <tbody>
                   {revestments.map((revestment) => {
                     return (
-                      <tr
-                        onClick={() => {
-                          navigate(`/rodovias/information/${"PA-999"}`);
-                        }}
-                        className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
-                      >
+                      <tr className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
                         <td className="p-2  ">{revestment.type}</td>
                         <td className="p-2  ">{revestment.extention} km</td>
                         <td></td>
@@ -77,9 +73,12 @@ export function Revestment() {
                           <div className="flex justify gap-3">
                             {lock ? (
                               <>
-                                <button className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
-                                  <PencilLine size={18} />
-                                </button>
+                                <Dialog>
+                                  <DialogTrigger className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
+                                    <PencilLine size={18} />
+                                  </DialogTrigger>
+                                  <ModalUpdate data={revestment} />
+                                </Dialog>
                                 <button className="flex  text-sm justify-center items-center gap-1 p-1 text-sm text-red-500 border rounded border-red-500 hover:bg-red-500 hover:text-white">
                                   <TrashSimple size={18} />
                                 </button>

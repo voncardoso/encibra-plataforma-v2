@@ -1,5 +1,6 @@
 import { useFieldArray, useForm } from "react-hook-form";
 import { X } from "@phosphor-icons/react";
+import { api } from "../../../../lib/api";
 import {
   DialogOverlay,
   DialogContent,
@@ -7,9 +8,8 @@ import {
   DialogClose,
 } from "@radix-ui/react-dialog";
 import { useParams } from "react-router-dom";
-import { api } from "../../../../lib/api";
 
-export function ModalCreate() {
+export function ModalUpdate(data) {
   const params = useParams();
   const {
     register,
@@ -17,13 +17,17 @@ export function ModalCreate() {
     formState: { errors },
     reset,
   } = useForm({
-    defaultValues: {},
+    defaultValues: {
+      type: data.data.type,
+      extention: data.data.extention,
+      id: +data.data.id,
+    },
   });
 
-  async function handleCreateRevestiment(data) {
+  async function handleUpadteRevestiment(data) {
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const response = await api.put(
-      `/road/${params.id}/revetment/null/create`,
+      `/road/${params.id}/revetment/${data.id}/update`,
       {
         type: data.type,
         extention: data.extention,
@@ -37,23 +41,24 @@ export function ModalCreate() {
     );
     console.log(response);
     if (response.status === 200) {
-      window.alert("Ponto cadastrado com sucesso");
+      window.alert("Revestimento atualizado com sucesso");
     }
     window.location.reload();
   }
+
   return (
     <DialogPortal>
       <DialogOverlay className=" fixed inset-0 bg-black bg-opacity-50" />
       <DialogContent className="fixed w-96 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-lg p-4">
         <header className="flex mb-5 justify-between">
-          <h1 className="text-xl text font-bold">Adicionar Revestimento</h1>
+          <h1 className="text-xl text font-bold">Atualizar Revestimento</h1>
           <DialogClose asChild>
             <button className="relative bottom-2">
               <X />
             </button>
           </DialogClose>
         </header>
-        <form onSubmit={handleSubmit(handleCreateRevestiment)} action="">
+        <form onSubmit={handleSubmit(handleUpadteRevestiment)} action="">
           <label htmlFor="">
             Tipo
             <select
