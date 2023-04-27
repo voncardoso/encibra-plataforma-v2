@@ -17,6 +17,7 @@ import { Information } from "./Pages/Videos/Information";
 import "./global.css";
 import { Patology } from "./Pages/Videos/Patology";
 import { UserStorageRoad } from "./Context/useContextRoad";
+import { RegisterVideo } from "./Pages/Videos/RegisterVideo";
 
 function App() {
   return (
@@ -79,6 +80,7 @@ function App() {
                     </PrivateRoutes>
                   }
                 />
+
                 <Route
                   path="/rodovias/pontos/:id"
                   element={
@@ -87,6 +89,7 @@ function App() {
                     </PrivateRoutes>
                   }
                 />
+
                 <Route
                   path="/rodovias/resvestimento/:id"
                   element={
@@ -105,6 +108,15 @@ function App() {
                   }
                 />
 
+                  <Route
+                    path="/rodovias/videos/:id/cadastro"
+                    element={
+                      <PrivateRoutes>
+                        <RegisterVideo />
+                      </PrivateRoutes>
+                    }
+                  />
+
                 <Route
                   path="/rodovias/videos/:id"
                   element={
@@ -121,6 +133,7 @@ function App() {
                       </PrivateRoutes>
                     }
                   />
+
                   <Route
                     path="/rodovias/videos/:id/patology/:video"
                     element={
