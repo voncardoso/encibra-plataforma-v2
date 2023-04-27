@@ -26,7 +26,6 @@ export function ModalUpdate(props) {
   });
 
   async function handleRoadsCity(data) {
-    console.log(data);
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const response = await api.put(
       `/road/${params.id}/city/${data.id}/update`,
@@ -46,6 +45,7 @@ export function ModalUpdate(props) {
 
     if(response.status === 200){
       props.arrayUpdate(response.data)
+      window.alert("Município atualizado com sucesso");
     }
   }
 

@@ -39,14 +39,14 @@ export function Points() {
   }
 
   function arrayUpdate(object){
-    console.log("obeject",object)
-    setDataCity(dataCity.map(item => {
+    setDataPoints(dataPoints.map(item => {
       if (item.id === object.id) {
         return object;
       }
       return item;
     })) 
   }
+
   async function deletePoint(id) {
     console.log();
     const token = window.localStorage.getItem("encibraapptoken-v2");
@@ -64,10 +64,16 @@ export function Points() {
           },
         }
       );
-      window.location.reload();
+
+      if(response.status === 200){
+        setDataPoints(dataPoints.filter(item => item.id !== response.data.id))
+        window.alert("Ponto deletado com sucesso");
+      }
     }
   }
 
+
+  
   if (dataPoints) {
     return (
       <>
@@ -84,12 +90,13 @@ export function Points() {
                     <th className="p-2">Longitude</th>
                     <th className=" p-2 rounded-se-md text-center flex gap-3 justify-end">
                       {lock ? (
-                        <Dialog>
-                          <DialogTrigger className="flex justify-center items-center gap-1 p-1 text-sm text-gold-400 border rounded border-gold-400 hover:bg-gold-400 hover:text-white">
+                        <Dialog >
+                          <DialogTrigger  className="flex justify-center items-center gap-1 p-1 text-sm text-gold-400 border rounded border-gold-400 hover:bg-gold-400 hover:text-white">
                             <PlusCircle size={18} />
                             <p className="">Inserir</p>
                           </DialogTrigger>
-                          <ModalCreate arrayCretae={arrayCretae}/>
+                          <ModalCreate arrayCretae={arrayCretae}/> 
+                          
                         </Dialog>
                       ) : (
                         ""
@@ -117,12 +124,13 @@ export function Points() {
                           <div className="flex justify gap-3">
                             {lock ? (
                               <>
-                                <Dialog>
-                                  <DialogTrigger className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
-                                    <PencilLine size={18} />
-                                  </DialogTrigger>
-                                  <ModalUpdate data={point} />
-                                </Dialog>
+
+                             <Dialog >
+                                <DialogTrigger className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
+                                  <PencilLine size={18} />
+                                </DialogTrigger>
+                                  <ModalUpdate data={point} arrayUpdate={arrayUpdate}/>
+                                </Dialog>   
                                 <button
                                   className="flex  text-sm justify-center items-center gap-1 p-1 text-sm text-red-500 border rounded border-red-500 hover:bg-red-500 hover:text-white"
                                   onClick={() => {

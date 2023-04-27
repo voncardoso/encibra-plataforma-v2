@@ -42,6 +42,7 @@ export function ModalCreate({arrayCretae}) {
 
     if (response.status === 200) {
       arrayCretae(response.data)
+      reset()
       window.alert("Ponto cadastrado com sucesso");
     }
   }

@@ -8,8 +8,9 @@ import {
   DialogClose,
 } from "@radix-ui/react-dialog";
 import { X } from "@phosphor-icons/react";
+import { useState } from "react";
 
-export function ModalUpdate(data) {
+export function ModalUpdate(props) {
   const params = useParams();
   const {
     register,
@@ -18,16 +19,16 @@ export function ModalUpdate(data) {
     reset,
   } = useForm({
     defaultValues: {
-      type: data.data.type,
-      latitude: data.data.latitude,
-      longitude: data.data.longitude,
-      description: data.data.description,
-      kilometer: data.data.kilometer,
-      id: data.data.id,
+      type: props.data.type,
+      latitude: props.data.latitude,
+      longitude: props.data.longitude,
+      description: props.data.description,
+      kilometer: props.data.kilometer,
+      id: props.data.id,
     },
   });
+
   async function handleUpdatePoints(data) {
-    console.log("teste", data);
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const response = await api.put(
       `/road/${params.id}/points/${data.id}/update`,
@@ -36,7 +37,7 @@ export function ModalUpdate(data) {
         latitude: data.latitude,
         longitude: data.longitude,
         description: data.description,
-        kilometer: data.extention,
+        kilometer: data.kilometer,
         roadId: +params.id,
       },
       {
@@ -46,20 +47,20 @@ export function ModalUpdate(data) {
       }
     );
 
-    console.log(response);
-
     if (response.status === 200) {
+      props.arrayUpdate(response.data)
       window.alert("Ponto atualizado com sucesso");
     }
-    window.location.reload();
+   // window.location.reload();
+ 
   }
   return (
     <DialogPortal>
       <DialogOverlay className=" fixed inset-0 bg-black bg-opacity-50" />
       <DialogContent className="fixed w-96 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-lg p-4">
         <header className="flex mb-5 justify-between">
-          <h1 className="text-xl text font-bold">Adicionar Município</h1>
-          <DialogClose asChild>
+          <h1 className="text-xl text font-bold">Atualizar Pontos</h1>
+          <DialogClose asChild >
             <button className="relative bottom-2">
               <X />
             </button>
@@ -122,7 +123,7 @@ export function ModalUpdate(data) {
 
           <button className="mt-6 bg-gold-400 w-full p-2 text-white rounded hover:bg-gold-300">
             Atualizar
-          </button>
+          </button>  
         </form>
       </DialogContent>
     </DialogPortal>
