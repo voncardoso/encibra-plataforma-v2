@@ -523,7 +523,7 @@ export function Dashboard() {
                   <td className="p-2  ">
                     <Link
                       className="flex justify-center"
-                      to={`/rodovias/information/${road.id}`}
+                      to={``}
                     >
                       <CaretRight size={20} />
                     </Link>

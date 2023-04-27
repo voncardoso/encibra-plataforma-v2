@@ -10,11 +10,7 @@ export function RegisterRoad() {
     control,
     reset,
   } = useForm({
-    defaultValues: {
-      cities: {
-        sequence: "0"
-      }
-    },
+    defaultValues: {},
   });
 
   const {

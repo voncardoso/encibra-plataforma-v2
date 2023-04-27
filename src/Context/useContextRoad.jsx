@@ -5,7 +5,7 @@ import { useLocation, useParams } from "react-router-dom";
 export const UserContextRoad = createContext();
 
 export const UserStorageRoad = ({ children }) => {
-  const params = useParams();
+  const [road, setRoad] = useState([]);
   const [dataRoad, setDataRoad] = useState([]);
   const [dataRoadCity, setDataRoadCity] = useState([]);
   const {pathname} = useLocation();
@@ -21,7 +21,15 @@ export const UserStorageRoad = ({ children }) => {
       setDataRoad(response.data);
     }
     roadGetReaload()
-  },[pathname])
+  },[])
+
+  async function GetRoads() {
+    const token = window.localStorage.getItem("encibraapptoken-v2");
+    const response = await api.get("/road", {
+      headers: { Authorization: "Bearer " + token },
+    });
+    setRoad(response.data);
+  }
 
   async function Roads(id) {
     const response = await api.get(`/road/${id}`, {
@@ -31,7 +39,16 @@ export const UserStorageRoad = ({ children }) => {
   }
 
   return (
-    <UserContextRoad.Provider value={{ Roads, dataRoad, dataRoadCity, setDataRoad, setIdReloadRoad }}>
+    <UserContextRoad.Provider value={
+      { 
+        Roads, 
+        dataRoad, 
+        dataRoadCity, 
+        setDataRoad, 
+        setIdReloadRoad,
+        GetRoads,
+        road 
+      }}>
       {children}
     </UserContextRoad.Provider>
   );

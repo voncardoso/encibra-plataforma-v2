@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContextRoad } from "../../../Context/useContextRoad";
-import { useParams } from "react-router-dom";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { PencilLine } from "@phosphor-icons/react";
 import { ModalUpdate } from "./ModalUpdate";
@@ -44,13 +43,10 @@ export function RoadInformation() {
       initialLatitude : strechParse.initialLatitude,
       initialLongitude : strechParse.initialLongitude,
     }
-
-    console.log("teste",strech)
     setDataStrech(strech) 
   }
 
   function arrayUpdateInformation(object){
-    console.log("information",object)
     setDataInformation({
       acronym : object.acronym,
       extention: object.extention,
@@ -63,11 +59,9 @@ export function RoadInformation() {
       url: object.url,
     })
   }
-  console.log("teste",dataStrech)
 
 
-
-  if (dataRoad) {
+ 
     return (
       <section className="">
         <div className="flex flex justify-between items-end p-2.5 mt-5 bg-white rounded-md mt-2.5 shadow-lg ">
@@ -154,5 +148,5 @@ export function RoadInformation() {
         </div>
       </section>
     );
-  }
+  
 }

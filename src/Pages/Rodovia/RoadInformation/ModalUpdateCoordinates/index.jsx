@@ -10,7 +10,6 @@ import {
 import { useParams } from "react-router-dom";
 
 export function ModalUpdateCoordinates(props) {
-  console.log(props)
   const params = useParams();
   let strech = null;
   const {
