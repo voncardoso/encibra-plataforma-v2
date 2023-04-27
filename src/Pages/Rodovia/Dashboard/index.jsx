@@ -62,7 +62,7 @@ export function Dashboard() {
             acc.meshEstadual01 += 1;
             acc.totalEstadual += 1;
           } else {
-            cc.meshFederal01 += 1;
+            acc.meshFederal01 += 1;
             acc.totalFeferal += 1;
           }
           break;

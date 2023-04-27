@@ -7,10 +7,11 @@ import { UserContextRoad } from "../../Context/useContextRoad";
 
 export function DefaultLayoutRoad() {
   const params = useParams();
-  const { Roads, dataRoad } = useContext(UserContextRoad);
+  const { Roads, dataRoad, setIdReloadRoad } = useContext(UserContextRoad);
 
   useEffect(() => {
     Roads(params.id);
+    setIdReloadRoad(params.id)
   }, []);
 
   return (

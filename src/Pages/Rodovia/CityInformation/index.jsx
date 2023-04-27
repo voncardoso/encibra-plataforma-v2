@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContextRoad } from "../../../Context/useContextRoad";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 
 import {
@@ -15,9 +15,34 @@ import { ModalCreate } from "./ModalCreate";
 import { ModalUpdate } from "./ModalUpdate";
 
 export function CityInformation() {
-  const { dataRoad } = useContext(UserContextRoad);
   const params = useParams();
+  const {pathname} = useLocation();
+  const { dataRoad, setDataRoad } = useContext(UserContextRoad);
+  const [dataCity, setDataCity] = useState([])
   const [lock, setLock] = useState(false);
+
+
+  useEffect(() =>{
+    function getCity(){
+      setDataCity(dataRoad.city)
+    }  
+
+    getCity();
+  }, [dataRoad])
+
+  function arrayCretae(object){
+    setDataCity([...dataCity, object])  
+  }
+
+  function arrayUpdate(object){
+    console.log("obeject",object)
+    setDataCity(dataCity.map(item => {
+      if (item.id === object.id) {
+        return object;
+      }
+      return item;
+    })) 
+  }
 
   function handleLock() {
     if (lock === true) {
@@ -43,15 +68,18 @@ export function CityInformation() {
           },
         }
       );
-      window.location.reload();
+
+       if(response.status === 200){
+        // function para deleter o imtem do array dataCity
+        setDataCity(dataCity.filter(item => item.id !== response.data.id));
+        window.alert("Muncípio deletado com sucesso");
+       }
     }
   }
 
-  const city = dataRoad.city;
-
   return (
     <>
-      {city?.length !== 0 ? (
+      {dataCity?.length !== 0 ? (
         <section className="mt-5">
           <div className="pr-5">
             <table className="w-full text-center ">
@@ -67,7 +95,7 @@ export function CityInformation() {
                           <PlusCircle size={18} />
                           <p className="">Inserir</p>
                         </DialogTrigger>
-                        <ModalCreate />
+                        <ModalCreate arrayCretae={arrayCretae}/>
                       </Dialog>
                     ) : (
                       ""
@@ -82,7 +110,7 @@ export function CityInformation() {
                 </tr>
               </thead>
               <tbody>
-                {city?.map((city) => {
+                {dataCity?.map((city) => {
                   return (
                     <tr
                       key={city.id}
@@ -99,7 +127,7 @@ export function CityInformation() {
                                 <DialogTrigger className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
                                   <PencilLine size={18} />
                                 </DialogTrigger>
-                                <ModalUpdate data={city} />
+                                <ModalUpdate data={city} arrayUpdate={arrayUpdate}/>
                               </Dialog>
 
                               <button
@@ -162,7 +190,7 @@ export function CityInformation() {
               </thead>
               <tbody>
                 <tr
-                  key={city.id}
+                 
                   onClick={() => {
                     navigate(`/rodovias/information/${"PA-999"}`);
                   }}

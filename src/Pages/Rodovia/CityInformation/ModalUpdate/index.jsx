@@ -9,7 +9,7 @@ import {
 import { useParams } from "react-router-dom";
 import { api } from "../../../../lib/api";
 
-export function ModalUpdate(data) {
+export function ModalUpdate(props) {
   const params = useParams();
   const {
     register,
@@ -18,10 +18,10 @@ export function ModalUpdate(data) {
     reset,
   } = useForm({
     defaultValues: {
-      extention: data.data.extention,
-      name: data.data.name,
+      extention: props.data.extention,
+      name: props.data.name,
       sequence: "0",
-      id: data.data.id,
+      id: props.data.id,
     },
   });
 
@@ -43,7 +43,8 @@ export function ModalUpdate(data) {
         },
       }
     );
-    window.location.reload();
+    props.arrayUpdate(response.data)
+   // window.location.reload();
   }
 
   return (
