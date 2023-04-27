@@ -10,7 +10,11 @@ export function RegisterRoad() {
     control,
     reset,
   } = useForm({
-    defaultValues: {},
+    defaultValues: {
+      cities: {
+        sequence: "0"
+      }
+    },
   });
 
   const {
@@ -222,15 +226,7 @@ export function RegisterRoad() {
                   className="bg-gray-input w-full rounded-md p-2"
                 />
               </label>
-              <label htmlFor="">
-                Quilômetro
-                <input
-                  name={`fields[${index}].sequence[${index}]`}
-                  defaultValue={field.sequence}
-                  {...register(`cities.${index}.sequence`)}
-                  className="bg-gray-input w-full rounded-md p-2"
-                />
-              </label>
+
               <button
                 className="flex gap-1 text-left w-32 items-center hover:text-red-500"
                 type="button"
