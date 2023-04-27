@@ -9,7 +9,7 @@ import {
 } from "@radix-ui/react-dialog";
 import { useParams } from "react-router-dom";
 
-export function ModalUpdate(data) {
+export function ModalUpdate(props) {
   const params = useParams();
   const {
     register,
@@ -18,9 +18,9 @@ export function ModalUpdate(data) {
     reset,
   } = useForm({
     defaultValues: {
-      type: data.data.type,
-      extention: data.data.extention,
-      id: +data.data.id,
+      type: props.data.type,
+      extention: props.data.extention,
+      id: +props.data.id,
     },
   });
 
@@ -39,11 +39,10 @@ export function ModalUpdate(data) {
         },
       }
     );
-    console.log(response);
     if (response.status === 200) {
+      props.arrayUpdate(response.data)
       window.alert("Revestimento atualizado com sucesso");
     }
-    window.location.reload();
   }
 
   return (

@@ -9,7 +9,7 @@ import {
 import { useParams } from "react-router-dom";
 import { api } from "../../../../lib/api";
 
-export function ModalCreate() {
+export function ModalCreate({arrayCretae}) {
   const params = useParams();
   const {
     register,
@@ -35,12 +35,13 @@ export function ModalCreate() {
         },
       }
     );
-    console.log(response);
     if (response.status === 200) {
+      arrayCretae(response.data)
       window.alert("Ponto cadastrado com sucesso");
+      reset()
     }
-    window.location.reload();
   }
+  
   return (
     <DialogPortal>
       <DialogOverlay className=" fixed inset-0 bg-black bg-opacity-50" />

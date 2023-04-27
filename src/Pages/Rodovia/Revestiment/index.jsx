@@ -17,6 +17,28 @@ export function Revestment() {
   const { dataRoad } = useContext(UserContextRoad);
   const params = useParams();
   const [lock, setLock] = useState(false);
+  const [datarevestments, setDataRevestments] = useState([])
+  
+
+  useEffect(() =>{
+    function getRevestment(){
+      setDataRevestments(dataRoad.revetment)
+    }  
+    getRevestment();
+  }, [dataRoad])
+
+  function arrayCretae(object){
+    setDataRevestments([...datarevestments, object])  
+  }
+
+  function arrayUpdate(object){
+    setDataRevestments(datarevestments.map(item => {
+      if (item.id === object.id) {
+        return object;
+      }
+      return item;
+    })) 
+  }
 
   function handleLock() {
     if (lock === true) {
@@ -42,16 +64,18 @@ export function Revestment() {
           },
         }
       );
-      window.location.reload();
+      if(response.status === 200){
+        setDataRevestments(datarevestments.filter(item => item.id !== response.data.id));
+        window.alert("Muncípio deletado com sucesso");
+      }
     }
   }
 
-  const revestments = dataRoad.revetment;
 
-  if (revestments) {
+  if (datarevestments) {
     return (
       <>
-        {revestments.length !== 0 ? (
+        {datarevestments.length !== 0 ? (
           <section className="mt-5">
             <div className="pr-5">
               <table className="w-full text-center ">
@@ -67,7 +91,7 @@ export function Revestment() {
                             <PlusCircle size={18} />
                             <p className="">Inserir</p>
                           </DialogTrigger>
-                          <ModalCreate />
+                          <ModalCreate arrayCretae={arrayCretae}/>
                         </Dialog>
                       ) : (
                         ""
@@ -82,7 +106,7 @@ export function Revestment() {
                   </tr>
                 </thead>
                 <tbody>
-                  {revestments.map((revestment) => {
+                  {datarevestments.map((revestment) => {
                     return (
                       <tr className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
                         <td className="p-2  ">{revestment.type}</td>
@@ -96,7 +120,7 @@ export function Revestment() {
                                   <DialogTrigger className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
                                     <PencilLine size={18} />
                                   </DialogTrigger>
-                                  <ModalUpdate data={revestment} />
+                                  <ModalUpdate data={revestment} arrayUpdate={arrayUpdate}/>
                                 </Dialog>
                                 <button
                                   className="flex  text-sm justify-center items-center gap-1 p-1 text-sm text-red-500 border rounded border-red-500 hover:bg-red-500 hover:text-white"
