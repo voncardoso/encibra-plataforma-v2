@@ -9,7 +9,7 @@ import {
 } from "@radix-ui/react-dialog";
 import { useParams } from "react-router-dom";
 
-export function ModalUpdate(data) {
+export function ModalUpdate(props) {
   const params = useParams();
   let strech = null;
   const {
@@ -21,8 +21,8 @@ export function ModalUpdate(data) {
     defaultValues: {},
   });
 
-  if (data.data.stretch) {
-    strech = JSON.parse(data.data.stretch);
+  if (props.data.stretch) {
+    strech = JSON.parse(props.data.stretch);
   }
 
   async function handleUpdateInformation(dataUpdate) {
@@ -55,8 +55,9 @@ export function ModalUpdate(data) {
     );
 
     if (response.status === 200) {
+      props.arrayUpdateInformation(response.data)
       window.alert("Informações atualizados com sucesso");
-      window.location.reload();
+     // window.location.reload();
     }
   }
 
@@ -78,7 +79,7 @@ export function ModalUpdate(data) {
             <input
               id="acronym"
               type="text"
-              defaultValue={data.data.acronym}
+              defaultValue={props.data.acronym}
               className="mb-4 bg-gray-input w-full rounded-md p-2"
               {...register("acronym", { required: true })}
             />
@@ -88,7 +89,7 @@ export function ModalUpdate(data) {
             Malha
             <select
               id="mesh"
-              defaultValue={data.data.mesh}
+              defaultValue={props.data.mesh}
               className="mb-4 bg-gray-input w-full rounded-md p-2"
               {...register("mesh", { required: true })}
             >
@@ -103,7 +104,7 @@ export function ModalUpdate(data) {
             <input
               type="text"
               id="extention"
-              defaultValue={data.data.extention}
+              defaultValue={props.data.extention}
               className="mb-4 bg-gray-input w-full rounded-md p-2"
               {...register("extention", { required: true })}
             />
@@ -113,7 +114,7 @@ export function ModalUpdate(data) {
             Núcleo Regional
             <select
               id="regional"
-              defaultValue={data.data.regional}
+              defaultValue={props.data.regional}
               className="mb-4 bg-gray-input w-full rounded-md p-2"
               {...register("regional", { required: true })}
             >
@@ -135,7 +136,7 @@ export function ModalUpdate(data) {
             UF
             <select
               id="uf"
-              defaultValue={data.data.uf}
+              defaultValue={props.data.uf}
               className="mb-4 bg-gray-input w-full rounded-md p-2"
               {...register("uf", { required: true })}
             >

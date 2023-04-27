@@ -8,11 +8,64 @@ import { ModalUpdateCoordinates } from "./ModalUpdateCoordinates";
 
 export function RoadInformation() {
   const { dataRoad } = useContext(UserContextRoad);
+  const [dataInformation, setDataInformation] = useState({})
+  const [dataStrech, setDataStrech] = useState({})
   let strech = null;
 
   if (dataRoad.stretch) {
     strech = JSON.parse(dataRoad?.stretch);
   }
+
+  useEffect(() =>{
+    function getSrech(){
+      setDataStrech(strech)
+      setDataInformation({
+        acronym : dataRoad.acronym,
+        extention: dataRoad.extention,
+        id: dataRoad.id,
+        kml: dataRoad.kml,
+        mesh: dataRoad.mesh,
+        regional: dataRoad.regional,
+        revesment:dataRoad.revesment,
+        uf: dataRoad.uf,
+        url: dataRoad.url,
+      })
+    }  
+
+    getSrech();
+  }, [dataRoad])
+
+  function arrayUpdate(object){
+    const strechParse = JSON.parse(object.stretch)
+    const strech = {
+      description : strechParse.description,
+      endLatitude : strechParse.endLatitude,
+      endLongitude : strechParse.endLongitude,
+      initialLatitude : strechParse.initialLatitude,
+      initialLongitude : strechParse.initialLongitude,
+    }
+
+    console.log("teste",strech)
+    setDataStrech(strech) 
+  }
+
+  function arrayUpdateInformation(object){
+    console.log("information",object)
+    setDataInformation({
+      acronym : object.acronym,
+      extention: object.extention,
+      id: object.id,
+      kml: object.kml,
+      mesh: object.mesh,
+      regional: object.regional,
+      revesment:object.revesment,
+      uf: object.uf,
+      url: object.url,
+    })
+  }
+  console.log("teste",dataStrech)
+
+
 
   if (dataRoad) {
     return (
@@ -23,33 +76,33 @@ export function RoadInformation() {
               <span className="text-gray-400 tracking-wider mr-2">
                 Rodovia:
               </span>
-              {dataRoad.acronym}
+              {dataInformation.acronym}
             </strong>
             <strong className="py-2 text-text-100 ">
               <span className="text-gray-400 tracking-wider mr-2 ">Malha:</span>
-              {dataRoad.mesh}
+              {dataInformation.mesh}
             </strong>
             <strong className="py-2 text-text-100 ">
               <span className="text-gray-400 tracking-wider mr-2 ">
                 Extensão:
               </span>
-              {dataRoad.extention} Km
+              {dataInformation.extention} Km
             </strong>
             <strong className="py-2 text-text-100 ">
               <span className="text-gray-400 tracking-wider mr-2 ">
                 Núcleo Regional:
               </span>
-              {dataRoad.regional}
+              {dataInformation.regional}
             </strong>
             <strong className="py-2 text-text-100 ">
               <span className="text-gray-400 tracking-wider mr-2 ">UF:</span>
-              {dataRoad.uf}
+              {dataInformation.uf}
             </strong>
             <strong className="py-2 text-text-100 ">
               <span className="text-gray-400 tracking-wider mr-2 ">
                 Descrição:
               </span>
-              {strech?.description}
+              {dataStrech?.description}
             </strong>
           </div>
           <div className="py-2 flex justify-end justify-self-end">
@@ -57,7 +110,7 @@ export function RoadInformation() {
               <DialogTrigger className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
                 <PencilLine size={18} />
               </DialogTrigger>
-              <ModalUpdate data={dataRoad} />
+              <ModalUpdate data={dataRoad} arrayUpdateInformation={arrayUpdateInformation}/>
             </Dialog>
           </div>
         </div>
@@ -69,25 +122,25 @@ export function RoadInformation() {
               <span className="text-gray-400 tracking-wider mr-2">
                 Latitude inicial:
               </span>
-              {strech?.initialLatitude}
+              {dataStrech?.initialLatitude}
             </strong>
             <strong className="py-2 text-text-100 ">
               <span className="text-gray-400 tracking-wider mr-2 ">
                 Longitude inicial:
               </span>
-              {strech?.initialLongitude}
+              {dataStrech?.initialLongitude}
             </strong>
             <strong className="py-2 text-text-100 ">
               <span className="text-gray-400 tracking-wider mr-2 ">
                 Latitude final:
               </span>
-              {strech?.endLatitude}
+              {dataStrech?.endLatitude}
             </strong>
             <strong className="py-2 text-text-100 ">
               <span className="text-gray-400 tracking-wider mr-2 ">
                 Latitude final:
               </span>
-              {strech?.endLongitude}
+              {dataStrech?.endLongitude}
             </strong>
           </div>
           <div className="py-2 flex justify-end ">
@@ -95,7 +148,7 @@ export function RoadInformation() {
               <DialogTrigger className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
                 <PencilLine size={18} />
               </DialogTrigger>
-              <ModalUpdateCoordinates data={dataRoad} />
+              <ModalUpdateCoordinates data={dataRoad} arrayUpdate={arrayUpdate}/>
             </Dialog>
           </div>
         </div>

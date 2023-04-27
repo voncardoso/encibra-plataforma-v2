@@ -9,7 +9,8 @@ import {
 } from "@radix-ui/react-dialog";
 import { useParams } from "react-router-dom";
 
-export function ModalUpdateCoordinates(data) {
+export function ModalUpdateCoordinates(props) {
+  console.log(props)
   const params = useParams();
   let strech = null;
   const {
@@ -21,8 +22,8 @@ export function ModalUpdateCoordinates(data) {
     defaultValues: {},
   });
 
-  if (data.data.stretch) {
-    strech = JSON.parse(data.data.stretch);
+  if (props.data.stretch) {
+    strech = JSON.parse(props.data.stretch);
   }
 
   async function handleUpdateInformationCoordinates(dataUpdate) {
@@ -50,8 +51,9 @@ export function ModalUpdateCoordinates(data) {
     );
 
     if (response.status === 200) {
+      props.arrayUpdate(response.data)
       window.alert("Informações atualizados com sucesso");
-      window.location.reload();
+     // window.location.reload();
     }
   }
 
