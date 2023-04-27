@@ -43,8 +43,10 @@ export function ModalUpdate(props) {
         },
       }
     );
-    props.arrayUpdate(response.data)
-   // window.location.reload();
+
+    if(response.status === 200){
+      props.arrayUpdate(response.data)
+    }
   }
 
   return (

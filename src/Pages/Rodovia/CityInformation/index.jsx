@@ -16,8 +16,7 @@ import { ModalUpdate } from "./ModalUpdate";
 
 export function CityInformation() {
   const params = useParams();
-  const {pathname} = useLocation();
-  const { dataRoad, setDataRoad } = useContext(UserContextRoad);
+  const { dataRoad} = useContext(UserContextRoad);
   const [dataCity, setDataCity] = useState([])
   const [lock, setLock] = useState(false);
 
@@ -35,7 +34,6 @@ export function CityInformation() {
   }
 
   function arrayUpdate(object){
-    console.log("obeject",object)
     setDataCity(dataCity.map(item => {
       if (item.id === object.id) {
         return object;

@@ -9,7 +9,7 @@ import {
 } from "@radix-ui/react-dialog";
 import { X } from "@phosphor-icons/react";
 
-export function ModalCreate() {
+export function ModalCreate({arrayCretae}) {
   const params = useParams();
   const {
     register,
@@ -41,9 +41,9 @@ export function ModalCreate() {
     );
 
     if (response.status === 200) {
+      arrayCretae(response.data)
       window.alert("Ponto cadastrado com sucesso");
     }
-    window.location.reload();
   }
 
   return (

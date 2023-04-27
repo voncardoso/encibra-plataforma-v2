@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UserContextRoad } from "../../../Context/useContextRoad";
 import { ModalCreate } from "./ModalCreate";
@@ -17,6 +17,14 @@ export function Points() {
   const { dataRoad } = useContext(UserContextRoad);
   const params = useParams();
   const [lock, setLock] = useState(false);
+  const [dataPoints, setDataPoints] = useState([])
+
+  useEffect(() =>{
+    function getCity(){
+      setDataPoints(dataRoad.points)
+    }  
+    getCity();
+  }, [dataRoad])
 
   function handleLock() {
     if (lock === true) {
@@ -26,17 +34,30 @@ export function Points() {
     }
   }
 
+  function arrayCretae(object){
+    setDataPoints([...dataPoints, object])  
+  }
+
+  function arrayUpdate(object){
+    console.log("obeject",object)
+    setDataCity(dataCity.map(item => {
+      if (item.id === object.id) {
+        return object;
+      }
+      return item;
+    })) 
+  }
   async function deletePoint(id) {
     console.log();
     const token = window.localStorage.getItem("encibraapptoken-v2");
-    const city = {};
+    const points = {};
 
     const result = window.confirm("Certeza que deseja deletar o ponto? ");
 
     if (result) {
       const response = await api.put(
         `/road/${params.id}/points/${id}/delete`,
-        city,
+        points,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -47,11 +68,10 @@ export function Points() {
     }
   }
 
-  const points = dataRoad.points;
-  if (dataRoad.points) {
+  if (dataPoints) {
     return (
       <>
-        {points.length !== 0 ? (
+        {dataPoints.length !== 0 ? (
           <section className="mt-5">
             <div className="pr-5">
               <table className="w-full text-center ">
@@ -69,7 +89,7 @@ export function Points() {
                             <PlusCircle size={18} />
                             <p className="">Inserir</p>
                           </DialogTrigger>
-                          <ModalCreate />
+                          <ModalCreate arrayCretae={arrayCretae}/>
                         </Dialog>
                       ) : (
                         ""
@@ -84,9 +104,9 @@ export function Points() {
                   </tr>
                 </thead>
                 <tbody>
-                  {points.map((point) => {
+                  {dataPoints.map((point) => {
                     return (
-                      <tr className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
+                      <tr key={point.id} className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
                         <td className="p-2">{point.type}</td>
                         <td className="p-2">{point.description}</td>
                         <td className="p-2">{point.kilometer}</td>

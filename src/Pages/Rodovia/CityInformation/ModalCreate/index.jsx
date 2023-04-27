@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 import { api } from "../../../../lib/api";
 
 export function ModalCreate({arrayCretae}) {
- 
   const params = useParams();
   const {
     register,
