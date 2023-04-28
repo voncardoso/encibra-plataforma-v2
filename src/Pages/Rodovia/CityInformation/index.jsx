@@ -173,7 +173,7 @@ export function CityInformation() {
                             <PlusCircle size={18} />
                             <p className="">Inserir</p>
                           </DialogTrigger>
-                          <NewModalCity />
+                          <ModalCreate arrayCretae={arrayCretae}/>
                         </Dialog>
                       ) : (
                         ""
