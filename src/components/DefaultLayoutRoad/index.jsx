@@ -1,4 +1,4 @@
-import { BrowserRouter, NavLink, Outlet, useParams } from "react-router-dom";
+import { BrowserRouter, NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import { Nav } from "./style";
 import { useEffect, useState } from "react";
 import { api } from "../../lib/api";
@@ -8,11 +8,12 @@ import { UserContextRoad } from "../../Context/useContextRoad";
 export function DefaultLayoutRoad() {
   const params = useParams();
   const { Roads, dataRoad, setIdReloadRoad } = useContext(UserContextRoad);
-
+  const {pathname} = useLocation();
+  
   useEffect(() => {
     Roads(params.id);
     setIdReloadRoad(params.id)
-  }, []);
+  }, [pathname]);
 
   if(dataRoad){
     return (

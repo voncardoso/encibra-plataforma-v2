@@ -17,6 +17,7 @@ import {
 
 export function CityInformation() {
   const params = useParams();
+  const {pathname} = useLocation()
   const { dataRoad } = useContext(UserContextRoad);
   const [dataCity, setDataCity] = useState([])
   const [lock, setLock] = useState(false);
@@ -28,7 +29,7 @@ export function CityInformation() {
     }  
 
     getCity();
-  }, [dataRoad])
+  }, [dataRoad, pathname])
 
   function arrayCretae(object){
     setDataCity([...dataCity, object])  
