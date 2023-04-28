@@ -5,10 +5,39 @@ import { PencilLine } from "@phosphor-icons/react";
 import { ModalUpdate } from "./ModalUpdate";
 import { ModalUpdateCoordinates } from "./ModalUpdateCoordinates";
 
+
+import MapboxClient from '@mapbox/mapbox-sdk/services/directions';
+import ReactMapGL, {
+  Marker,
+  Source,
+  Layer,
+  GeolocateControl,
+  FullscreenControl,
+  NavigationControl,
+  ScaleControl,
+  Popup,
+  Map
+} from "react-map-gl";
+import { useLocation, useParams } from 'react-router-dom';
+
+
 export function RoadInformation() {
   const { dataRoad } = useContext(UserContextRoad);
   const [dataInformation, setDataInformation] = useState({})
   const [dataStrech, setDataStrech] = useState({})
+  const {pathname} = useLocation();
+  const params = useParams()  
+  const directionsClient = MapboxClient({ accessToken: "pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw" });
+  const [start, setStart] = useState({ latitude: 0, longitude: 0});
+  const [end, setEnd] = useState({ latitude: 0, longitude: 0 });
+  const [route, setRoute] = useState(null);
+  const [viewport, setViewport] = useState({
+    latitude: start.latitude ,
+    longitude: start.longitude,
+    zoom: 3.5,
+    bearing: 0,
+    pitch: 0
+  });
   let strech = null;
 
   if (dataRoad.stretch) {
@@ -18,6 +47,17 @@ export function RoadInformation() {
   useEffect(() =>{
     function getSrech(){
       setDataStrech(strech)
+
+      // setando a localização inicial e final da rodovias
+      setStart({
+        latitude: +strech?.initialLatitude,
+        longitude: +strech?.initialLongitude
+      })
+      setEnd({
+        latitude: +strech?.endLatitude,
+        longitude: +strech?.endLongitude
+      })
+
       setDataInformation({
         acronym : dataRoad.acronym,
         extention: dataRoad.extention,
@@ -32,7 +72,8 @@ export function RoadInformation() {
     }  
 
     getSrech();
-  }, [dataRoad])
+  }, [dataRoad, params.id])
+
 
   function arrayUpdate(object){
     const strechParse = JSON.parse(object.stretch)
@@ -44,6 +85,7 @@ export function RoadInformation() {
       initialLongitude : strechParse.initialLongitude,
     }
     setDataStrech(strech) 
+    
   }
 
   function arrayUpdateInformation(object){
@@ -60,8 +102,35 @@ export function RoadInformation() {
     })
   }
 
+  useEffect(() => {
+    directionsClient.getDirections({
+     profile: 'driving',
+     waypoints: [
+       { coordinates: [start.longitude, start.latitude] },
+       { coordinates: [end.longitude, end.latitude] }
+     ],
+     geometries: 'geojson'
+   }) 
+   .send()
+   .then(response => {
+     setRoute(response.body.routes[0]);
+     setViewport({
+       ...viewport,
+       latitude: +`${start.latitude}`,
+       longitude: +`${start.longitude}`,
+       zoom: 8,
+        bearing: 0,
+        pitch: 0,
 
- 
+     });
+   });
+   }, [start, pathname]);
+   
+   const handleViewportChange = (newViewport) => {
+    setViewport(newViewport);
+  };
+
+  if(dataInformation && strech){
     return (
       <section className="">
         <div className="flex flex justify-between items-end p-2.5 mt-5 bg-white rounded-md mt-2.5 shadow-lg ">
@@ -146,7 +215,51 @@ export function RoadInformation() {
             </Dialog>
           </div>
         </div>
+       
+        {start.latitude ?   
+        <div className="mb-5">
+          {console.log("teste",+start.latitude)}
+              <ReactMapGL
+               key={`${start.latitude}-${start.longitude}`}
+              initialViewState={{
+                latitude: +start.latitude,
+                longitude: +start.longitude,
+                zoom:11
+              }}
+             
+              onViewportChange={handleViewportChange}
+                  cooperativeGestures={true}
+                  style={{width: '100%', height: '600px', borderRadius: "6px"}}
+                  mapStyle="mapbox://styles/mapbox/streets-v11"
+                  mapboxAccessToken="pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw"
+              >
+                  
+                  <Marker latitude={start.latitude} longitude={start.longitude} offsetLeft={-20} offsetTop={-10}>
+                    <div className="marker" />
+                  </Marker>
+                  <Marker latitude={end.latitude} longitude={end.longitude} offsetLeft={-20} offsetTop={-10}>
+                    <div className="marker" />
+                  </Marker>
+                  {route && (
+                    <Source type="geojson" data={route.geometry}>
+                      <Layer
+                        id="route"
+                        type="line"
+                        paint={{ 'line-color': '#0070f3', 'line-width': 4 }}
+                      />
+                    </Source>
+                  )}
+          
+
+                <GeolocateControl position="top-left" />
+                <FullscreenControl position="top-left" />
+                <NavigationControl position="top-left" />
+                <ScaleControl />
+              </ReactMapGL>
+          </div>: ""}
+            
       </section>
-    );
+  );
+  }
   
 }

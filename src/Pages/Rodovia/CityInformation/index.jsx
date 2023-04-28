@@ -3,6 +3,9 @@ import { UserContextRoad } from "../../../Context/useContextRoad";
 import { useLocation, useParams } from "react-router-dom";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 
+import { api } from "../../../lib/api";
+import { ModalCreate } from "./ModalCreate";
+import { ModalUpdate } from "./ModalUpdate";
 import {
   PlusCircle,
   TrashSimple,
@@ -10,9 +13,7 @@ import {
   PencilLine,
   LockOpen,
 } from "@phosphor-icons/react";
-import { api } from "../../../lib/api";
-import { ModalCreate } from "./ModalCreate";
-import { ModalUpdate } from "./ModalUpdate";
+
 
 export function CityInformation() {
   const params = useParams();
@@ -155,7 +156,6 @@ export function CityInformation() {
                 </tbody>
               </table>
             </div>
-            <div></div>
           </section>
         ) : (
           <section className="mt-5">
