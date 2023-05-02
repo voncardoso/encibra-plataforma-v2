@@ -4,6 +4,7 @@ export default {
   theme: {
     colors: {
       background: "#F4F3F1",
+      black: "#000000",
       "text-100": "#39332E",
       white: "#FFFFFF",
       "gold-100": "#FDF2E4",
@@ -19,8 +20,11 @@ export default {
 
       "red-400": "#f87171",
       "red-500": "#ef4444",
-      "red-800": "#991b1b"
-    },
+      "red-800": "#991b1b",
+
+      "sky-600": "#0284c7",
+      "emerald-500": "#10b981"
+       },
     screens: {
       "2xl": { max: "1535px" },
       // => @media (max-width: 1535px) { ... }
@@ -46,6 +50,7 @@ export default {
     },
     fontFamily: {
       sans: ["Roboto", "sans-serif"],
+      
     },
   },
   plugins: [
