@@ -8,7 +8,7 @@ export function DashboardUser(){
                 <strong className="text-2xl">Usuários</strong>
                 <NavLink
                     className="flex items-center gap-1 hover:text-gold-400 hover:underline"
-                    to="/rodovias/registro"
+                    to="/user/registro"
                 >
                     <PlusCircle className="text-gold-400" size={22} />
                     Cadastrar Usuários

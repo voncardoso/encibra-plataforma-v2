@@ -20,6 +20,7 @@ import { UserStorageRoad } from "./Context/useContextRoad";
 import { RegisterVideo } from "./Pages/Videos/RegisterVideo";
 import { DefaultLayoutUser } from "./components/DefaultLayoutUser";
 import { DashboardUser } from "./Pages/User/Dashboard";
+import { RegisterUser } from "./Pages/User/Register";
 
 function App() {
   return (
@@ -156,6 +157,14 @@ function App() {
                 element={
                   <PrivateRoutes>
                     <DashboardUser  />
+                  </PrivateRoutes>
+                }
+              />
+              <Route
+                path="/user/registro"
+                element={
+                  <PrivateRoutes>
+                    <RegisterUser  />
                   </PrivateRoutes>
                 }
               />
