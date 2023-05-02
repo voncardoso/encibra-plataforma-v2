@@ -2,12 +2,10 @@ import { NavLink } from "react-router-dom";
 import {
   Notebook,
   Truck,
-  Gear,
-  SignIn,
   ChartBar,
   Calculator,
   CaretRight,
-  Users,
+  Users
 } from "@phosphor-icons/react";
 import Logo from "../../assets/Logo-sidbar.svg";
 import LogoMobile from "../../assets/LogoSidbarMin.svg";
@@ -44,7 +42,7 @@ export function Sidbar() {
           className={` md:hidden md:w-16 md:m-auto mb-1 py-2.5 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md`}
           to="/user"
         >
-          <Truck className="ml-2" size={24} />
+          <Users className="ml-2" size={24} />
           <p className="md:hidden md:m-auto">Usuários</p>
         </NavLink>
 
