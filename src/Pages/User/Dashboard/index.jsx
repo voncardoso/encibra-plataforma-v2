@@ -12,7 +12,6 @@ export function DashboardUser(){
             const response = await api.get("/users", {
               headers: { Authorization: "Bearer " + token },
             });
-            console.log("user",response)
             setDataUser(response.data)
         }
         GetUsers()
