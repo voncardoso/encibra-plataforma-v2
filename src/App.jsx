@@ -14,13 +14,14 @@ import { CityInformation } from "./Pages/Rodovia/CityInformation";
 import { List } from "./Pages/Videos/List";
 import { DefaultLayoutVideos } from "./components/DefaultLayoutVideos";
 import { Information } from "./Pages/Videos/Information";
-import "./global.css";
 import { Patology } from "./Pages/Videos/Patology";
 import { UserStorageRoad } from "./Context/useContextRoad";
 import { RegisterVideo } from "./Pages/Videos/RegisterVideo";
 import { DefaultLayoutUser } from "./components/DefaultLayoutUser";
 import { DashboardUser } from "./Pages/User/Dashboard";
 import { RegisterUser } from "./Pages/User/Register";
+import "./global.css";
+import { UserInformation } from "./Pages/User/UserInformation";
 
 function App() {
   return (
@@ -165,6 +166,14 @@ function App() {
                 element={
                   <PrivateRoutes>
                     <RegisterUser  />
+                  </PrivateRoutes>
+                }
+              />
+              <Route
+                path="/user/:id"
+                element={
+                  <PrivateRoutes>
+                    <UserInformation  />
                   </PrivateRoutes>
                 }
               />

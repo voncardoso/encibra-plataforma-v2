@@ -1,10 +1,11 @@
 import { CaretRight, PlusCircle } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { api } from "../../../lib/api";
 
 export function DashboardUser(){
     const [dataUser, setDataUser] = useState([])
+    const navigate = useNavigate()
     useEffect(() =>{
         async function GetUsers(){
             const token = window.localStorage.getItem("encibraapptoken-v2");
@@ -47,6 +48,9 @@ export function DashboardUser(){
                             {dataUser.map((user) =>{
                                 return(
                                 <tr key={user.id}
+                                onClick={() =>{
+                                    navigate(`/user/${user.id}`);
+                                }}
                                     className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
                                 >
                                     <td className="p-2">{user.name}</td>
