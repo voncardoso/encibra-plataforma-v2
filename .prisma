@@ -13,10 +13,11 @@ datasource db {
 
 model City {
   id        Int    @id @default(autoincrement())
-  extention Int
+  extention String
   name      String
-  sequence  Int
-  road      Roads  @relation(fields: [id], references: [id])
+  sequence  String
+  roadId    Int    @map("road_id")
+  roads     Roads  @relation(fields: [roadId], references: [id])
 
   @@map("city")
 }
@@ -25,11 +26,11 @@ model Company {
   id   Int    @id @default(autoincrement())
   name String
 
-  createdAt DateTime       @default(now()) @map("created_at")
-  updatedAt DateTime       @updatedAt @map("updated_at")
-  deletedAt DateTime?      @map("deleted_at")
-  users     UserXCompany[]
-  videos    Videos[]
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+  deletedAt    DateTime?      @map("deleted_at")
+  userXCompany UserXCompany[]
+  videos       Videos[]
 
   @@map("company")
 }
@@ -46,11 +47,11 @@ model Iggs {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
 
-  road  Roads   @relation(fields: [roadId], references: [id])
-  video Videos? @relation(fields: [videoId], references: [id])
+  roads  Roads   @relation(fields: [roadId], references: [id])
+  videos Videos? @relation(fields: [videoId], references: [id])
 
-  reports    Reports[]
-  patologies Patology[]
+  reports  Reports[]
+  patology Patology[]
 
   @@map("iggs")
 }
@@ -59,20 +60,21 @@ model Patology {
   id            Int    @id @default(autoincrement())
   acronym       String
   code          String
+  cracks        String @db.Text
   descrption    String
   iggsId        Int?
   km            Int
   level         Level
-  type          String
+  roadId        Int    @map("road_id")
+  roadSide      String @map("road_side") @db.Text
   screenshotUrl String @map("screenshot_url")
+  type          String
   videoId       Int    @map("video_id")
   videoTime     String @map("video_time")
-  cracks        String @db.Text
-  roadSide      String @map("road_side") @db.Text
 
-  road  Roads  @relation(fields: [id], references: [id])
-  video Videos @relation(fields: [videoId], references: [id])
-  iggs  Iggs?  @relation(fields: [iggsId], references: [id])
+  roads  Roads  @relation(fields: [roadId], references: [id])
+  videos Videos @relation(fields: [videoId], references: [id])
+  iggs   Iggs?  @relation(fields: [iggsId], references: [id])
 
   @@map("patology")
 }
@@ -86,7 +88,7 @@ model Points {
   kilometer   String
   roadId      Int    @map("road_id")
 
-  road Roads @relation(fields: [roadId], references: [id])
+  roads Roads @relation(fields: [roadId], references: [id])
 
   @@map("points")
 }
@@ -97,9 +99,9 @@ model Reports {
   level   Level
   videoId Int    @map("video_id")
   iggId   Int    @map("igg_id")
-  user    Users  @relation(fields: [userId], references: [id])
-  igg     Iggs   @relation(fields: [id], references: [id])
-  video   Videos @relation(fields: [videoId], references: [id])
+  users   Users  @relation(fields: [userId], references: [id])
+  iggs    Iggs   @relation(fields: [id], references: [id])
+  videos  Videos @relation(fields: [videoId], references: [id])
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
@@ -111,32 +113,32 @@ model Reports {
 model Revetment {
   id        Int    @id @default(autoincrement())
   type      String
-  extention Int
+  extention String
   roadId    Int    @map("road_id")
 
-  road Roads @relation(fields: [roadId], references: [id])
+  roads Roads @relation(fields: [roadId], references: [id])
 
   @@map("revetments")
 }
 
 model Roads {
-  id           Int    @id @default(autoincrement())
-  extention    Int
-  mesh         String
-  regional     String
-  acronym      String @unique
-  url          String
-  kml          String @db.Text
-  revesment    String @db.Text
-  stretch      String @db.Text
-  otherDefects String @map("other_defects") @db.Text
+  id        Int                @id @default(autoincrement())
+  extention String
+  mesh      String
+  regional  String
+  acronym   String             @unique
+  url       String
+  kml       String
+  revesment String
+  stretch   String             @db.Text
+  uf        StatesAbbreviation
 
-  cities     City[]
-  iggs       Iggs[]
-  patologies Patology[]
-  points     Points[]
-  revetments Revetment[]
-  videos     Videos[]
+  city      City[]
+  iggs      Iggs[]
+  patology  Patology[]
+  points    Points[]
+  revetment Revetment[]
+  videos    Videos[]
 
   @@map("roads")
 }
@@ -157,8 +159,8 @@ model Users {
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
 
-  reports   Reports[]
-  companies UserXCompany[]
+  reports      Reports[]
+  userXCompany UserXCompany[]
 
   @@map("users")
 }
@@ -172,7 +174,7 @@ model UserXCompany {
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
 
-  user    Users   @relation(fields: [userId], references: [id])
+  users   Users   @relation(fields: [userId], references: [id])
   company Company @relation(fields: [companyId], references: [id])
 
   @@map("user_x_company")
@@ -195,11 +197,11 @@ model Videos {
   updatedAt DateTime  @updatedAt @map("updated_at")
 
   company Company @relation(fields: [companyId], references: [id])
-  road    Roads   @relation(fields: [roadId], references: [id])
+  roads   Roads   @relation(fields: [roadId], references: [id])
 
-  iggs       Iggs[]
-  patologies Patology[]
-  reports    Reports[]
+  iggs     Iggs[]
+  patology Patology[]
+  reports  Reports[]
 
   @@map("videos")
 }

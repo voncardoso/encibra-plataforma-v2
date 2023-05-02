@@ -11,6 +11,7 @@ import { api } from "../../../lib/api";
 export function Dashboard() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  let stretch = null;
   //responsividade do slider
   const breakpoints = {
     // Largura mínima de 640 pixels
@@ -61,7 +62,7 @@ export function Dashboard() {
             acc.meshEstadual01 += 1;
             acc.totalEstadual += 1;
           } else {
-            cc.meshFederal01 += 1;
+            acc.meshFederal01 += 1;
             acc.totalFeferal += 1;
           }
           break;
@@ -207,6 +208,11 @@ export function Dashboard() {
       total: 0,
     }
   );
+
+  if (data?.stretch) {
+    stretch = JSON.parse(data?.stretch);
+    console.log("teste", stretch);
+  }
 
   return (
     <section className="w-full overflow-y-scroll ">
@@ -499,13 +505,10 @@ export function Dashboard() {
           </thead>
           <tbody>
             {data.map((road) => {
-              let stretch = null;
-              {
-                road.stretch === "" ? "" : (stretch = JSON.parse(road.stretch));
-              }
-              console.log(stretch);
+              stretch = JSON.parse(road?.stretch);
               return (
                 <tr
+                  key={road.id}
                   onClick={() => {
                     navigate(`/rodovias/information/${road.id}`);
                   }}
@@ -520,7 +523,7 @@ export function Dashboard() {
                   <td className="p-2  ">
                     <Link
                       className="flex justify-center"
-                      to={`/rodovias/information/${road.id}`}
+                      to={``}
                     >
                       <CaretRight size={20} />
                     </Link>

@@ -4,6 +4,7 @@ export default {
   theme: {
     colors: {
       background: "#F4F3F1",
+      black: "#000000",
       "text-100": "#39332E",
       white: "#FFFFFF",
       "gold-100": "#FDF2E4",

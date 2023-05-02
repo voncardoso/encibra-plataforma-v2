@@ -61,15 +61,15 @@ export function RegisterRoad() {
           regional: data1.regional,
           url: "",
           kml: "",
+          revesment: "",
           stretch: JSON.stringify(stretch),
           uf: data1.uf,
-          revesment: "",
-          cities: {
+          city: {
             createMany: {
               data: data1.cities,
             },
           },
-          revetments: {
+          revetment: {
             createMany: {
               data: data1.revetment,
             },
@@ -222,15 +222,7 @@ export function RegisterRoad() {
                   className="bg-gray-input w-full rounded-md p-2"
                 />
               </label>
-              <label htmlFor="">
-                Quilômetro
-                <input
-                  name={`fields[${index}].sequence[${index}]`}
-                  defaultValue={field.sequence}
-                  {...register(`cities.${index}.sequence`)}
-                  className="bg-gray-input w-full rounded-md p-2"
-                />
-              </label>
+
               <button
                 className="flex gap-1 text-left w-32 items-center hover:text-red-500"
                 type="button"
