@@ -45,7 +45,6 @@ export function Dashboard() {
       const response = await api.get("/road", {
         headers: { Authorization: "Bearer " + token },
       });
-      console.log(response.data);
       setData(response.data);
     }
     GetRoads();
@@ -211,7 +210,6 @@ export function Dashboard() {
 
   if (data?.stretch) {
     stretch = JSON.parse(data?.stretch);
-    console.log("teste", stretch);
   }
 
   return (

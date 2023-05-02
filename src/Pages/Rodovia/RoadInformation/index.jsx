@@ -218,7 +218,7 @@ export function RoadInformation() {
        
         {start.latitude ?   
         <div className="mb-5">
-          {console.log("teste",+start.latitude)}
+          
               <ReactMapGL
                key={`${start.latitude}-${start.longitude}`}
               initialViewState={{

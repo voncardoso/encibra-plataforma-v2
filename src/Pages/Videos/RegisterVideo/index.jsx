@@ -23,6 +23,7 @@ export function RegisterVideo(){
         const token = window.localStorage.getItem("encibraapptoken-v2");
         const userId = window.localStorage.getItem("encibraappId-v2");
         const dataObjeto = new Date(data.date);
+        console.log(dataObjeto.toISOString())
         const video = {
             url: "",
             date: dataObjeto.toISOString(),
@@ -39,7 +40,7 @@ export function RegisterVideo(){
             updatedAt: new Date().toISOString(),
 
         }
-        console.log(video)
+       
         const response = await api.put(
             `/road/${params.id}/videos/null/create`,
             video,
@@ -49,6 +50,8 @@ export function RegisterVideo(){
               },
             }
           );
+
+          console.log(response)
          
       }
     return(
