@@ -40,6 +40,13 @@ export function Sidbar() {
           <Notebook className="ml-2" size={24} />
           <p className="md:hidden  md:invisible">Contratos</p>
         </li>
+        <NavLink
+          className={` md:hidden md:w-16 md:m-auto mb-1 py-2.5 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md`}
+          to="/user"
+        >
+          <Truck className="ml-2" size={24} />
+          <p className="md:hidden md:m-auto">Usuários</p>
+        </NavLink>
 
         {/** mobile */}
         <img className="hidden md:block m-auto pb-4" src={LogoMobile} alt="" />

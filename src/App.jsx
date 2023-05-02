@@ -18,6 +18,8 @@ import "./global.css";
 import { Patology } from "./Pages/Videos/Patology";
 import { UserStorageRoad } from "./Context/useContextRoad";
 import { RegisterVideo } from "./Pages/Videos/RegisterVideo";
+import { DefaultLayoutUser } from "./components/DefaultLayoutUser";
+import { DashboardUser } from "./Pages/User/Dashboard";
 
 function App() {
   return (
@@ -144,6 +146,19 @@ function App() {
                   />
                 </Route>
               </Route>
+
+
+            </Route>
+
+            <Route path="/user" element={<DefaultLayoutUser/>}>
+              <Route
+                path="/user"
+                element={
+                  <PrivateRoutes>
+                    <DashboardUser  />
+                  </PrivateRoutes>
+                }
+              />
             </Route>
           </Routes>
         </UserStorageRoad>
