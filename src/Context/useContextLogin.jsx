@@ -8,6 +8,7 @@ export const UserStorageLogin = ({ children }) => {
   const [validateTokenLogin, setValidateTokenLogin] = useState(false);
   const [errorAuth, setErrorAuth] = useState(null);
   const [loadingAuth, setLoadingAuth] = useState(false);
+  const [dataUser, setDataUser] = useState({})
   const navigate = useNavigate();
 
   async function autoLogin(){
@@ -36,8 +37,11 @@ export const UserStorageLogin = ({ children }) => {
           password: `${password}`,
         };
         const response = await api.post("/auth/login", data);
+        
         if(response.status === 200){
           window.localStorage.setItem("encibraapptoken-v2", response.data.token)
+          window.localStorage.setItem("encibraappId-v2", response.data.id)
+          setDataUser(response.data)
           navigate('/rodovias')
           setErrorAuth(false)
         }else{
@@ -53,8 +57,18 @@ export const UserStorageLogin = ({ children }) => {
     }
   }
 
+  async function getUserId(){
+    const token = window.localStorage.getItem("encibraapptoken-v2");
+    const id = window.localStorage.getItem("encibraappId-v2");
+    const response = await api.get(`/users/${id}`, {
+      headers: { Authorization: "Bearer " + token },
+    });
+      
+    setDataUser(response.data)
+  }
+
   return (
-    <UserContextLogin.Provider value={{autoLogin, userLogin, errorAuth, loadingAuth, validateTokenLogin }}>
+    <UserContextLogin.Provider value={{autoLogin, userLogin, errorAuth, loadingAuth, validateTokenLogin, dataUser, getUserId }}>
       {children}
     </UserContextLogin.Provider>
   );
