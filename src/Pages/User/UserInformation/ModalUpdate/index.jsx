@@ -27,7 +27,6 @@ export function ModalUpdete(props){
         const user = {
             name: data.name,
             email: data.email,
-            password: data.password,
             phone: data.phone,
             position: data.position,
             updatedAt: new Date().toISOString()
@@ -103,16 +102,6 @@ export function ModalUpdete(props){
                         />
                     </label>
                 
-                    <label htmlFor="password">
-                        passsword
-                        <input
-                            type="text"
-                            id="password"
-                            className="bg-gray-input w-full rounded-md p-2 mb-2"
-                            {...register("password")}
-                        />
-                    </label>
-
                     <label htmlFor=""></label>
 
                     
