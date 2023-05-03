@@ -21,10 +21,12 @@ export default {
       "red-400": "#f87171",
       "red-500": "#ef4444",
       "red-800": "#991b1b",
-
       "sky-600": "#0284c7",
-      "emerald-500": "#10b981"
-       },
+
+      "emerald-500": "#10b981",
+      "green-500": "#34d399",
+      "indigo-500": "#6366f1",
+    },
     screens: {
       "2xl": { max: "1535px" },
       // => @media (max-width: 1535px) { ... }
@@ -50,7 +52,6 @@ export default {
     },
     fontFamily: {
       sans: ["Roboto", "sans-serif"],
-      
     },
   },
   plugins: [
