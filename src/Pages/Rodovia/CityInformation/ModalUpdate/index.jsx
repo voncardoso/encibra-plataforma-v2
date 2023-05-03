@@ -43,8 +43,8 @@ export function ModalUpdate(props) {
       }
     );
 
-    if(response.status === 200){
-      props.arrayUpdate(response.data)
+    if (response.status === 200) {
+      props.arrayUpdate(response.data);
       window.alert("Município atualizado com sucesso");
     }
   }
