@@ -278,7 +278,36 @@ export function Points() {
                   >
                   <div className="bg-white p-2">
                    
-                    <span>{marker.type}</span>
+                    {marker.type === "Vila" && 
+                      <span className="flex items-center text-sm  gap-1">
+                        <HouseLine className="text-emerald-500" weight="fill" size={20}/>
+                        {marker.description}
+                      </span>
+                      || 
+                      marker.type === "Ponte" && 
+                        <span className="flex items-center text-sm  gap-1">
+                          <Bridge className="text-orange-500" weight="fill" size={20}/> 
+                          {marker.description}
+                        </span>
+                      || 
+                      marker.type === "Divisa entre municípios" && 
+                        <span className="flex items-center text-sm  gap-1">
+                          <Bookmarks  className="text-indigo-500" weight="fill"size={20}/> 
+                          {marker.description}
+                        </span>
+                      || 
+                      marker.type === "Sede do município" && 
+                        <span className="flex items-center text-sm  gap-1">
+                           <Buildings className="text-sky-600" weight="fill" size={20}/> 
+                          {marker.description}
+                        </span>
+                      || 
+                      marker.type === "Travessia de balsa" && 
+                        <span className="flex items-center text-sm  gap-1">
+                           <img className="w-5" src={Barco} alt="" /> 
+                          {marker.description}
+                        </span>
+                    }
                   </div>
                 </Marker>
                  )
