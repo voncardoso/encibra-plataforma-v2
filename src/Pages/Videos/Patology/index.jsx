@@ -1,13 +1,15 @@
 import { Image, PencilLine, PlusCircle, TrashSimple } from "@phosphor-icons/react"
-import { NavLink } from "react-router-dom"
+import { useState } from "react"
+import { NavLink, useParams } from "react-router-dom"
 
 export function Patology(){
+  const {id, video} = useParams()
     return(
         <div className="mt-5">
-        <header className="flex justify-end p-4">
+        <header className="flex justify-end ">
             <NavLink
-              className="flex items-center gap-1 hover:text-gold-400 hover:underline"
-              to={`#`}
+              className="mb-5 flex items-center gap-1 hover:text-gold-400 hover:underline"
+              to={`/rodovias/videos/${id}/patology/${video}/register`}
             >
               <PlusCircle className="text-gold-400" size={22} />
               Cadastrar Vídeo
@@ -24,7 +26,9 @@ export function Patology(){
               <th className="p-2">Latitude</th>
               <th className="p-2">Longitude</th>
               <th className="p-2"></th>
-              <th></th>
+              <th>
+                <NavLink></NavLink>
+              </th>
             </tr>
           </thead>
           <tbody>
