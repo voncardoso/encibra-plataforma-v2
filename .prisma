@@ -51,19 +51,19 @@ model Iggs {
 
 model Patology {
   id            Int    @id @default(autoincrement())
-  acronym       String
-  code          String
-  cracks        String @db.Text
-  descrption    String
-  iggsId        Int?
+  acronym       String //sigla da rodovias
+  code          String 
+  cracks        String @db.Text // rachaduras = trincas
+  descrption    String // descrption
+  iggsId        Int? // id do igg
   km            String
-  level         Level
-  roadId        Int    @map("road_id")
-  roadSide      String @map("road_side") @db.Text
-  screenshotUrl String @map("screenshot_url")
-  type          String
-  videoId       Int    @map("video_id")
-  videoTime     String @map("video_time")
+  level         Level // principal ou sub
+  roadId        Int    @map("road_id") // id da rodovia
+  roadSide      String @map("road_side") @db.Text //lado
+  screenshotUrl String @map("screenshot_url") // imagem
+  type          String //
+  videoId       Int    @map("video_id") // id video
+  videoTime     String @map("video_time") // tempo do video 
   roads  Roads  @relation(fields: [roadId], references: [id])
   videos Videos @relation(fields: [videoId], references: [id])
   iggs   Iggs?  @relation(fields: [iggsId], references: [id])

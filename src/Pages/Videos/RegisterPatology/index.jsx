@@ -11,9 +11,12 @@ export function RegisterPatology(){
         defaultValues: {},
       });
 
+    async function handleRegisterPatology(data){
+    }
     return(
         <section className="mt-5 flex overflow-auto w-full   border-b-8 border-background rounded-md">
             <form 
+                onSubmit={handleSubmit(handleRegisterPatology)}
                 action=""
                 className=" bg-white w-full h-auto p-5"
             >
@@ -23,13 +26,13 @@ export function RegisterPatology(){
 
                 <h2 className="border-b-2 border-gray-300 w-full col-span-3 mt-5 mb-3 text-lg font-bold text-text-100">Localização</h2>
                 <div className="col-span-3 grid grid-cols-3  gap-5">
-                    <label htmlFor="stretch">
+                    <label htmlFor="km">
                         Km
                         <input
-                            id="stretch"
+                            id="km"
                             type="text"
                             className="bg-gray-input w-full rounded-md p-2"
-                            {...register("stretch", { required: true })}
+                            {...register("km", { required: true })}
                         />
                     </label>
                     <label htmlFor="stretch">
@@ -308,7 +311,7 @@ export function RegisterPatology(){
                     </textarea>
                 </div>
 
-                <h2 className="border-b-2 border-gray-300 w-full col-span-3 mt-5 mb-3 text-lg font-bold text-text-100">Trincas Rodas</h2>
+                <h2 className="border-b-2 border-gray-300 w-full col-span-3 mt-5 mb-3 text-lg font-bold text-text-100">Vídeo</h2>
                 <div className="col-span-3 grid grid-cols-3  gap-5">
                     <label htmlFor="stretch">
                         Tempo
