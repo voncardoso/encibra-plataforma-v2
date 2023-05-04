@@ -12,12 +12,15 @@ import {
 } from "@phosphor-icons/react";
 import { ModalUpdate } from "./ModalUpdate";
 import { api } from "../../../lib/api";
+import Pagination from '@mui/material/Pagination';
 
 export function Points() {
   const { dataRoad } = useContext(UserContextRoad);
   const params = useParams();
   const [lock, setLock] = useState(false);
   const [dataPoints, setDataPoints] = useState([])
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   useEffect(() =>{
     function getCity(){
@@ -72,6 +75,19 @@ export function Points() {
     }
   }
 
+  // criar paginação
+  function paginate(items, currentPage, itemsPerPage) {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return items.slice(startIndex, endIndex);
+  }
+  const paginatedData = paginate(dataPoints, currentPage, itemsPerPage);
+  const totalPages = Math.ceil(dataPoints.length / itemsPerPage);
+  
+  function goToPage(event, pageNumber) {
+    console.log("",pageNumber)
+    setCurrentPage(pageNumber);
+  }
 
   
   if (dataPoints) {
@@ -79,7 +95,7 @@ export function Points() {
       <>
         {dataPoints.length !== 0 ? (
           <section className="mt-5">
-            <div className="pr-5">
+            <div className="pr-5 flex flex-col">
               <table className="w-full text-center ">
                 <thead>
                   <tr className="bg-gray-300 ">
@@ -111,7 +127,7 @@ export function Points() {
                   </tr>
                 </thead>
                 <tbody>
-                  {dataPoints.map((point) => {
+                  {paginatedData.map((point) => {
                     return (
                       <tr key={point.id} className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
                         <td className="p-2">{point.type}</td>
@@ -156,6 +172,9 @@ export function Points() {
                   </tr>
                 </tbody>
               </table>
+              <div className="mx-auto flex items-center">
+                <Pagination className="mt-2.5" count={totalPages} onChange={goToPage}  shape="rounded" />
+            </div>
             </div>
           </section>
         ) : (
