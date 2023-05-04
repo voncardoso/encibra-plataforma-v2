@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContextRoad } from "../../../Context/useContextRoad";
 import { useLocation, useParams } from "react-router-dom";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
-
+import Pagination from '@mui/material/Pagination';
 import { api } from "../../../lib/api";
 import { ModalCreate } from "./ModalCreate";
 import { ModalUpdate } from "./ModalUpdate";
@@ -21,6 +21,8 @@ export function CityInformation() {
   const { dataRoad } = useContext(UserContextRoad);
   const [dataCity, setDataCity] = useState([])
   const [lock, setLock] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
 
   useEffect(() =>{
@@ -77,12 +79,30 @@ export function CityInformation() {
     }
   }
 
+  // criar paginação
+  function paginate(items, currentPage, itemsPerPage) {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    if(items){
+      return items.slice(startIndex, endIndex);
+    }
+  }
+
+ const paginatedData = paginate(dataCity, currentPage, itemsPerPage);
+  const totalPages = Math.ceil(dataCity?.length / itemsPerPage);
+  
+  function goToPage(event, pageNumber) {
+    console.log("",pageNumber)
+    setCurrentPage(pageNumber);
+  }
+
+  console.log(dataCity)
   if(dataRoad){
     return (
       <>
         {dataCity?.length !== 0 ? (
           <section className="mt-5">
-            <div className="pr-5">
+            <div className="flex flex-col pr-5">
               <table className="w-full text-center ">
                 <thead>
                   <tr className="bg-gray-300 ">
@@ -111,7 +131,7 @@ export function CityInformation() {
                   </tr>
                 </thead>
                 <tbody>
-                  {dataCity?.map((city) => {
+                  {paginatedData?.map((city) => {
                     return (
                       <tr
                         key={city.id}
@@ -156,6 +176,9 @@ export function CityInformation() {
                   </tr>
                 </tbody>
               </table>
+              <div className="mx-auto flex items-center">
+                <Pagination className="mt-2.5 mb-3" count={totalPages} onChange={goToPage}  shape="rounded" />
+              </div>
             </div>
           </section>
         ) : (
