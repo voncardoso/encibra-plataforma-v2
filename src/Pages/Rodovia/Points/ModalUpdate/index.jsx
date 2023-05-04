@@ -75,11 +75,11 @@ export function ModalUpdate(props) {
               className="bg-gray-input w-full rounded-md p-2 mb-4"
             >
               <option value="">Selecione o tipo</option>
-              <option value="1">Ponte</option>
-              <option value="2">Vila</option>
-              <option value="3">Divisa entre municípios</option>
-              <option value="4">Sede do município</option>
-              <option value="5">Travessia de balsa</option>
+              <option value="Ponte">Ponte</option>
+              <option value="Vila">Vila</option>
+              <option value="Divisa entre municípios">Divisa entre municípios</option>
+              <option value="Sede do município">Sede do município</option>
+              <option value="Travessia de balsa">Travessia de balsa</option>
             </select>
           </label>
           <label className="" htmlFor="description">
