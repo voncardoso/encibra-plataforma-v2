@@ -26,6 +26,7 @@ export default {
       "emerald-500": "#10b981",
       "green-500": "#34d399",
       "indigo-500": "#6366f1",
+      "orange-500": "#f97316"
     },
     screens: {
       "2xl": { max: "1535px" },
