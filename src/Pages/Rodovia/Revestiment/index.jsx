@@ -12,13 +12,16 @@ import {
 } from "@phosphor-icons/react";
 import { ModalCreate } from "./ModalCreate";
 import { ModalUpdate } from "./ModalUpadate";
+import Pagination from '@mui/material/Pagination';
+
 
 export function Revestment() {
   const { dataRoad } = useContext(UserContextRoad);
   const params = useParams();
   const [lock, setLock] = useState(false);
   const [datarevestments, setDataRevestments] = useState([])
-  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   useEffect(() =>{
     function getRevestment(){
@@ -71,13 +74,28 @@ export function Revestment() {
     }
   }
 
+  function paginate(items, currentPage, itemsPerPage) {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    if(items){
+      return items.slice(startIndex, endIndex);
+    }
+  }
+  const paginatedData = paginate(datarevestments, currentPage, itemsPerPage);
+  const totalPages = Math.ceil(datarevestments?.length / itemsPerPage);
+  
+  function goToPage(event, pageNumber) {
+    console.log("",pageNumber)
+    setCurrentPage(pageNumber);
+  }
+
 
   if (datarevestments) {
     return (
       <>
         {datarevestments.length !== 0 ? (
           <section className="mt-5">
-            <div className="pr-5">
+            <div className="pr-5 flex flex-col">
               <table className="w-full text-center ">
                 <thead>
                   <tr className="bg-gray-300 ">
@@ -106,9 +124,9 @@ export function Revestment() {
                   </tr>
                 </thead>
                 <tbody>
-                  {datarevestments.map((revestment) => {
+                  {paginatedData.map((revestment) => {
                     return (
-                      <tr className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
+                      <tr key={revestment.id} className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
                         <td className="p-2  ">{revestment.type}</td>
                         <td className="p-2  ">{revestment.extention} km</td>
                         <td></td>
@@ -147,6 +165,9 @@ export function Revestment() {
                   </tr>
                 </tbody>
               </table>
+              <div className="mx-auto flex items-center">
+                <Pagination className="mt-2.5" count={totalPages} onChange={goToPage}  shape="rounded" />
+            </div>
             </div>
           </section>
         ) : (
