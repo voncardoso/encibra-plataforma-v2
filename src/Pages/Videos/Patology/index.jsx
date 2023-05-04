@@ -1,8 +1,18 @@
-import { Image, PencilLine, TrashSimple } from "@phosphor-icons/react"
+import { Image, PencilLine, PlusCircle, TrashSimple } from "@phosphor-icons/react"
+import { NavLink } from "react-router-dom"
 
 export function Patology(){
     return(
         <div className="mt-5">
+        <header className="flex justify-end p-4">
+            <NavLink
+              className="flex items-center gap-1 hover:text-gold-400 hover:underline"
+              to={`#`}
+            >
+              <PlusCircle className="text-gold-400" size={22} />
+              Cadastrar Vídeo
+            </NavLink>
+        </header>
         <table className="table-auto w-full text-center">
           <thead>
             <tr className="bg-gray-300 ">
