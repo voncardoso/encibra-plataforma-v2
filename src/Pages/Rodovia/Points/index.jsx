@@ -279,31 +279,31 @@ export function Points() {
                   <div className="bg-white p-2">
                    
                     {marker.type === "Vila" && 
-                      <span className="flex items-center text-sm  gap-1">
+                      <div className="flex items-center text-sm  gap-1 rounded-md">
                         <HouseLine className="text-emerald-500" weight="fill" size={20}/>
                         {marker.description}
-                      </span>
+                      </div>
                       || 
                       marker.type === "Ponte" && 
-                        <span className="flex items-center text-sm  gap-1">
+                        <div className="flex items-center text-sm  gap-1 rounded-md">
                           <Bridge className="text-orange-500" weight="fill" size={20}/> 
                           {marker.description}
-                        </span>
+                        </div>
                       || 
                       marker.type === "Divisa entre municípios" && 
-                        <span className="flex items-center text-sm  gap-1">
+                        <div className="flex items-center text-sm  gap-1 rounded-md">
                           <Bookmarks  className="text-indigo-500" weight="fill"size={20}/> 
                           {marker.description}
-                        </span>
+                        </div>
                       || 
                       marker.type === "Sede do município" && 
-                        <span className="flex items-center text-sm  gap-1">
+                        <div className="flex items-center text-sm  gap-1 rounded-md">
                            <Buildings className="text-sky-600" weight="fill" size={20}/> 
                           {marker.description}
-                        </span>
+                        </div>
                       || 
                       marker.type === "Travessia de balsa" && 
-                        <span className="flex items-center text-sm  gap-1">
+                        <span className="flex items-center text-sm  gap-1 rounded-md">
                            <img className="w-5" src={Barco} alt="" /> 
                           {marker.description}
                         </span>
@@ -329,7 +329,7 @@ export function Points() {
                     </Source>
                   )}
 
-                <div className="m-2 p-2 relative z-10 bg-white w-52">
+                <div className="m-2 p-2 relative z-10 bg-white w-52 rounded-md">
                   <ul>
                     <li className="p-2 flex items-center gap-2 text-sm font-medium">
                       <Bookmarks  className="text-indigo-500" weight="fill"size={22}/>
