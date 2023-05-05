@@ -1,4 +1,4 @@
-import { Image, PencilLine, PlusCircle, TrashSimple } from "@phosphor-icons/react"
+import { Image, Lock, LockOpen, PencilLine, PlusCircle, TrashSimple } from "@phosphor-icons/react"
 import { useEffect, useState } from "react"
 import { NavLink, useParams } from "react-router-dom"
 import { api } from "../../../lib/api";
@@ -6,6 +6,7 @@ import { api } from "../../../lib/api";
 export function Patology(){
   const [dataPatology, setDataPatology] = useState([])
   const {id, video} = useParams();
+  const [lock, setLock] = useState(false);
 
   useEffect(() =>{
     async function getPatology(){
@@ -27,6 +28,14 @@ export function Patology(){
     getPatology()
   }, [])
 
+  function handleLock() {
+    if (lock === true) {
+      setLock(false);
+    } else {
+      setLock(true);
+    }
+  }
+
   console.log(dataPatology)
 
     return(
@@ -37,10 +46,10 @@ export function Patology(){
               to={`/rodovias/videos/${id}/patology/${video}/register`}
             >
               <PlusCircle className="text-gold-400" size={22} />
-              Cadastrar Vídeo
+              Cadastrar Patologia
             </NavLink>
         </header>
-        <table className="table-auto w-full text-center">
+        <table className="table-auto w-full text-center ">
           <thead>
             <tr className="bg-gray-300 ">
               <th className="p-2 rounded-ss-md">Lado</th>
@@ -50,7 +59,14 @@ export function Patology(){
               <th className="p-2">Min</th>
               <th className="p-2">Latitude</th>
               <th className="p-2">Longitude</th>
-              <th className="p-2"></th>
+              <th className="p-2 flex justify-end">
+                <button
+                  className=" text-sm  items-center justify-items-end gap-1 p-1 text-sm text-text-100 border rounded border-text-100 hover:bg-text-100 hover:text-white"
+                    onClick={handleLock}
+                  >
+                    {lock ? <LockOpen size={18} /> : <Lock size={18} />}
+                </button>
+              </th>
               <th>
                 <NavLink></NavLink>
               </th>
@@ -62,13 +78,13 @@ export function Patology(){
               const cracks = JSON.parse(patology.cracks)
               const sags = JSON.parse(patology.sags)
               const otherDefects = JSON.parse(patology.otherDefects)
-              console.log(cracks, sags, otherDefects)
+            
               return(
                 <tr key={patology.id} className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
                   <td className="p-2  ">
                     {roadSide.BD && "BD "}  
                     {roadSide.BE && "BE "}  
-                    {roadSide.EIXO && "BEIXO "}  
+                    {roadSide.EIXO && "EIXO "}  
                     {roadSide.PISTA && "PISTA "}
                   </td>
                   <td className="p-2  ">
@@ -102,10 +118,10 @@ export function Patology(){
                   <td className="p-2  ">{patology.latitude}</td>
                   <td className="p-2  ">{patology.longitude}</td>
                   <td className="p-2">
-                    <div className="flex gap-4 items-center h-auto">
-                        <PencilLine size={22} color={"#0b7bb7"} />
-                        <Image size={22} color={"#56A899"} />
-                        <TrashSimple size={22} color={"#e64a33"} />
+                    <div className="flex justify-end gap-4 items-center h-auto">
+                        <PencilLine size={24} color={"#0b7bb7"} />
+                        <Image size={24} color={"#56A899"} />
+                        {lock && <TrashSimple size={24} color={"#e64a33"} />}
                     </div>
                   </td>
                 </tr>

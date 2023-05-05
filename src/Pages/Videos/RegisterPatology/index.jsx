@@ -1,13 +1,16 @@
-import { useContext } from "react";
-import { useForm } from "react-hook-form";
+import { useContext, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { UserContextRoad } from "../../../Context/useContextRoad";
 import { useParams } from "react-router-dom";
 import { api } from "../../../lib/api";
 
 export function RegisterPatology(){
     const { dataRoad } = useContext(UserContextRoad);
-    const {id, video} = useParams()
-    console.log("road", dataRoad)
+    const {id, video} = useParams();
+    const [fileImage, setFileImage] = useState("")
+    const [preview, setPreview] = useState(null);
+    const [formData, setFormData] = useState(new FormData());
+
     const {
         register,
         handleSubmit,
@@ -15,72 +18,188 @@ export function RegisterPatology(){
         control,
         reset,
       } = useForm({
-        defaultValues: {},
+        defaultValues: {
+            
+        },
       });
 
     async function handleRegisterPatology(data){
         console.log(data)
         const token = window.localStorage.getItem("encibraapptoken-v2");
-        const patology = {
-            acronym: dataRoad.acronym,
-            code: "",
-            cracks: JSON.stringify({
-                FI:  data.FI,
-                TTC: data.TTC ,
-                TTL: data.TTL ,
-                TLC: data.TLC ,
-                TLL: data.TLL ,
-                TRR: data.TRR ,
-                J: data.J,
-                TB: data.TB,
-                JE: data.JE,
-                TBE: data.TBE,
-            }),
-            descrption: data.descrption,
-            km: data.km,
-            level: "MAIN",
-            roadId: dataRoad.id,
-            roadSide: JSON.stringify({
-                BD: data.BD ,
-                BE: data.BE ,
-                EIXO: data.EIXO,
-                PISTA: data.PISTA,
-            }),
-            screenshotUrl: "",
-            type: "",
-            videoId: Number(video),
-            videoTime: data.videoTime,
-            observation: data.observation,
-            sags: JSON.stringify({
-                ALP: data.ALP,
-                ATP: data.ATP,
-                ALC: data.ALC,
-                ATC: data.ATC,
-            }),
-            otherDefects: JSON.stringify({
-                O:  data.O,
-                P:  data.P,
-                E:  data.E,
-                EX: data.EX,
-                D: data.D,
-                R: data.R,
-            }),
-            latitude: data.latitude,
-            longitude: data.longitude  
+        const formData = new FormData();
+        formData.append("file", data.file)
 
-        }
-        const response = await api.put(
-            `/road/${id}/patology/null/create`,patology,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+        if(data.file === undefined){
+            const response1 = await api.put(
+                `/road/${id}/patology/null/create`,
+                {
+                    acronym: dataRoad.acronym,
+                    code: "",
+                    cracks: JSON.stringify({
+                        FI:  data.FI,
+                        TTC: data.TTC ,
+                        TTL: data.TTL ,
+                        TLC: data.TLC ,
+                        TLL: data.TLL ,
+                        TRR: data.TRR ,
+                        J: data.J,
+                        TB: data.TB,
+                        JE: data.JE,
+                        TBE: data.TBE,
+                    }),
+                    descrption: data.descrption,
+                    km: data.km,
+                    level: "MAIN",
+                    roadId: dataRoad.id,
+                    roadSide: JSON.stringify({
+                        BD: data.BD ,
+                        BE: data.BE ,
+                        EIXO: data.EIXO,
+                        PISTA: data.PISTA,
+                    }),
+                    screenshotUrl: "",
+                    type: "",
+                    videoId: Number(video),
+                    videoTime: data.videoTime,
+                    observation: data.observation,
+                    sags: JSON.stringify({
+                        ALP: data.ALP,
+                        ATP: data.ATP,
+                        ALC: data.ALC,
+                        ATC: data.ATC,
+                    }),
+                    otherDefects: JSON.stringify({
+                        O:  data.O,
+                        P:  data.P,
+                        E:  data.E,
+                        EX: data.EX,
+                        D: data.D,
+                        R: data.R,
+                    }),
+                    latitude: data.latitude,
+                    longitude: data.longitude
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+              console.log("teste", response1)
+              if(response1.status === 200){
+                reset()
+                setPreview("")
+                window.alert("Patologia cadastrada com sucesso")
+              }
+        }else{
+            const response = await api.post(
+                `/upload/image`,formData,
+                {
+                  headers: {
+                    'content-type': 'multipart/form-data',
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+              
+              // verifica se a imagem foi cadstrada no storage
+            if(response.status === 200){
+                // adiciona a url da imagem ao file image
+            setFileImage(response.data)
 
-
-        console.log("patologia",response)
+                // faz a requisição para cadastar a patologia ja com a url da imagem
+                const response1 = await api.put(
+                    `/road/${id}/patology/null/create`,
+                    {
+                        acronym: dataRoad.acronym,
+                        code: "",
+                        cracks: JSON.stringify({
+                            FI:  data.FI,
+                            TTC: data.TTC ,
+                            TTL: data.TTL ,
+                            TLC: data.TLC ,
+                            TLL: data.TLL ,
+                            TRR: data.TRR ,
+                            J: data.J,
+                            TB: data.TB,
+                            JE: data.JE,
+                            TBE: data.TBE,
+                        }),
+                        descrption: data.descrption,
+                        km: data.km,
+                        level: "MAIN",
+                        roadId: dataRoad.id,
+                        roadSide: JSON.stringify({
+                            BD: data.BD ,
+                            BE: data.BE ,
+                            EIXO: data.EIXO,
+                            PISTA: data.PISTA,
+                        }),
+                        screenshotUrl: response.data.url,
+                        type: "",
+                        videoId: Number(video),
+                        videoTime: data.videoTime,
+                        observation: data.observation,
+                        sags: JSON.stringify({
+                            ALP: data.ALP,
+                            ATP: data.ATP,
+                            ALC: data.ALC,
+                            ATC: data.ATC,
+                        }),
+                        otherDefects: JSON.stringify({
+                            O:  data.O,
+                            P:  data.P,
+                            E:  data.E,
+                            EX: data.EX,
+                            D: data.D,
+                            R: data.R,
+                        }),
+                        latitude: data.latitude,
+                        longitude: data.longitude
+                    },
+                    {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                    }
+                  );
+                  console.log("teste", response1)
+                  if(response1.status === 200){
+                    reset()
+                    setPreview("")
+                    window.alert("Patologia cadastrada com sucesso")
+                  }
+              } else{
+                window.alert("error ao cadastrar Imagem")
+              }
+        }       
     }
+
+    function handleImage(event){
+        setPreview(URL.createObjectURL(event.target.files[0]))
+
+    }
+
+    // validar o tipo de imagem
+    const imageTypeValidation = (file) => {
+        if(!file){
+            
+        }else if (file.type !== "image/png" && file.type !== "image/jpeg") {
+            return "O arquivo deve estar no formato PNG ou JPEG.";
+          }
+        return true;
+      };
+
+    const timeValidation = (value) => {
+        const pattern = /^((?:[0-5][0-9]|1[0-9]|2[0-3]):[0-5][0-9])(?::[0-5][0-9])?$/;
+        if (!pattern.test(value)) {
+          return "Tempo invalido.";
+        }
+        return true;
+      };  
+  
+      
+
     return(
         <section className="mt-5 flex overflow-auto w-full   border-b-8 border-background rounded-md">
             <form 
@@ -89,7 +208,7 @@ export function RegisterPatology(){
                 className=" bg-white w-full h-auto p-5"
             >
                 <h1 className="col-span-3 text-2xl font-bold text-text-100">
-                    Cadastro de Rodovias
+                    Cadastro de Patologia
                 </h1>
 
                 <h2 className="border-b-2 border-gray-300 w-full col-span-3 mt-5 mb-3 text-lg font-bold text-text-100">Localização</h2>
@@ -380,12 +499,22 @@ export function RegisterPatology(){
                 <h2 className="border-b-2 border-gray-300 w-full col-span-3 mt-5 mb-3 text-lg font-bold text-text-100">Observação</h2>
                 <div className="col-span-3 grid grid-cols-3 mt-5 gap-5">
                     <label htmlFor="observation">
-                        <input
+                        <select
+                            name=""
                             id="observation"
-                            type="text"
                             className="bg-gray-input w-full rounded-md p-2"
                             {...register("observation")}
-                        />
+                        >
+                            <option value="">Selecione a observação</option>
+                            <option value="I Trecho">Inicio Trecho</option>
+                            <option value="F Trecho">Fim Trecho</option>
+                            <option value="Vila">Vila</option>
+                            <option value="Ponte">Ponte</option>
+                            <option value="Rotatória">Rotatória</option>
+                            <option value="Cruzamento">Cruzamento</option>
+                            <option value="Entroncamento">Entroncamento</option>
+
+                        </select>
                     </label>
                 </div>
 
@@ -416,15 +545,44 @@ export function RegisterPatology(){
                         />
                         <p className="text-sm mt-1">Ex: 00:00:00 ou 00:00</p>
                     </label>
+                    <Controller
+                        name="videoTime"
+                        control={control}
+                        rules={{ required: true, validate: timeValidation }}
+                        render={({ field }) => (
+                        <div>
+                           <label htmlFor="videoTime">
+                                Tempo
+                            <input
+                                id="videoTime"
+                                type="text"
+                                className="bg-gray-input w-full rounded-md p-2"
+                                {...field}
+                            />
+                                <p className="text-sm mt-1">Ex: 00:00:00 ou 00:00</p>
+                                
+                            </label>
+                            {errors.videoTime && <span className="error text-sm mt-1 text-red-500">{errors.videoTime.message}</span>}
+                        </div>
+                    )}
+                    />
                     <label htmlFor="screenshotUrl">
                         Foto
-                        <input
-                            id="screenshotUrl"
-                            type="file"
-                            className="bg-gray-input w-full rounded-md p-2"
-                            {...register("screenshotUrl")}
-                        />
+                       
+                        <div  className="p-2 bg-gray-input w-full rounded-md p-2">
+                            <Controller
+                                name="file"
+                                control={control}
+                                render={({ field }) => <input type="file" onChange={(e) => {
+                                    field.onChange(e.target.files[0]),
+                                    handleImage(e)
+                                }
+                            
+                            } />}
+                            />
+                        </div>
                     </label>
+                    <img style={{maxWidth: "500px", maxHeight: "300px"}} className="w-500 h-300 col-span-2 rounded-md" src={preview} alt="" />
                 </div>
 
                 <div className="mt-10">
