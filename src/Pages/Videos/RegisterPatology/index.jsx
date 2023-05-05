@@ -535,16 +535,6 @@ export function RegisterPatology(){
 
                 <h2 className="border-b-2 border-gray-300 w-full col-span-3 mt-5 mb-3 text-lg font-bold text-text-100">Vídeo</h2>
                 <div className="col-span-3 grid grid-cols-3  gap-5">
-                    <label htmlFor="videoTime">
-                        Tempo
-                        <input
-                            id="videoTime"
-                            type="text"
-                            className="bg-gray-input w-full rounded-md p-2"
-                            {...register("videoTime", { required: true })}
-                        />
-                        <p className="text-sm mt-1">Ex: 00:00:00 ou 00:00</p>
-                    </label>
                     <Controller
                         name="videoTime"
                         control={control}
@@ -569,11 +559,11 @@ export function RegisterPatology(){
                     <label htmlFor="screenshotUrl">
                         Foto
                        
-                        <div  className="p-2 bg-gray-input w-full rounded-md p-2">
+                        <div >
                             <Controller
                                 name="file"
                                 control={control}
-                                render={({ field }) => <input type="file" onChange={(e) => {
+                                render={({ field }) => <input type="file" className="p-2 bg-gray-input w-full rounded-md p-2" accept="image/png, image/jpeg" onChange={(e) => {
                                     field.onChange(e.target.files[0]),
                                     handleImage(e)
                                 }
