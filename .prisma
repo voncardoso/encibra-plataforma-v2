@@ -64,6 +64,11 @@ model Patology {
   type          String //
   videoId       Int    @map("video_id") // id video
   videoTime     String @map("video_time") // tempo do video 
+  observation   String? @db.Text
+  sags          String? @db.Text
+  otherDefects  String? @db.Text
+  latitude      String? @db.Text
+  longitude     String? @db.Text
   roads  Roads  @relation(fields: [roadId], references: [id])
   videos Videos @relation(fields: [videoId], references: [id])
   iggs   Iggs?  @relation(fields: [iggsId], references: [id])
