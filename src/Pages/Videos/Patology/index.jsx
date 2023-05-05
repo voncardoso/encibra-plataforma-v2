@@ -38,12 +38,38 @@ export function Patology(){
       setLock(true);
     }
   }
+  async function deletePatology(idPatology) {
+    console.log("foi", id)
+    const token = window.localStorage.getItem("encibraapptoken-v2");
+    const city = {};
+
+    const result = window.confirm("Certeza que deseja deletar a patologia? ");
+
+    if (result) {
+      const response = await api.put(
+        `/road/${id}/patology/${idPatology}/delete`,
+        city,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+       if(response.status === 200){
+        // function para deleter o imtem do array dataCity
+        setDataPatology(dataPatology.filter(item => item.id !== response.data.id));
+        window.alert("Muncípio deletado com sucesso");
+       }
+    }
+  }
   // criar paginação
   function paginate(items, currentPage, itemsPerPage) {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return items.slice(startIndex, endIndex);
   }
+
   const paginatedData = paginate(dataPatology, currentPage, itemsPerPage);
   const totalPages = Math.ceil(dataPatology.length / itemsPerPage);
   
@@ -51,7 +77,7 @@ export function Patology(){
     console.log("",pageNumber)
     setCurrentPage(pageNumber);
   }
-  console.log(dataPatology)
+  
 
     return(
         <div className="mt-5 flex flex-col justify-center">
@@ -136,7 +162,16 @@ export function Patology(){
                     <div className="flex justify-end gap-4 items-center h-auto">
                         <PencilLine size={24} color={"#0b7bb7"} />
                         <Image size={24} color={"#56A899"} />
-                        {lock && <TrashSimple size={24} color={"#e64a33"} />}
+                        {lock 
+                          && 
+                          <TrashSimple 
+                            size={24} 
+                            color={"#e64a33"} 
+                            onClick={()=>{
+                              deletePatology(patology.id)
+                            }}
+                          />  
+                        }
                     </div>
                   </td>
                 </tr>
