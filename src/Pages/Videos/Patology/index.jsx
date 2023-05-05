@@ -2,11 +2,14 @@ import { Image, Lock, LockOpen, PencilLine, PlusCircle, TrashSimple } from "@pho
 import { useEffect, useState } from "react"
 import { NavLink, useParams } from "react-router-dom"
 import { api } from "../../../lib/api";
+import Pagination from '@mui/material/Pagination';
 
 export function Patology(){
   const [dataPatology, setDataPatology] = useState([])
   const {id, video} = useParams();
   const [lock, setLock] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   useEffect(() =>{
     async function getPatology(){
@@ -35,11 +38,23 @@ export function Patology(){
       setLock(true);
     }
   }
-
+  // criar paginação
+  function paginate(items, currentPage, itemsPerPage) {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return items.slice(startIndex, endIndex);
+  }
+  const paginatedData = paginate(dataPatology, currentPage, itemsPerPage);
+  const totalPages = Math.ceil(dataPatology.length / itemsPerPage);
+  
+  function goToPage(event, pageNumber) {
+    console.log("",pageNumber)
+    setCurrentPage(pageNumber);
+  }
   console.log(dataPatology)
 
     return(
-        <div className="mt-5">
+        <div className="mt-5 flex flex-col justify-center">
         <header className="flex justify-end ">
             <NavLink
               className="mb-5 flex items-center gap-1 hover:text-gold-400 hover:underline"
@@ -73,7 +88,7 @@ export function Patology(){
             </tr>
           </thead>
           <tbody>
-            {dataPatology?.map((patology) =>{
+            {paginatedData?.map((patology) =>{
               const roadSide = JSON.parse(patology.roadSide)
               const cracks = JSON.parse(patology.cracks)
               const sags = JSON.parse(patology.sags)
@@ -132,6 +147,9 @@ export function Patology(){
             </tr>
           </tbody>
         </table>
+        <div className="mx-auto flex items-center">
+          <Pagination className="mt-2.5 mb-3" count={totalPages} onChange={goToPage}  shape="rounded" />
+        </div>
       </div>
     )
 }
