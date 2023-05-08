@@ -11,7 +11,6 @@ import { api } from "../../../../lib/api";
 import { useState } from "react";
 
 export function ModalUpdate(props) {
-  console.log(props);
   const [preview, setPreview] = useState(null);
   const params = useParams();
   const {

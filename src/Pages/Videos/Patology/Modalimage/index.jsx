@@ -87,8 +87,6 @@ export function Modalimage(props) {
       }
     }
   }
-
-  console.log(preview);
   return (
     <DialogPortal>
       <DialogOverlay className=" fixed inset-0 bg-black bg-opacity-50" />

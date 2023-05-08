@@ -1,3 +1,5 @@
+import { useContext, useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
 import {
   Image,
   Lock,
@@ -6,20 +8,59 @@ import {
   PlusCircle,
   TrashSimple,
 } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import ReactMapGL, {
+  Marker,
+  Source,
+  Layer,
+  GeolocateControl,
+  FullscreenControl,
+  NavigationControl,
+  ScaleControl,
+  Popup,
+  Map,
+} from "react-map-gl";
+import MapboxClient from "@mapbox/mapbox-sdk/services/directions";
 import { api } from "../../../lib/api";
 import Pagination from "@mui/material/Pagination";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { Modalimage } from "./Modalimage";
 import { ModalUpdate } from "./ModalUpdate";
+import { UserContextRoad } from "../../../Context/useContextRoad";
 
 export function Patology() {
+  const { dataRoad } = useContext(UserContextRoad);
+  const params = useParams();
   const [dataPatology, setDataPatology] = useState([]);
   const { id, video } = useParams();
   const [lock, setLock] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  // variavel mapa
+  const [viewport, setViewport] = useState();
+  const [route, setRoute] = useState(null);
+  const [routePatology, setRoutePatology] = useState(null);
+  const [start, setStart] = useState({ latitude: 0, longitude: 0 });
+  const [end, setEnd] = useState({ latitude: 0, longitude: 0 });
+  const [startPatology, setStartPatology] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
+  const [endPatology, setEndPatology] = useState({ latitude: 0, longitude: 0 });
+  const [dataStrech, setDataStrech] = useState({});
+  const directionsClient = MapboxClient({
+    accessToken:
+      "pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw",
+  });
+  const directionsClient1 = MapboxClient({
+    accessToken:
+      "pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw",
+  });
+  console.log("patologia", dataPatology);
+  let strech = null;
+  if (dataRoad.stretch) {
+    strech = JSON.parse(dataRoad?.stretch);
+  }
 
   useEffect(() => {
     async function getPatology() {
@@ -37,11 +78,75 @@ export function Patology() {
       );
       // function filtarar as patologias
       setDataPatology(
-        response.data.filter((item) => item.videoId === Number(video))
+        response.data
+          .filter((item) => item.videoId === Number(video))
+          .sort((a, b) => a.km - b.km)
       );
     }
     getPatology();
   }, []);
+
+  //function para redenrizar o traçado da rodovia
+  useEffect(() => {
+    function getSrech() {
+      setDataStrech(strech);
+
+      // setando a localização inicial e final da rodovias
+      setStart({
+        latitude: +strech?.initialLatitude,
+        longitude: +strech?.initialLongitude,
+      });
+      setEnd({
+        latitude: +strech?.endLatitude,
+        longitude: +strech?.endLongitude,
+      });
+    }
+
+    getSrech();
+  }, [dataRoad, params.id]);
+  useEffect(() => {
+    function getCoordenadas() {
+      dataPatology.map((item, index) => {
+        if (index === 0) {
+          setStartPatology({
+            latitude: +item?.latitude,
+            longitude: +item?.longitude,
+          });
+        }
+        if (dataPatology.length - 1 === index) {
+          setEndPatology({
+            latitude: +item?.latitude,
+            longitude: +item?.longitude,
+          });
+        }
+      });
+    }
+    getCoordenadas();
+  }, [dataRoad]);
+  //function para redenrizar o traçado da rodovia
+  useEffect(() => {
+    directionsClient
+      .getDirections({
+        profile: "driving",
+        waypoints: [
+          { coordinates: [startPatology.longitude, startPatology.latitude] },
+          { coordinates: [endPatology.longitude, endPatology.latitude] },
+        ],
+        geometries: "geojson",
+      })
+      .send()
+      .then((response) => {
+        setRoute(response.body.routes[0]);
+        setViewport({
+          ...viewport,
+          latitude: +`${startPatology.latitude}`,
+          longitude: +`${startPatology.longitude}`,
+          zoom: 8,
+          bearing: 0,
+          pitch: 0,
+        });
+      });
+  }, [startPatology]);
 
   function handleLock() {
     if (lock === true) {
@@ -93,6 +198,7 @@ export function Patology() {
     setCurrentPage(pageNumber);
   }
 
+  console.log(startPatology, endPatology);
   return (
     <div className="mt-5 flex flex-col justify-center">
       <header className="flex justify-end ">
@@ -238,6 +344,53 @@ export function Patology() {
           shape="rounded"
         />
       </div>
+      {strech && (
+        <div className="mb-5">
+          <ReactMapGL
+            key={`${start?.latitude}-${start?.longitude}`}
+            initialViewState={{
+              latitude: +strech?.initialLatitude,
+              longitude: +strech?.initialLongitude,
+              zoom: 10,
+            }}
+            cooperativeGestures={true}
+            style={{ width: "100%", height: "500px", borderRadius: "6px" }}
+            mapStyle="mapbox://styles/mapbox/streets-v11"
+            mapboxAccessToken="pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw"
+          >
+            <Marker
+              latitude={+strech?.initialLatitude}
+              longitude={+strech?.initialLongitude}
+              offsetLeft={-20}
+              offsetTop={-10}
+            >
+              <div className="marker" />
+            </Marker>
+            <Marker
+              latitude={+strech?.endLatitude}
+              longitude={+strech?.endLongitude}
+              offsetLeft={-20}
+              offsetTop={-10}
+            >
+              <div className="marker" />
+            </Marker>
+            {route && (
+              <Source type="geojson" data={route.geometry}>
+                <Layer
+                  id="route"
+                  type="line"
+                  paint={{ "line-color": "#0070f3", "line-width": 4 }}
+                />
+              </Source>
+            )}
+
+            <GeolocateControl position="top-right" />
+            <FullscreenControl position="top-right" />
+            <NavigationControl position="top-right" />
+            <ScaleControl />
+          </ReactMapGL>
+        </div>
+      )}
     </div>
   );
 }
