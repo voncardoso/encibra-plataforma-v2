@@ -1,22 +1,30 @@
-import { Image, Lock, LockOpen, PencilLine, PlusCircle, TrashSimple } from "@phosphor-icons/react"
-import { useEffect, useState } from "react"
-import { NavLink, useParams } from "react-router-dom"
+import {
+  Image,
+  Lock,
+  LockOpen,
+  PencilLine,
+  PlusCircle,
+  TrashSimple,
+} from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
 import { api } from "../../../lib/api";
-import Pagination from '@mui/material/Pagination';
+import Pagination from "@mui/material/Pagination";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { Modalimage } from "./Modalimage";
+import { ModalUpdate } from "./ModalUpdate";
 
-export function Patology(){
-  const [dataPatology, setDataPatology] = useState([])
-  const {id, video} = useParams();
+export function Patology() {
+  const [dataPatology, setDataPatology] = useState([]);
+  const { id, video } = useParams();
   const [lock, setLock] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  useEffect(() =>{
-    async function getPatology(){
+  useEffect(() => {
+    async function getPatology() {
       const token = window.localStorage.getItem("encibraapptoken-v2");
-      const patology = {}
+      const patology = {};
 
       const response = await api.put(
         `/road/${id}/patology/null/findMany`,
@@ -28,10 +36,12 @@ export function Patology(){
         }
       );
       // function filtarar as patologias
-      setDataPatology(response.data.filter(item => item.videoId  === Number(video)));
+      setDataPatology(
+        response.data.filter((item) => item.videoId === Number(video))
+      );
     }
-    getPatology()
-  }, [])
+    getPatology();
+  }, []);
 
   function handleLock() {
     if (lock === true) {
@@ -42,7 +52,7 @@ export function Patology(){
   }
 
   async function deletePatology(idPatology) {
-    console.log("foi", id)
+    console.log("foi", id);
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const city = {};
 
@@ -59,11 +69,13 @@ export function Patology(){
         }
       );
 
-       if(response.status === 200){
+      if (response.status === 200) {
         // function para deleter o imtem do array dataCity
-        setDataPatology(dataPatology.filter(item => item.id !== response.data.id));
+        setDataPatology(
+          dataPatology.filter((item) => item.id !== response.data.id)
+        );
         window.alert("Muncípio deletado com sucesso");
-       }
+      }
     }
   }
   // criar paginação
@@ -75,22 +87,22 @@ export function Patology(){
 
   const paginatedData = paginate(dataPatology, currentPage, itemsPerPage);
   const totalPages = Math.ceil(dataPatology.length / itemsPerPage);
-  
+
   function goToPage(event, pageNumber) {
-    console.log("",pageNumber)
+    console.log("", pageNumber);
     setCurrentPage(pageNumber);
   }
-  
-  return(
-      <div className="mt-5 flex flex-col justify-center">
+
+  return (
+    <div className="mt-5 flex flex-col justify-center">
       <header className="flex justify-end ">
-          <NavLink
-            className="mb-5 flex items-center gap-1 hover:text-gold-400 hover:underline"
-            to={`/rodovias/videos/${id}/patology/${video}/register`}
-          >
-            <PlusCircle className="text-gold-400" size={22} />
-            Cadastrar Patologia
-          </NavLink>
+        <NavLink
+          className="mb-5 flex items-center gap-1 hover:text-gold-400 hover:underline"
+          to={`/rodovias/videos/${id}/patology/${video}/register`}
+        >
+          <PlusCircle className="text-gold-400" size={22} />
+          Cadastrar Patologia
+        </NavLink>
       </header>
       <table className="table-auto w-full text-center ">
         <thead>
@@ -105,9 +117,9 @@ export function Patology(){
             <th className="p-2 flex justify-end">
               <button
                 className=" text-sm  items-center justify-items-end gap-1 p-1 text-sm text-text-100 border rounded border-text-100 hover:bg-text-100 hover:text-white"
-                  onClick={handleLock}
-                >
-                  {lock ? <LockOpen size={18} /> : <Lock size={18} />}
+                onClick={handleLock}
+              >
+                {lock ? <LockOpen size={18} /> : <Lock size={18} />}
               </button>
             </th>
             <th>
@@ -116,18 +128,21 @@ export function Patology(){
           </tr>
         </thead>
         <tbody>
-          {paginatedData?.map((patology) =>{
-            const roadSide = JSON.parse(patology.roadSide)
-            const cracks = JSON.parse(patology.cracks)
-            const sags = JSON.parse(patology.sags)
-            const otherDefects = JSON.parse(patology.otherDefects)
-          
-            return(
-              <tr key={patology.id} className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200">
+          {paginatedData?.map((patology) => {
+            const roadSide = JSON.parse(patology.roadSide);
+            const cracks = JSON.parse(patology.cracks);
+            const sags = JSON.parse(patology.sags);
+            const otherDefects = JSON.parse(patology.otherDefects);
+
+            return (
+              <tr
+                key={patology.id}
+                className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
+              >
                 <td className="p-2  ">
-                  {roadSide.BD && "BD "}  
-                  {roadSide.BE && "BE "}  
-                  {roadSide.EIXO && "EIXO "}  
+                  {roadSide.BD && "BD "}
+                  {roadSide.BE && "BE "}
+                  {roadSide.EIXO && "EIXO "}
                   {roadSide.PISTA && "PISTA "}
                 </td>
                 <td className="p-2  ">
@@ -153,7 +168,7 @@ export function Patology(){
                   {cracks.TLL && "TLL "}
                 </td>
                 <td className="p-2  w-48 ">
-                <p className="truncate w-48">{patology.descrption}</p>
+                  <p className="truncate w-48">{patology.descrption}</p>
                 </td>
                 <td className="p-2  ">{patology.km}</td>
                 <td className="p-2  ">{patology.videoTime}</td>
@@ -161,32 +176,54 @@ export function Patology(){
                 <td className="p-2  ">{patology.longitude}</td>
                 <td className="p-2">
                   <div className="flex justify-end gap-4 items-center h-auto">
-                      <PencilLine size={24} color={"#0b7bb7"} />
-                      {patology.screenshotUrl ? <Dialog>
-                          <DialogTrigger className="">
-                            <Image size={24} color={"#56A899"} />
-                          </DialogTrigger>
-                          <Modalimage image={patology.screenshotUrl}/>
-                        </Dialog> : <Dialog>
-                          <DialogTrigger className="">
-                            <Image size={24} color={"#E8E4E4"} />
-                          </DialogTrigger>
-                          <Modalimage image={patology.screenshotUrl}/>
-                        </Dialog>}
-                      {lock 
-                        && 
-                        <TrashSimple 
-                          size={24} 
-                          color={"#e64a33"} 
-                          onClick={()=>{
-                            deletePatology(patology.id)
-                          }}
-                        />  
-                      }
+                    <Dialog>
+                      <DialogTrigger className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
+                        <PencilLine size={18} />
+                      </DialogTrigger>
+                      <ModalUpdate
+                        data={patology}
+                        roadSide={roadSide}
+                        cracks={cracks}
+                        sags={sags}
+                        otherDefects={otherDefects}
+                        id={patology.id}
+                      />
+                    </Dialog>
+
+                    {patology.screenshotUrl ? (
+                      <Dialog>
+                        <DialogTrigger className="">
+                          <Image size={24} color={"#56A899"} />
+                        </DialogTrigger>
+                        <Modalimage
+                          image={patology.screenshotUrl}
+                          id={patology.id}
+                        />
+                      </Dialog>
+                    ) : (
+                      <Dialog>
+                        <DialogTrigger className="">
+                          <Image size={24} color={"#E8E4E4"} />
+                        </DialogTrigger>
+                        <Modalimage
+                          image={patology.screenshotUrl}
+                          id={patology.id}
+                        />
+                      </Dialog>
+                    )}
+                    {lock && (
+                      <TrashSimple
+                        size={24}
+                        color={"#e64a33"}
+                        onClick={() => {
+                          deletePatology(patology.id);
+                        }}
+                      />
+                    )}
                   </div>
                 </td>
               </tr>
-            )
+            );
           })}
           <tr className=" bg-gray-300 border-b-2 border-gray-200 ">
             <td colSpan={9} className="p-2 rounded-ee-md rounded-es-md"></td>
@@ -194,8 +231,13 @@ export function Patology(){
         </tbody>
       </table>
       <div className="mx-auto flex items-center">
-        <Pagination className="mt-2.5 mb-3" count={totalPages} onChange={goToPage}  shape="rounded" />
+        <Pagination
+          className="mt-2.5 mb-3"
+          count={totalPages}
+          onChange={goToPage}
+          shape="rounded"
+        />
       </div>
     </div>
-  )
+  );
 }
