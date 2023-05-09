@@ -3,14 +3,18 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { CaretRight, PlusCircle } from "@phosphor-icons/react";
 import "../../../Global/slider.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
-import "swiper/css";
 import { useEffect, useState } from "react";
 import { api } from "../../../lib/api";
+import Pagination from '@mui/material/Pagination';
+
+// Import Swiper styles
+import "swiper/css";
 
 export function Dashboard() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   let stretch = null;
   //responsividade do slider
   const breakpoints = {
@@ -45,7 +49,6 @@ export function Dashboard() {
       const response = await api.get("/road", {
         headers: { Authorization: "Bearer " + token },
       });
-      console.log(response.data);
       setData(response.data);
     }
     GetRoads();
@@ -211,8 +214,23 @@ export function Dashboard() {
 
   if (data?.stretch) {
     stretch = JSON.parse(data?.stretch);
-    console.log("teste", stretch);
   }
+
+  // criar paginação
+  function paginate(items, currentPage, itemsPerPage) {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return items.slice(startIndex, endIndex);
+  }
+  const paginatedData = paginate(data, currentPage, itemsPerPage);
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  
+  function goToPage(event, pageNumber) {
+    console.log("",pageNumber)
+    setCurrentPage(pageNumber);
+  }
+
+  console.log(paginatedData, totalPages)
 
   return (
     <section className="w-full overflow-y-scroll ">
@@ -490,7 +508,7 @@ export function Dashboard() {
         </Swiper>
       </nav>
 
-      <div className="pr-5 mb-5">
+      <div className="pr-5 mb-5 flex flex-col">
         <table className="w-full text-center">
           <thead>
             <tr className="bg-gray-300 ">
@@ -504,7 +522,7 @@ export function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            {data.map((road) => {
+            {paginatedData.map((road) => {
               stretch = JSON.parse(road?.stretch);
               return (
                 <tr
@@ -536,6 +554,9 @@ export function Dashboard() {
             </tr>
           </tbody>
         </table>
+        <div className="mx-auto flex items-center">
+          <Pagination className="mt-2.5" count={totalPages} onChange={goToPage}  shape="rounded" />
+        </div>
       </div>
     </section>
   );

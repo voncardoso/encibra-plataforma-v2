@@ -22,6 +22,7 @@ import { DashboardUser } from "./Pages/User/Dashboard";
 import { RegisterUser } from "./Pages/User/Register";
 import "./global.css";
 import { UserInformation } from "./Pages/User/UserInformation";
+import { RegisterPatology } from "./Pages/Videos/RegisterPatology";
 
 function App() {
   return (
@@ -143,6 +144,14 @@ function App() {
                     element={
                       <PrivateRoutes>
                         <Patology />
+                      </PrivateRoutes>
+                    }
+                  />
+                  <Route
+                    path="/rodovias/videos/:id/patology/:video/register"
+                    element={
+                      <PrivateRoutes>
+                        <RegisterPatology />
                       </PrivateRoutes>
                     }
                   />

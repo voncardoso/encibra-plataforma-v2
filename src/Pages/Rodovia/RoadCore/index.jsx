@@ -1,18 +1,21 @@
 import { CaretRight, MagnifyingGlass } from "@phosphor-icons/react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { UserContextRoad } from "../../../Context/useContextRoad";
-
+import Pagination from '@mui/material/Pagination';
 export function RoadCore() {
   const params = useParams();
   const navigate = useNavigate();
   const {  GetRoads, road } = useContext(UserContextRoad);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   let stretch = null;
   useEffect(() =>{
     GetRoads()
   }, [])
 
   const dataRoad = road.filter((item) => item.regional === `0${params.id}`)
+
   
   const someRoadRegional = dataRoad.reduce(
     (acc, road) => {
@@ -47,6 +50,19 @@ export function RoadCore() {
       total: 0,
     }
   );
+
+  function paginate(items, currentPage, itemsPerPage) {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return items.slice(startIndex, endIndex);
+  }
+  const paginatedData = paginate(dataRoad, currentPage, itemsPerPage);
+  const totalPages = Math.ceil(dataRoad.length / itemsPerPage);
+  
+  function goToPage(event, pageNumber) {
+    console.log("",pageNumber)
+    setCurrentPage(pageNumber);
+  }
 
   return (
     <section className="w-full overflow-y-scroll ">
@@ -90,7 +106,7 @@ export function RoadCore() {
 
 
       {/**Table */}
-      <div className="pr-5">
+      <div className=" pr-5 flex flex-col">
         <table className="w-full text-center">
           <thead>
             <tr className="bg-gray-300 ">
@@ -104,7 +120,7 @@ export function RoadCore() {
             </tr>
           </thead>
           <tbody>
-            {dataRoad.map((road) =>{  stretch = JSON.parse(road?.stretch);
+            {paginatedData.map((road) =>{  stretch = JSON.parse(road?.stretch);
               return(
                 <tr 
                   className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
@@ -131,6 +147,9 @@ export function RoadCore() {
             </tr>
           </tbody>
         </table>
+        <div className="mx-auto flex items-center">
+          <Pagination className="mt-2.5 mb-3" count={totalPages} onChange={goToPage}  shape="rounded" />
+        </div>
       </div>
     </section>
   );
