@@ -31,6 +31,7 @@ export function Modalimage(props) {
   }, [props.image]);
 
   async function handleUpdate(data) {
+    console.log("foi")
     console.log(data);
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const formData = new FormData();

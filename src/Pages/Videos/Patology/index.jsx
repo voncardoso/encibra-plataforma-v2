@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import {
+  HouseLine,
   Image,
   Lock,
   LockOpen,
+  MapPin,
   PencilLine,
   PlusCircle,
   TrashSimple,
@@ -37,6 +39,7 @@ export function Patology() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
   // variavel mapa
+  const [showPopup, setShowPopup] = useState(null);
   const [viewport, setViewport] = useState();
   const [route, setRoute] = useState(null);
   const [routePatology, setRoutePatology] = useState(null);
@@ -56,6 +59,7 @@ export function Patology() {
     accessToken:
       "pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw",
   });
+
   console.log("patologia", dataPatology);
   let strech = null;
   if (dataRoad.stretch) {
@@ -104,6 +108,8 @@ export function Patology() {
 
     getSrech();
   }, [dataRoad, params.id]);
+
+
   useEffect(() => {
     function getCoordenadas() {
       dataPatology.map((item, index) => {
@@ -123,6 +129,7 @@ export function Patology() {
     }
     getCoordenadas();
   }, [dataRoad]);
+
   //function para redenrizar o traçado da rodovia
   useEffect(() => {
     directionsClient
@@ -157,7 +164,6 @@ export function Patology() {
   }
 
   async function deletePatology(idPatology) {
-    console.log("foi", id);
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const city = {};
 
@@ -183,6 +189,7 @@ export function Patology() {
       }
     }
   }
+
   // criar paginação
   function paginate(items, currentPage, itemsPerPage) {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -198,7 +205,7 @@ export function Patology() {
     setCurrentPage(pageNumber);
   }
 
-  console.log(startPatology, endPatology);
+  console.log(dataPatology)
   return (
     <div className="mt-5 flex flex-col justify-center">
       <header className="flex justify-end ">
@@ -358,6 +365,7 @@ export function Patology() {
             mapStyle="mapbox://styles/mapbox/streets-v11"
             mapboxAccessToken="pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw"
           >
+             {/**Tra a rota dos pontos iniciais */}
             <Marker
               latitude={+strech?.initialLatitude}
               longitude={+strech?.initialLongitude}
@@ -374,6 +382,8 @@ export function Patology() {
             >
               <div className="marker" />
             </Marker>
+
+           
             {route && (
               <Source type="geojson" data={route.geometry}>
                 <Layer
@@ -384,6 +394,65 @@ export function Patology() {
               </Source>
             )}
 
+            {/**Mostrar a imagem ao clicar no pin correspondente */}
+            {dataPatology.map((item) =>{
+              return(
+                <section key={item.id}>
+                  <Marker
+                    latitude={+item?.latitude}
+                    longitude={+item?.longitude}
+                    anchor="bottom"
+                    closeButton={(e) => setShowPopup(false)}
+                    onClick={(e) => {
+                      e.originalEvent.stopPropagation();
+                        setShowPopup(item);
+                        
+                    }}
+                  >
+                    {item.screenshotUrl !== "" && <MapPin className="text-sky-600 cursor-pointer" size={50} weight="duotone"/>}
+                    {item.screenshotUrl === "" && <MapPin className="text-red-500 cursor-pointer" size={50} weight="duotone"/>}
+                    {item.observation === "Vila" && <HouseLine className="text-emerald-500 cursor-pointer" size={50} weight="duotone"/>}
+                  </Marker>
+                </section>
+              )
+            })}
+
+            {showPopup && 
+            <Popup
+              longitude={showPopup.longitude}
+              latitude={showPopup.latitude}
+              anchor="center"
+              onClose={(e) => {
+                setShowPopup(null);
+              }}
+              maxWidth={"60vw"}
+            >
+              {showPopup.screenshotUrl ? 
+                <img src={showPopup.screenshotUrl} alt="" /> 
+                : 
+                <h1 className="text-4xl">
+                  {showPopup.km} km   
+                </h1>
+              }
+            </Popup>}
+
+            {/**controle dos mapa  */}
+            <div className="m-2 p-2 relative z-10 bg-white w-52 rounded-md">
+                  <ul>
+                    <li className="p-2 flex items-center gap-2 text-sm font-medium">
+                      <MapPin weight="duotone" className="text-sky-600" size={22}/>
+                     Com imagem
+                    </li>
+                    <li className="p-2 flex items-center gap-2 text-sm font-medium ">
+                      <MapPin weight="duotone" className="text-red-500"  size={22}/>
+                      Sem Imagem
+                    </li>
+                    <li className="p-2 flex items-center gap-2 text-sm">
+                      <HouseLine className="text-emerald-500" weight="duotone" size={22}/>
+                      Vila
+                    </li>
+                  </ul>
+                </div>
             <GeolocateControl position="top-right" />
             <FullscreenControl position="top-right" />
             <NavigationControl position="top-right" />
