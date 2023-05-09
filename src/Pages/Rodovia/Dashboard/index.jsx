@@ -1,6 +1,6 @@
 import { useKeenSlider } from "keen-slider/react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { CaretRight, PlusCircle } from "@phosphor-icons/react";
+import { CaretRight, MagnifyingGlass, PlusCircle } from "@phosphor-icons/react";
 import "../../../Global/slider.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useEffect, useState } from "react";
@@ -15,6 +15,8 @@ export function Dashboard() {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [filteredRoad, setFilteredRoad] = useState([]);
+  const [seach, setSeach] = useState("")
   let stretch = null;
   //responsividade do slider
   const breakpoints = {
@@ -230,8 +232,29 @@ export function Dashboard() {
     setCurrentPage(pageNumber);
   }
 
-  console.log(paginatedData, totalPages)
+  useEffect(() =>{
+    if(seach.length > 0){
+      setFilteredRoad(data.filter((item) => item.acronym.toLocaleUpperCase().includes(seach.toLocaleUpperCase())))
+    }else if(seach.length === 0){
+      setFilteredRoad([])
+    }
+  }, [seach])
 
+   // criar paginação
+   function paginate(items, currentPage, itemsPerPage) {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return items.slice(startIndex, endIndex);
+  }
+  const paginatedDataFilter = paginate(filteredRoad, currentPage, itemsPerPage);
+  const totalPagesFilter = Math.ceil(filteredRoad.length / itemsPerPage);
+  
+  function goToPage(event, pageNumber) {
+    console.log("",pageNumber)
+    setCurrentPage(pageNumber);
+  }
+
+  
   return (
     <section className="w-full overflow-y-scroll ">
       <header className="flex justify-between pr-5 pt-5 pb-8 items-center">
@@ -507,7 +530,18 @@ export function Dashboard() {
           </SwiperSlide>
         </Swiper>
       </nav>
-
+      <div className="py-4 flex justify-end pr-5">
+      <label className="flex items-center" htmlFor="">
+        <MagnifyingGlass size={22} className="relative left-8 text-gray-400"/>
+          <input
+            type="text"
+            className="w-60 bg-gray-input rounded-md p-2 pl-10"
+            placeholder="Buscar rodovia"
+            value={seach}
+            onChange={(event) => setSeach(event.target.value)}
+          />
+        </label>
+      </div>
       <div className="pr-5 mb-5 flex flex-col">
         <table className="w-full text-center">
           <thead>
@@ -522,7 +556,35 @@ export function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            {paginatedData.map((road) => {
+           {filteredRoad.length > 0 ?  
+           paginatedDataFilter.map((road) => {
+              stretch = JSON.parse(road?.stretch);
+              return (
+                <tr
+                  key={road.id}
+                  onClick={() => {
+                    navigate(`/rodovias/information/${road.id}`);
+                  }}
+                  className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
+                >
+                  <td className="p-2  ">{road.acronym}</td>
+                  <td className="p-2  ">{road.mesh}</td>
+                  <td className="p-2  ">{road.extention}</td>
+                  <td className="p-2  ">{stretch?.initialLatitude}</td>
+                  <td className="p-2  ">{stretch?.initialLongitude}</td>
+                  <td className="p-2  ">{road.uf}</td>
+                  <td className="p-2  ">
+                    <Link
+                      className="flex justify-center"
+                      to={``}
+                    >
+                      <CaretRight size={20} />
+                    </Link>
+                  </td>
+                </tr>
+              );
+            }) :  
+            paginatedData.map((road) => {
               stretch = JSON.parse(road?.stretch);
               return (
                 <tr
@@ -555,7 +617,7 @@ export function Dashboard() {
           </tbody>
         </table>
         <div className="mx-auto flex items-center">
-          <Pagination className="mt-2.5" count={totalPages} onChange={goToPage}  shape="rounded" />
+          <Pagination className="mt-2.5" count={filteredRoad.length > 0 ? totalPagesFilter : totalPages} onChange={goToPage}  shape="rounded" />
         </div>
       </div>
     </section>
