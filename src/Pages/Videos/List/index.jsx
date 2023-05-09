@@ -25,8 +25,6 @@ export function List() {
     }
   }
 
-  console.log("user", dataUser);
-  console.log("videos", dataRoad.videos);
 
   if (dataRoad) {
     if (

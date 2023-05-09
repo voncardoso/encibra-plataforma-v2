@@ -25,6 +25,8 @@ import { UserInformation } from "./Pages/User/UserInformation";
 import { RegisterPatology } from "./Pages/Videos/RegisterPatology";
 import { Igg } from "./Pages/Igg/List";
 import { RegisterIgg } from "./Pages/Igg/RegisterIgg";
+import { IggItem } from "./Pages/Igg/IggItem";
+import { ReportsPdf } from "./Pages/Igg/ReportsPdf";
 
 function App() {
   return (
@@ -34,6 +36,15 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Login />} />
+
+            <Route
+                    path="/igg/:igg/pdf"
+                    element={
+                      <PrivateRoutes>
+                        <ReportsPdf />
+                      </PrivateRoutes>
+                    }
+                  />  
 
             <Route path="/rodovias" element={<DefaultLayout />}>
               <Route
@@ -126,13 +137,24 @@ function App() {
                   />
 
                   <Route
-                    path="/rodovias/igg/:id"
+                    path="/rodovias/:id/igg"
                     element={
                       <PrivateRoutes>
                         <Igg />
                       </PrivateRoutes>
                     }
                   />
+
+                  <Route
+                    path="/rodovias/:id/igg/:igg"
+                    element={
+                      <PrivateRoutes>
+                        <IggItem />
+                      </PrivateRoutes>
+                    }
+                  />  
+
+                  
 
                   <Route
                     path="/rodovias/igg/:id/cadastro"
