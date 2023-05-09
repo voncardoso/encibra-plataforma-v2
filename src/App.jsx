@@ -23,12 +23,15 @@ import { RegisterUser } from "./Pages/User/Register";
 import "./global.css";
 import { UserInformation } from "./Pages/User/UserInformation";
 import { RegisterPatology } from "./Pages/Videos/RegisterPatology";
+import { Igg } from "./Pages/Igg/List";
+import { RegisterIgg } from "./Pages/Igg/RegisterIgg";
 
 function App() {
   return (
     <BrowserRouter>
       <UserStorageLogin>
         <UserStorageRoad>
+
           <Routes>
             <Route path="/" element={<Login />} />
 
@@ -122,6 +125,24 @@ function App() {
                     }
                   />
 
+                  <Route
+                    path="/rodovias/igg/:id"
+                    element={
+                      <PrivateRoutes>
+                        <Igg />
+                      </PrivateRoutes>
+                    }
+                  />
+
+                  <Route
+                    path="/rodovias/igg/:id/cadastro"
+                    element={
+                      <PrivateRoutes>
+                        <RegisterIgg />
+                      </PrivateRoutes>
+                    }
+                  />
+
                 <Route
                   path="/rodovias/videos/:id"
                   element={
@@ -157,8 +178,6 @@ function App() {
                   />
                 </Route>
               </Route>
-
-
             </Route>
 
             <Route path="/user" element={<DefaultLayoutUser/>}>
