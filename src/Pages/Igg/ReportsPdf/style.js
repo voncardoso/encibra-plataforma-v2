@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import image from "../../../assets/CapaRelatorio.png"
+import image from "../../../assets/CapaRelatorio.png";
 
 export const CapaRelatorio = styled.section`
   max-height: 810px;
@@ -378,7 +378,7 @@ export const CalculoIGG = styled.section`
       width: 47px;
     }
   }
-  .TricasFadigas {    
+  .TricasFadigas {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -482,7 +482,6 @@ export const FormulaCalculoIGG = styled.section`
     }
   }
 `;
-
 
 export const InventarioIGG = styled.section`
   height: 780px;
@@ -719,6 +718,151 @@ export const InventarioIGG = styled.section`
             }
           }
         }
+      }
+    }
+  }
+`;
+
+export const InventarioImage = styled.section`
+  height: 780px;
+  background: var(--white);
+  font-size: 12px;
+  width: 1094px;
+  margin: 0 auto;
+  padding: 0px 10px 0px 60px;
+  background: var(--white);
+  > div {
+    padding: 0px 10px 0px 60px;
+  }
+
+  h3 {
+    background: var(--white);
+    width: 100%;
+    background: #958671;
+    color: #000000;
+    padding: 5px 0px;
+    text-align: center;
+    border: 1px solid #958671;
+  }
+
+  .logo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    padding: 10px 0px 0px 0px;
+    img {
+      width: 200px;
+    }
+  }
+
+  .dadosPrincipais {
+    border: 1px solid #000000;
+    width: 100%;
+    padding: 0px 10px;
+    ul {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+
+      li {
+        padding: 5px;
+        strong {
+          display: flex;
+          padding: 5px 0px;
+
+          p {
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  .dados {
+    padding: 10px;
+    grid-column: 1 / 5;
+    display: flex;
+    div {
+      width: 80%;
+    }
+  }
+
+  .data {
+    border: 1px solid #000;
+    border-top: none;
+    border-bottom: none;
+    padding: 0px 0px;
+    ul {
+      display: block;
+      li {
+        height: 100%;
+        div {
+          width: 100px;
+          padding: 0px;
+        }
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 0px;
+      }
+    }
+  }
+
+  .folhaEstacao {
+    border: 1px solid #000;
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+    padding: 0px 0px;
+    ul {
+      display: block;
+      li {
+        height: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    }
+  }
+
+  .divPhoto {
+    background: var(--white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 60px;
+    //  border: 1px solid #000;
+    li {
+      width: 100%;
+      border: 1px solid #000;
+      header {
+        width: 100%;
+        border: none;
+
+        border-left: none;
+
+        h3 {
+          background: #958671;
+          width: 100%;
+          font-size: 12px;
+        }
+        ul {
+          display: flex;
+          //    border-bottom: 1px solid #000;
+          li {
+            padding: 2px 6px;
+            border: none;
+            border-bottom: 1px solid #000;
+            height: 34px;
+          }
+          li:nth-child(1) {
+            width: 70px;
+          }
+        }
+      }
+      img {
+        width: 100%;
+        height: 220px;
+        padding: 5px;
       }
     }
   }
