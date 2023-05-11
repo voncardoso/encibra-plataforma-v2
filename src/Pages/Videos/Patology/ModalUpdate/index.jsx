@@ -92,7 +92,7 @@ export function ModalUpdate(props) {
 
   return (
     <DialogPortal>
-      <DialogOverlay className=" fixed inset-0 bg-black bg-opacity-50">
+      <DialogOverlay className=" fixed inset-0 bg-black bg-opacity-50 z-20">
         <DialogContent className="overflow-y-auto h-5/6 fixed w-3/4 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-lg p-4">
           <header className="pt-5 px-5 flex justify-between">
             <h1 className="text-xl text font-bold">Atualizar Patologia</h1>

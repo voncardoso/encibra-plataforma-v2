@@ -56,6 +56,7 @@ export const CalculoIGG = styled.section`
   height: 780px;
   background: var(--white);
   font-size: 12px;
+  line-height: 16px;
   font-weight: 600;
 
   > div {
@@ -93,7 +94,7 @@ export const CalculoIGG = styled.section`
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 
         li {
-          padding: 5px;
+          padding:0px 5px;
           strong {
             display: flex;
             padding: 5px 0px;
