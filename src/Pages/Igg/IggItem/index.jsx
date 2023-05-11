@@ -36,7 +36,7 @@ export function IggItem(){
                                     </div>
                                 </div>
                                 <ul className=" p-2 flex flex-col gap-2 ">
-                                    <NavLink to={`/igg/${params.igg}/pdf`}>
+                                    <NavLink to={`/${params.id}/igg/${params.igg}/pdf/`}>
                                         <FileText className="text-gold-400" size={30}/>
                                     </NavLink >
                                 </ul>

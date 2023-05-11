@@ -10,8 +10,98 @@ import {
   InventarioIGG,
   InventarioImage,
 } from "./style";
+import { useLocation, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { UserContextRoad } from "../../../Context/useContextRoad";
+import { useEffect } from "react";
 
 export function ReportsPdf() {
+  const params = useParams();
+  const { Roads, dataRoad, setIdReloadRoad } = useContext(UserContextRoad);
+  const {pathname} = useLocation();
+  let totalPaginas = 0
+  let totalPaginasPhoto = 0
+
+  useEffect(() => {
+    Roads(params.id);
+    setIdReloadRoad(params.id)
+  }, [pathname]);
+
+  const DataIgg = dataRoad.iggs?.filter((igg) => igg.id === Number(params.igg))
+  const DataVideo = dataRoad.videos?.filter((video) => video.id === Number(DataIgg[0].videoId))
+  const DataPatology = dataRoad.patology?.filter((patologys) => patologys.videoId === DataVideo[0].id)
+  .sort((a, b) => a.km - b.km)
+
+  // função para mostrar o array em lista de 14 items
+  function splitArrayforTen(){
+    var resultado = [];
+    var grupo = 0;
+
+    if (DataPatology) {
+      for (var i = 0; i < DataPatology.length; i++) {
+        if (resultado[grupo] === undefined) {
+          resultado[grupo] = [];
+        }
+
+        resultado[grupo].push(
+          DataPatology[i]
+        );
+
+        if ((i + 1) % 14 === 0) {
+          grupo = grupo + 1;
+        }
+      }
+    }
+
+    console.log("resultado",resultado)
+    if(DataPatology){
+      totalPaginas = DataPatology.length  / 10;
+    }
+
+    return resultado[0];
+  }
+
+ // função para mostrar o array em lista de 4 items
+  function splitArrayforFour() {
+    var resultado = [];
+    var data2 = [];
+    var grupo = 0;
+
+    DataPatology?.map((item) => {
+      if (item.screenshotUrl !== "") {
+        data2.push(item);
+      }
+    });
+
+    if (DataPatology) {
+      for (let i = 0; i < data2.length; i++) {
+        if (resultado[grupo] === undefined) {
+          resultado[grupo] = [];
+        }
+
+        resultado[grupo].push(
+          data2.sort(function (a, b) {
+            return a.km < b.km ? -1 : a.km > b.km ? 1 : 0;
+          })[i]
+        );
+
+        if ((i + 1) % 4 === 0) {
+          grupo = grupo + 1;
+        }
+      }
+    }
+    totalPaginasPhoto = data2.length / 4;
+    console.log("resultado 2", resultado)
+    return resultado[0];
+  }
+
+  console.log(" rodovia",dataRoad)
+  console.log(" iggs", DataIgg)
+  console.log(" videos", DataVideo)
+  console.log(" patologia", DataPatology)
+
+  
+
   return (
     <section className="bg-white h-screen w-screen">
       <CapaRelatorio>
@@ -610,35 +700,88 @@ export function ReportsPdf() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>12</td>
-                <td>001</td>
-                <td>BD</td>
-                <td>{}</td>
-                <td className="tdCinza espaco">FI</td>
-                <td className="tdCinza espaco">TTC</td>
-                <td className="tdCinza espaco">TTL</td>
-                <td className="tdCinza espaco">TLC</td>
-                <td className="tdCinza espaco">TLL</td>
-                <td className="tdCinza espaco">TRR</td>
-                <td className="espaco">J</td>
-                <td className="espaco">TB</td>
-                <td className="tdCinza espaco">JE</td>
-                <td className="tdCinza espaco">TBE</td>
-                <td className="espaco">ALP</td>
-                <td className="espaco">ATP</td>
-                <td className="espaco">ALC</td>
-                <td className="espaco">ATC</td>
-                <td className="tdCinza espaco">O</td>
-                <td className="tdCinza espaco">P</td>
-                <td className="tdCinza espaco">E</td>
-                <td className="espaco">EX</td>
-                <td className="tdCinza espaco">D</td>
-                <td className="espaco">R</td>
-                <td className="tdLaranja espaco">TRI</td>
-                <td className="tdLaranja espaco">TRE</td>
-                <td>teste</td>
-              </tr>
+              {splitArrayforTen()?.map((patology) => {
+                const roadSide = JSON.parse(patology.roadSide);
+                const cracks = JSON.parse(patology.cracks);
+                const sags = JSON.parse(patology.sags);
+                const otherDefects = JSON.parse(patology.otherDefects);
+                console.log(sags)
+                return(
+                  <tr>
+                    <td>12</td>
+                    <td>{Intl.NumberFormat('pt-br',{
+                              minimumFractionDigits: 3,
+                              maximumFractionDigits: 3,
+                            }).format(patology.km).replace(/,/g, '.')}
+                    </td>
+                    <td>{roadSide.BD && "BD" || roadSide.BE && "BE" || roadSide.EIXO && "EIXO" || roadSide.PISTA && "PISTA"}</td>
+                    <td>{}</td>
+                    <td className="tdCinza espaco">
+                      {cracks.FI && "X"}    
+                    </td>
+                    <td className="tdCinza espaco">
+                    {cracks.TTC && "X"}
+                    </td>
+                    <td className="tdCinza espaco">
+                    {cracks.TTL && "X"}
+                    </td>
+                    <td className="tdCinza espaco">
+                    {cracks.TLC && "X"}
+                    </td>
+                    <td className="tdCinza espaco">
+                    {cracks.TLL && "X"}
+                    </td>
+                    <td className="tdCinza espaco">
+                    {cracks.TRR && "X"}
+                    </td>
+                    <td className="espaco">
+                    {cracks.J && "X"}
+                    </td>
+                    <td className="espaco">
+                    {cracks.TB && "X"}
+                    </td>
+                    <td className="tdCinza espaco">
+                    {cracks.JE && "X"}
+                    </td>
+                    <td className="tdCinza espaco">
+                    {cracks.TBE && "X"}
+                    </td>
+                    <td className="espaco">
+                    {sags.ALP && "X"} 
+                    </td>
+                    <td className="espaco">
+                    {sags.ATP && "X"}
+                    </td>
+                    <td className="espaco">
+                    {sags.ALC && "X"}
+                    </td>
+                    <td className="espaco">
+                    {sags.ATC && "X"}
+                    </td>
+                    <td className="tdCinza espaco">
+                    {otherDefects.O && "X"}
+                    </td>
+                    <td className="tdCinza espaco">
+                    {otherDefects.P && "X"}
+                    </td>
+                    <td className="tdCinza espaco">
+                    {otherDefects.E && "X"}
+                    </td>
+                    <td className="espaco">
+                    {otherDefects.EX && "X"}
+                    </td>
+                    <td className="tdCinza espaco">
+                      {otherDefects.D && "X"}
+                    </td>
+                    <td className="espaco">
+                      {otherDefects.R && "X"}
+                    </td>
+                    <td className="tdLaranja espaco"></td>
+                    <td className="tdLaranja espaco"></td>
+                    <td>{patology.observation}</td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>
@@ -688,16 +831,21 @@ export function ReportsPdf() {
           </ul>
         </div>
         <ul className="divPhoto">
-          <li>
-            <header>
-              <h3>Foto 12</h3>
-              <ul className="title">
-                <li>teste</li>
-                <li>teste</li>
-              </ul>
-            </header>
-            <img src="" alt="teste" />
-          </li>
+          {splitArrayforFour()?.map((image) => {
+            console.log("image", image)
+            return(
+              <li>
+                <header>
+                  <h3>Foto 12</h3>
+                  <ul className="title">
+                    <li>{image?.observation ? "Observação:" : "Patologias:"}</li>
+                    <li>{image.descrption}</li>
+                  </ul>
+                </header>
+                <img src={image?.screenshotUrl} alt="teste" />
+              </li>
+            )
+          })}
         </ul>
       </InventarioImage>
     </section>

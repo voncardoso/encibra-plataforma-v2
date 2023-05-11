@@ -5,7 +5,7 @@ import { api } from "../../../lib/api";
 
 export function RegisterIgg(){
     const { dataRoad } = useContext(UserContextRoad);
-    console.log(dataRoad)
+    
     const {
         register,
         handleSubmit,

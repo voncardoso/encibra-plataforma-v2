@@ -38,7 +38,7 @@ function App() {
             <Route path="/" element={<Login />} />
 
             <Route
-                    path="/igg/:igg/pdf"
+                    path="/:id/igg/:igg/pdf"
                     element={
                       <PrivateRoutes>
                         <ReportsPdf />
