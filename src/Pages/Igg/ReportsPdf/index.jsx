@@ -18,23 +18,26 @@ import { useEffect } from "react";
 export function ReportsPdf() {
   const params = useParams();
   const { Roads, dataRoad, setIdReloadRoad } = useContext(UserContextRoad);
-  const {pathname} = useLocation();
-  let totalPaginas = 0
-  let totalPaginasPhoto = 0
-  let totalIgg = 0
+  const { pathname } = useLocation();
+  let totalPaginas = 0;
+  let totalPaginasPhoto = 0;
+  let totalIgg = 0;
 
   useEffect(() => {
     Roads(params.id);
-    setIdReloadRoad(params.id)
+    setIdReloadRoad(params.id);
   }, [pathname]);
 
-  const DataIgg = dataRoad.iggs?.filter((igg) => igg.id === Number(params.igg))
-  const DataVideo = dataRoad.videos?.filter((video) => video.id === Number(DataIgg[0].videoId))
-  const DataPatology = dataRoad.patology?.filter((patologys) => patologys.videoId === DataVideo[0].id)
-  .sort((a, b) => a.km - b.km)
+  const DataIgg = dataRoad.iggs?.filter((igg) => igg.id === Number(params.igg));
+  const DataVideo = dataRoad.videos?.filter(
+    (video) => video.id === Number(DataIgg[0].videoId)
+  );
+  const DataPatology = dataRoad.patology
+    ?.filter((patologys) => patologys.videoId === DataVideo[0].id)
+    .sort((a, b) => a.km - b.km);
 
   // função para mostrar o array em lista de 14 items
-  function splitArrayforTen(){
+  function splitArrayforTen() {
     var resultado = [];
     var grupo = 0;
 
@@ -44,9 +47,7 @@ export function ReportsPdf() {
           resultado[grupo] = [];
         }
 
-        resultado[grupo].push(
-          DataPatology[i]
-        );
+        resultado[grupo].push(DataPatology[i]);
 
         if ((i + 1) % 14 === 0) {
           grupo = grupo + 1;
@@ -54,14 +55,14 @@ export function ReportsPdf() {
       }
     }
 
-    if(DataPatology){
-      totalPaginas = DataPatology.length  / 10;
+    if (DataPatology) {
+      totalPaginas = DataPatology.length / 10;
     }
 
     return resultado[0];
   }
 
- // função para mostrar o array em lista de 4 items
+  // função para mostrar o array em lista de 4 items
   function splitArrayforFour() {
     var resultado = [];
     var data2 = [];
@@ -94,198 +95,190 @@ export function ReportsPdf() {
     return resultado[0];
   }
 
-  
   // soma os item do inventario
-  const somaSags = DataPatology?.reduce((acc, patology) => {
-    const sags = JSON.parse(patology.sags);
+  const somaSags = DataPatology?.reduce(
+    (acc, patology) => {
+      const sags = JSON.parse(patology.sags);
 
-    if(!patology.observation){
-      if(sags.ATP === true){
-        acc.ATP += 1;
-        acc.total += 1
-        acc.totalAlpAtp += 1;
-      }
+      if (!patology.observation) {
+        if (sags.ATP === true) {
+          acc.ATP += 1;
+          acc.total += 1;
+          acc.totalAlpAtp += 1;
+        }
 
-      if(sags
-        .ALP === true){
-        acc.ALP += 1 
-        acc.total += 1
-        acc.totalAlpAtp += 1;
-      }
+        if (sags.ALP === true) {
+          acc.ALP += 1;
+          acc.total += 1;
+          acc.totalAlpAtp += 1;
+        }
 
-      if(sags.ALC === true){
-        acc.ALC += 1 
-        acc.total += 1
-        acc.totalAlcAtc += 1
-      }
+        if (sags.ALC === true) {
+          acc.ALC += 1;
+          acc.total += 1;
+          acc.totalAlcAtc += 1;
+        }
 
-      if(sags
-        .ATC === true){
-        acc.ATC += 1 
-        acc.total += 1
-        acc.totalAlcAtc += 1
+        if (sags.ATC === true) {
+          acc.ATC += 1;
+          acc.total += 1;
+          acc.totalAlcAtc += 1;
+        }
       }
+      return acc;
+    },
+    {
+      ATP: 0,
+      ALP: 0,
+      ALC: 0,
+      ATC: 0,
+      totalAlpAtp: 0,
+      totalAlcAtc: 0,
+      total: 0,
     }
-    return acc
-  },{
-    ATP: 0,
-    ALP: 0,
-    ALC: 0,
-    ATC: 0,
-    totalAlpAtp: 0,
-    totalAlcAtc: 0,
-    total: 0
-  })
+  );
 
-  const somaCracks = DataPatology?.reduce((acc, patology) => {
-    const cracks = JSON.parse(patology.cracks);
-   
-    if(!patology.observation){
-      if(cracks
-        .FI === true){
-        acc.FI += 1;
-        acc.total += 1
-      }
-      if(cracks
-        .J === true){
-        acc.J += 1 
-        acc.total += 1
-        acc.totalTrincasInterligadasSemErosao += 1;
-      }
+  const somaCracks = DataPatology?.reduce(
+    (acc, patology) => {
+      const cracks = JSON.parse(patology.cracks);
 
-      if(cracks.JE === true){
-        acc.JE += 1 
-        acc.total += 1
-        acc.totalTrincasInterligadasComErosao += 1;
-      }
+      if (!patology.observation) {
+        if (cracks.FI === true) {
+          acc.FI += 1;
+          acc.total += 1;
+        }
+        if (cracks.J === true) {
+          acc.J += 1;
+          acc.total += 1;
+          acc.totalTrincasInterligadasSemErosao += 1;
+        }
 
-      if(cracks
-        .TB === true){
-        acc.TB += 1 
-        acc.total += 1
-        acc.totalTrincasInterligadasSemErosao += 1;
-      }
+        if (cracks.JE === true) {
+          acc.JE += 1;
+          acc.total += 1;
+          acc.totalTrincasInterligadasComErosao += 1;
+        }
 
-      if(cracks
-        .TBE === true){
-        acc.TBE += 1 
-        acc.total += 1
-        acc.totalTrincasInterligadasComErosao += 1;
-      }
+        if (cracks.TB === true) {
+          acc.TB += 1;
+          acc.total += 1;
+          acc.totalTrincasInterligadasSemErosao += 1;
+        }
 
-      if(cracks
-        .TLC === true){
-        acc.TLC += 1 
-        acc.total += 1
-        acc.totalTrincasIsoladas += 1
-      }
+        if (cracks.TBE === true) {
+          acc.TBE += 1;
+          acc.total += 1;
+          acc.totalTrincasInterligadasComErosao += 1;
+        }
 
-      if(cracks
-        .TLL === true){
-        acc.TLL += 1 
-        acc.total += 1
-        acc.totalTrincasIsoladas += 1
-      }
+        if (cracks.TLC === true) {
+          acc.TLC += 1;
+          acc.total += 1;
+          acc.totalTrincasIsoladas += 1;
+        }
 
-      if(cracks
-        .TRR === true){
-        acc.TRR += 1 
-        acc.total += 1
-      }
+        if (cracks.TLL === true) {
+          acc.TLL += 1;
+          acc.total += 1;
+          acc.totalTrincasIsoladas += 1;
+        }
 
-      if(cracks
-        .TTC === true){
-        acc.TTC += 1 
-        acc.total += 1
-        acc.totalTrincasIsoladas += 1
-      }
+        if (cracks.TRR === true) {
+          acc.TRR += 1;
+          acc.total += 1;
+        }
 
-      if(cracks
-        .TTL === true){
-        acc.TTL += 1 
-        acc.total += 1
-        acc.totalTrincasIsoladas += 1
+        if (cracks.TTC === true) {
+          acc.TTC += 1;
+          acc.total += 1;
+          acc.totalTrincasIsoladas += 1;
+        }
+
+        if (cracks.TTL === true) {
+          acc.TTL += 1;
+          acc.total += 1;
+          acc.totalTrincasIsoladas += 1;
+        }
       }
+      return acc;
+    },
+    {
+      FI: 0,
+      J: 0,
+      JE: 0,
+      TB: 0,
+      TBE: 0,
+      TLC: 0,
+      TLL: 0,
+      TRR: 0,
+      TTC: 0,
+      TTL: 0,
+      totalTrincasIsoladas: 0,
+      totalTrincasInterligadasSemErosao: 0,
+      totalTrincasInterligadasComErosao: 0,
+      total: 0,
     }
-    return acc
-  }, {
-    FI: 0,
-    J: 0,
-    JE: 0,
-    TB: 0,
-    TBE: 0,
-    TLC: 0,
-    TLL: 0,
-    TRR:0,
-    TTC:0,
-    TTL: 0,
-    totalTrincasIsoladas: 0,
-    totalTrincasInterligadasSemErosao: 0,
-    totalTrincasInterligadasComErosao: 0,
-    total: 0
-  })
+  );
 
-  const somaOtherDefects = DataPatology?.reduce((acc, patology) =>{
-    const otherDefects = JSON.parse(patology.otherDefects);
-    if(!patology.observation){
-      if(otherDefects
-        .D === true){
-        acc.D += 1;
-        acc.total += 1
-      }
-      if(otherDefects
-        .E === true){
-        acc.E += 1 
-        acc.total += 1
-       
-      }
+  const somaOtherDefects = DataPatology?.reduce(
+    (acc, patology) => {
+      const otherDefects = JSON.parse(patology.otherDefects);
+      if (!patology.observation) {
+        if (otherDefects.D === true) {
+          acc.D += 1;
+          acc.total += 1;
+        }
+        if (otherDefects.E === true) {
+          acc.E += 1;
+          acc.total += 1;
+        }
 
-      if(otherDefects.EX === true){
-        acc.EX += 1 
-        acc.total += 1
-        
-      }
+        if (otherDefects.EX === true) {
+          acc.EX += 1;
+          acc.total += 1;
+        }
 
-      if(otherDefects
-        .O === true){
-        acc.O += 1 
-        acc.total += 1
-  
-      }
+        if (otherDefects.O === true) {
+          acc.O += 1;
+          acc.total += 1;
+        }
 
-      if(otherDefects
-        .P === true){
-        acc.P += 1 
-        acc.total += 1
-      }
+        if (otherDefects.P === true) {
+          acc.P += 1;
+          acc.total += 1;
+        }
 
-      if(otherDefects
-        .R === true){
-        acc.R += 1 
-        acc.total += 1
-        acc.totalTrincasIsoladas += 1
+        if (otherDefects.R === true) {
+          acc.R += 1;
+          acc.total += 1;
+          acc.totalTrincasIsoladas += 1;
+        }
       }
-    }
-    return acc
-  },{
+      return acc;
+    },
+    {
       D: 0,
       E: 0,
       EX: 0,
       O: 0,
       P: 0,
       R: 0,
-      total: 0
-  })
+      total: 0,
+    }
+  );
 
   // quantitade de intems do inventario
-  const amountStation = DataPatology?.reduce((acc, patology) =>{
-    if(!patology.observation){
-      acc.total += 1
+  const amountStation = DataPatology?.reduce(
+    (acc, patology) => {
+      if (!patology.observation) {
+        acc.total += 1;
+      }
+      return acc;
+    },
+    {
+      total: 0,
     }
-    return acc;
-  }, {
-    total: 0
-  })
+  );
 
   // frequencia relativa
 
@@ -301,26 +294,21 @@ export function ReportsPdf() {
 
   function ConteiIGG(concept) {
     if (+concept <= 20) {
-      return ("Ótimo");
-    } else if (+conc > 20 && +conc <= 40) {
-      return ("Bom");
-    } else if (+conc > 40 && +conc <= 80) {
-      return ("Regular");
-    } else if (+conc > 80 && +conc <= 160) {
-      return ("Ruim");
-    } else if (+conc > 160) {
-      return ("Pessimo");
+      return "Ótimo";
+    } else if (+concept > 20 && +concept <= 40) {
+      return "Bom";
+    } else if (+concept > 40 && +concept <= 80) {
+      return "Regular";
+    } else if (+concept > 80 && +concept <= 160) {
+      return "Ruim";
+    } else if (+concept > 160) {
+      return "Pessimo";
     }
   }
-  console.log("soma sags", somaSags)
-  console.log("cracks", somaCracks)
-  console.log("somaOtherDefects", somaOtherDefects)
-  console.log("amountStation", amountStation)
+  console.log("Data", dataRoad);
+  console.log("Data igg", DataIgg);
 
-
-  
-
-  if(DataPatology){
+  if (DataPatology) {
     return (
       <section className="bg-white h-screen w-screen">
         <CapaRelatorio>
@@ -328,10 +316,10 @@ export function ReportsPdf() {
             <img src={LogoEncibra} alt="" />
             <img src={LogoSetran} alt="" />
           </header>
-          <h1>Teste TEste 40</h1>
-          <h4>Trecho</h4>
+          <h1 className="font-bold">{dataRoad.acronym}</h1>
+          <h4>{DataIgg[0].description}</h4>
         </CapaRelatorio>
-  
+
         <CalculoIGG>
           <div>
             <div className="logo">
@@ -339,7 +327,7 @@ export function ReportsPdf() {
               <img src={LogoSetran} alt="" />
             </div>
             <h3>PLANILHA DE CÁLCULO DO ÍNDICE DE GRAVIDADE GLOBAL - IGG</h3>
-  
+
             <div className="dadosPrincipais">
               <ul>
                 <li className="dados">
@@ -377,7 +365,7 @@ export function ReportsPdf() {
                 </li>
               </ul>
             </div>
-  
+
             <table>
               <thead>
                 <tr>
@@ -395,7 +383,7 @@ export function ReportsPdf() {
                   <th>Observações</th>
                 </tr>
               </thead>
-              <tbody >
+              <tbody>
                 {/**linha 1*/}
                 <tr>
                   <td>1</td>
@@ -403,7 +391,8 @@ export function ReportsPdf() {
                     <ul>
                       <li>Fissuras</li>
                       <li>
-                        Trincas Isoladas, atribuidas a fadiga: TTC, TTL, TLC, TLL
+                        Trincas Isoladas, atribuidas a fadiga: TTC, TTL, TLC,
+                        TLL
                       </li>
                       <li>Trincas Isoladas não atribuidas a fadiga: TRR</li>
                     </ul>
@@ -411,22 +400,34 @@ export function ReportsPdf() {
                   <td>
                     <ul className="FrequenciaAbsoluta">
                       <li>{somaCracks?.FI}</li>
-                      <li className="TricasFadigas">{somaCracks.totalTrincasIsoladas}</li>
+                      <li className="TricasFadigas">
+                        {somaCracks.totalTrincasIsoladas}
+                      </li>
                       <li>{somaCracks.TRR}</li>
                     </ul>
                   </td>
                   <td>
                     <ul className="FrequenciaAbsoluta">
                       <li>{somaCracks?.FI}</li>
-                      <li className="TricasFadigas">{somaCracks.totalTrincasIsoladas}</li>
+                      <li className="TricasFadigas">
+                        {somaCracks.totalTrincasIsoladas}
+                      </li>
                       <li>{somaCracks.TRR}</li>
                     </ul>
                   </td>
                   <td className="frenquenciaRelativa">
                     <ul className="FrequenciaAbsoluta">
-                      <li>{RelativeFrequency(somaCracks?.FI).toLocaleString()}</li>
-                      <li className="TricasFadigas">{RelativeFrequency(somaCracks.totalTrincasIsoladas).toLocaleString()}</li>
-                      <li>{RelativeFrequency(somaCracks.TRR).toLocaleString()}</li>
+                      <li>
+                        {RelativeFrequency(somaCracks?.FI).toLocaleString()}
+                      </li>
+                      <li className="TricasFadigas">
+                        {RelativeFrequency(
+                          somaCracks.totalTrincasIsoladas
+                        ).toLocaleString()}
+                      </li>
+                      <li>
+                        {RelativeFrequency(somaCracks.TRR).toLocaleString()}
+                      </li>
                     </ul>
                   </td>
                   <td>
@@ -439,22 +440,22 @@ export function ReportsPdf() {
                   <td>
                     <ul className="FrequenciaAbsoluta">
                       <li>
-                        {
-                          IndividualIGGCalculation(
-                            RelativeFrequency(somaCracks?.FI), 0.2).toLocaleString()
-                        }
+                        {IndividualIGGCalculation(
+                          RelativeFrequency(somaCracks?.FI),
+                          0.2
+                        ).toLocaleString()}
                       </li>
-                      <li className="TricasFadigas">                        
-                        {
-                          IndividualIGGCalculation(
-                            RelativeFrequency(somaCracks.totalTrincasIsoladas), 0.2).toLocaleString()
-                        }
+                      <li className="TricasFadigas">
+                        {IndividualIGGCalculation(
+                          RelativeFrequency(somaCracks.totalTrincasIsoladas),
+                          0.2
+                        ).toLocaleString()}
                       </li>
                       <li>
-                        {
-                          IndividualIGGCalculation(
-                            RelativeFrequency(somaCracks.TRR), 0.2).toLocaleString()
-                        }
+                        {IndividualIGGCalculation(
+                          RelativeFrequency(somaCracks.TRR),
+                          0.2
+                        ).toLocaleString()}
                       </li>
                     </ul>
                   </td>
@@ -467,49 +468,61 @@ export function ReportsPdf() {
                   </td>
                   {/** */}
                 </tr>
-  
+
                 {/**linha 2*/}
                 <tr className="item2">
                   <td>2</td>
                   <td>Trincas Interligadas, sem erosão: (FC-2) J, TB</td>
                   <td>{somaCracks.totalTrincasInterligadasSemErosao}</td>
                   <td>{somaCracks.totalTrincasInterligadasSemErosao}</td>
-                  <td className="FrenquenciaRelativa">{RelativeFrequency(somaCracks.totalTrincasInterligadasSemErosao).toLocaleString()}</td>
+                  <td className="FrenquenciaRelativa">
+                    {RelativeFrequency(
+                      somaCracks.totalTrincasInterligadasSemErosao
+                    ).toLocaleString()}
+                  </td>
                   <td>0,5</td>
                   <td>
-                      {
-                        IndividualIGGCalculation(
-                          RelativeFrequency(somaCracks.totalTrincasInterligadasSemErosao), 0.5).toLocaleString()
-                      }
+                    {IndividualIGGCalculation(
+                      RelativeFrequency(
+                        somaCracks.totalTrincasInterligadasSemErosao
+                      ),
+                      0.5
+                    ).toLocaleString()}
                   </td>
                   <td>{""}</td>
                 </tr>
-  
+
                 {/**linha 3*/}
                 <tr className="item2">
                   <td>3</td>
                   <td>Trincas Interligadas, com erosão: (FC-3) JE, TBE</td>
                   <td>{somaCracks.totalTrincasInterligadasComErosao}</td>
                   <td>{somaCracks.totalTrincasInterligadasComErosao}</td>
-                  <td>{RelativeFrequency(somaCracks.totalTrincasInterligadasComErosao).toLocaleString()}</td>
+                  <td>
+                    {RelativeFrequency(
+                      somaCracks.totalTrincasInterligadasComErosao
+                    ).toLocaleString()}
+                  </td>
                   <td>0,8</td>
                   <td>
-                      {
-                        IndividualIGGCalculation(
-                          RelativeFrequency(somaCracks.totalTrincasInterligadasComErosao), 0.8).toLocaleString()
-                      }
+                    {IndividualIGGCalculation(
+                      RelativeFrequency(
+                        somaCracks.totalTrincasInterligadasComErosao
+                      ),
+                      0.8
+                    ).toLocaleString()}
                   </td>
                   <td>{""}</td>
                 </tr>
-  
+
                 {/**linha 4*/}
                 <tr>
                   <td>4</td>
                   <td>
                     <ul>
                       <li>
-                        Afundamento Plástico Local (ALP) e Afundamento Plástico da
-                        Trilha (ATP)
+                        Afundamento Plástico Local (ALP) e Afundamento Plástico
+                        da Trilha (ATP)
                       </li>
                       <li>
                         Afundamento de Consolidação Local (ALC) e Afundamento de
@@ -517,7 +530,7 @@ export function ReportsPdf() {
                       </li>
                     </ul>
                   </td>
-  
+
                   <td>
                     <ul className="FrequenciaAbsoluta">
                       <li className="linha4LiTop">
@@ -528,7 +541,7 @@ export function ReportsPdf() {
                       </li>
                     </ul>
                   </td>
-  
+
                   <td style={{ background: "#5B5B5B", color: "#5B5B5B" }}>
                     <ul className="FrequenciaAbsoluta">
                       <li className="linha4LiTop">
@@ -539,43 +552,53 @@ export function ReportsPdf() {
                       </li>
                     </ul>
                   </td>
-  
+
                   <td>
                     <ul className="FrequenciaAbsoluta">
                       <li className="linha4LiTop">
-                        <p>{RelativeFrequency(somaSags.totalAlpAtp).toLocaleString()}</p>
-                      </li>
-                      <li className="linha4LiBottom">
-                        <p>{RelativeFrequency(somaSags.totalAlcAtc).toLocaleString()}</p>
-                      </li>
-                    </ul>
-                  </td>
-  
-                  <td>
-                    <ul className="FrequenciaAbsoluta">
-                      <li className="linha4LiTop">
-                        <p>0,9</p>
-                      </li>
-                      <li className="linha4LiBottom">
-                        <p>0,9</p>
-                      </li>
-                    </ul>
-                  </td>
-                  <td>
-                    <ul className="FrequenciaAbsoluta">
-                      <li className="linha4LiTop">
-                        <p> {
-                          IndividualIGGCalculation(
-                            RelativeFrequency(somaSags.totalAlpAtp), 0.9).toLocaleString()
-                        }
-                      </p>
+                        <p>
+                          {RelativeFrequency(
+                            somaSags.totalAlpAtp
+                          ).toLocaleString()}
+                        </p>
                       </li>
                       <li className="linha4LiBottom">
                         <p>
-                          {
-                            IndividualIGGCalculation(
-                              RelativeFrequency(somaSags.totalAlcAtc), 0.9).toLocaleString()
-                          }
+                          {RelativeFrequency(
+                            somaSags.totalAlcAtc
+                          ).toLocaleString()}
+                        </p>
+                      </li>
+                    </ul>
+                  </td>
+
+                  <td>
+                    <ul className="FrequenciaAbsoluta">
+                      <li className="linha4LiTop">
+                        <p>0,9</p>
+                      </li>
+                      <li className="linha4LiBottom">
+                        <p>0,9</p>
+                      </li>
+                    </ul>
+                  </td>
+                  <td>
+                    <ul className="FrequenciaAbsoluta">
+                      <li className="linha4LiTop">
+                        <p>
+                          {" "}
+                          {IndividualIGGCalculation(
+                            RelativeFrequency(somaSags.totalAlpAtp),
+                            0.9
+                          ).toLocaleString()}
+                        </p>
+                      </li>
+                      <li className="linha4LiBottom">
+                        <p>
+                          {IndividualIGGCalculation(
+                            RelativeFrequency(somaSags.totalAlcAtc),
+                            0.9
+                          ).toLocaleString()}
                         </p>
                       </li>
                     </ul>
@@ -591,11 +614,11 @@ export function ReportsPdf() {
                     </ul>
                   </td>
                 </tr>
-  
+
                 {/**linha 5*/}
                 <tr>
                   <td>5</td>
-  
+
                   <td>
                     <ul>
                       <li>Ondulação / corrugação - O</li>
@@ -603,7 +626,7 @@ export function ReportsPdf() {
                       <li>Escorregamento do revestimento betuminoso - E</li>
                     </ul>
                   </td>
-  
+
                   <td>
                     <ul className="FrequenciaAbsoluta">
                       <li>{somaOtherDefects.O}</li>
@@ -611,7 +634,7 @@ export function ReportsPdf() {
                       <li>{somaOtherDefects.E}</li>
                     </ul>
                   </td>
-  
+
                   <td>
                     <ul
                       style={{ background: "#5B5B5B", color: "#5B5B5B" }}
@@ -634,33 +657,45 @@ export function ReportsPdf() {
                   </td>
                   <td>
                     <ul className="FrequenciaAbsoluta">
-                      <li>{RelativeFrequency(somaOtherDefects.O).toLocaleString()}</li>
-                      <li>{RelativeFrequency(somaOtherDefects.P).toLocaleString()}</li>
-                      <li>{RelativeFrequency(somaOtherDefects.E).toLocaleString()}</li>
-                    </ul>
-                  </td>
-                  <td>
-                    <ul className="FrequenciaAbsoluta">
-                      <li>1,0</li>
-                      <li>1,0</li>
-                      <li>1,0</li>
-                    </ul>
-                  </td>
-                  <td>
-                    <ul className="FrequenciaAbsoluta">
-                      <li> {
-                          IndividualIGGCalculation(
-                            RelativeFrequency(somaOtherDefects.O), 0.1).toLocaleString()
-                        }
+                      <li>
+                        {RelativeFrequency(somaOtherDefects.O).toLocaleString()}
                       </li>
-                      <li>{
-                          IndividualIGGCalculation(
-                            RelativeFrequency(somaOtherDefects.P), 0.1).toLocaleString()
-                        }</li>
-                      <li>{
-                          IndividualIGGCalculation(
-                            RelativeFrequency(somaOtherDefects.E), 0.1).toLocaleString()
-                        }</li>
+                      <li>
+                        {RelativeFrequency(somaOtherDefects.P).toLocaleString()}
+                      </li>
+                      <li>
+                        {RelativeFrequency(somaOtherDefects.E).toLocaleString()}
+                      </li>
+                    </ul>
+                  </td>
+                  <td>
+                    <ul className="FrequenciaAbsoluta">
+                      <li>1,0</li>
+                      <li>1,0</li>
+                      <li>1,0</li>
+                    </ul>
+                  </td>
+                  <td>
+                    <ul className="FrequenciaAbsoluta">
+                      <li>
+                        {" "}
+                        {IndividualIGGCalculation(
+                          RelativeFrequency(somaOtherDefects.O),
+                          0.1
+                        ).toLocaleString()}
+                      </li>
+                      <li>
+                        {IndividualIGGCalculation(
+                          RelativeFrequency(somaOtherDefects.P),
+                          0.1
+                        ).toLocaleString()}
+                      </li>
+                      <li>
+                        {IndividualIGGCalculation(
+                          RelativeFrequency(somaOtherDefects.E),
+                          0.1
+                        ).toLocaleString()}
+                      </li>
                     </ul>
                   </td>
                   <td>
@@ -672,7 +707,7 @@ export function ReportsPdf() {
                   </td>
                   {/** */}
                 </tr>
-  
+
                 {/**linha 6*/}
                 <tr className="item2">
                   <td>6</td>
@@ -681,52 +716,60 @@ export function ReportsPdf() {
                   <td style={{ background: "#5B5B5B", color: "#5B5B5B" }}>
                     {"."}
                   </td>
-                  <td>{RelativeFrequency(somaOtherDefects.EX).toLocaleString()}</td>
+                  <td>
+                    {RelativeFrequency(somaOtherDefects.EX).toLocaleString()}
+                  </td>
                   <td>0,5</td>
-                  <td>{
-                          IndividualIGGCalculation(
-                            RelativeFrequency(somaOtherDefects.EX), 0.5).toLocaleString()
-                        }</td>
+                  <td>
+                    {IndividualIGGCalculation(
+                      RelativeFrequency(somaOtherDefects.EX),
+                      0.5
+                    ).toLocaleString()}
+                  </td>
                   <td>{""}</td>
                 </tr>
-  
+
                 {/**linha 7*/}
                 <tr className="item2">
                   <td>7</td>
                   <td>Desgaste acentuado do pavimento - D</td>
                   <td>{somaOtherDefects.D}</td>
-                  <td style={{ background: "#5B5B5B", color: "#5B5B5B" }}>12</td>
-                  <td>{RelativeFrequency(somaOtherDefects.D).toLocaleString()}</td>
+                  <td style={{ background: "#5B5B5B", color: "#5B5B5B" }}>
+                    12
+                  </td>
+                  <td>
+                    {RelativeFrequency(somaOtherDefects.D).toLocaleString()}
+                  </td>
                   <td>0,3</td>
-                  <td>{
-                          IndividualIGGCalculation(
-                            RelativeFrequency(somaOtherDefects.D), 0.3).toLocaleString()
-                        }</td>
+                  <td>
+                    {IndividualIGGCalculation(
+                      RelativeFrequency(somaOtherDefects.D),
+                      0.3
+                    ).toLocaleString()}
+                  </td>
                   <td>{""}</td>
                 </tr>
-  
+
                 {/**linha 8*/}
                 <tr className="item2">
                   <td>8</td>
                   <td>Remendos - R</td>
                   <td>{somaOtherDefects.R}</td>
-                  <td style={{ background: "#5B5B5B", color: "#5B5B5B" }}>12</td>
-                  <td>
-                   0
+                  <td style={{ background: "#5B5B5B", color: "#5B5B5B" }}>
+                    12
                   </td>
+                  <td>0</td>
                   <td>0,6</td>
-                  <td>
-                    0
-                  </td>
+                  <td>0</td>
                   <td>{""}</td>
                 </tr>
-  
+
                 {/**linha 9*/}
                 <tr className="item2">
                   <td>9</td>
                   <td>
-                    Média aritmética dos valores médios das flechas medidas em mm
-                    nas TRI e TRE
+                    Média aritmética dos valores médios das flechas medidas em
+                    mm nas TRI e TRE
                   </td>
                   <td className="tdItmeTre">
                     {" "}
@@ -745,7 +788,7 @@ export function ReportsPdf() {
                   <td></td>
                   <td></td>
                 </tr>
-  
+
                 {/**linha 10*/}
                 <tr className="item2">
                   <td>10</td>
@@ -764,13 +807,13 @@ export function ReportsPdf() {
                   </td>
                   <td className="position1A1B">
                     <p>2A ( )</p>
-  
+
                     <p>2B ( )</p>
                   </td>
                   <td className="tdItmeTre"> </td>
                   <td></td>
                 </tr>
-  
+
                 {/**linha 11*/}
                 <tr className="footer">
                   <td></td>
@@ -791,8 +834,8 @@ export function ReportsPdf() {
                   </td>
                 </tr>
 
-                 {/**resultado igg */}
-                 <tr className="ResultadoIGG ">
+                {/**resultado igg */}
+                <tr className="ResultadoIGG ">
                   <td></td>
                   <td></td>
                   <td></td>
@@ -810,7 +853,7 @@ export function ReportsPdf() {
             </table>
           </div>
         </CalculoIGG>
-  
+
         <FormulaCalculoIGG>
           <div>
             <div className="logo">
@@ -820,7 +863,7 @@ export function ReportsPdf() {
             <h3>
               FÓRMULAS USADAS NO CÁLCULO DO ÍNDICE DE GRAVIDADE GLOBAL - IGG
             </h3>
-  
+
             <div className="formulas">
               <ul>
                 <li>
@@ -880,14 +923,14 @@ export function ReportsPdf() {
             </div>
           </div>
         </FormulaCalculoIGG>
-  
+
         <InventarioIGG>
           <div>
             <div className="logo">
               <img src={LogoEncibra} alt="" />
               <img src={LogoSetran} alt="" />
             </div>
-  
+
             <h3>INVENTÁRIO DO ESTADO DA SUPERFÍCIE DO PAVIMENTO</h3>
             <div className="dadosPrincipais">
               <ul style={{ fontWeight: "bold" }}>
@@ -926,13 +969,13 @@ export function ReportsPdf() {
                 </li>
               </ul>
             </div>
-  
+
             <table>
               <thead>
                 <tr>
                   <th colSpan={4}></th>
                   <th colSpan={10}>TRINCAS</th>
-  
+
                   <th colSpan={4}>AFUNDAMENTOS</th>
                   <th colSpan={6}>OUTROS DEFEITOS</th>
                   <th colSpan={2}>TRINCAS RODAS</th>
@@ -986,87 +1029,63 @@ export function ReportsPdf() {
                   const cracks = JSON.parse(patology.cracks);
                   const sags = JSON.parse(patology.sags);
                   const otherDefects = JSON.parse(patology.otherDefects);
-                  return(
+                  return (
                     <tr>
                       <td>12</td>
-                      <td>{Intl.NumberFormat('pt-br',{
-                                minimumFractionDigits: 3,
-                                maximumFractionDigits: 3,
-                              }).format(patology.km).replace(/,/g, '.')}
+                      <td>
+                        {Intl.NumberFormat("pt-br", {
+                          minimumFractionDigits: 3,
+                          maximumFractionDigits: 3,
+                        })
+                          .format(patology.km)
+                          .replace(/,/g, ".")}
                       </td>
-                      <td>{roadSide.BD && "BD" || roadSide.BE && "BE" || roadSide.EIXO && "EIXO" || roadSide.PISTA && "PISTA"}</td>
+                      <td>
+                        {(roadSide.BD && "BD") ||
+                          (roadSide.BE && "BE") ||
+                          (roadSide.EIXO && "EIXO") ||
+                          (roadSide.PISTA && "PISTA")}
+                      </td>
                       <td>{}</td>
+                      <td className="tdCinza espaco">{cracks.FI && "X"}</td>
+                      <td className="tdCinza espaco">{cracks.TTC && "X"}</td>
+                      <td className="tdCinza espaco">{cracks.TTL && "X"}</td>
+                      <td className="tdCinza espaco">{cracks.TLC && "X"}</td>
+                      <td className="tdCinza espaco">{cracks.TLL && "X"}</td>
+                      <td className="tdCinza espaco">{cracks.TRR && "X"}</td>
+                      <td className="espaco">{cracks.J && "X"}</td>
+                      <td className="espaco">{cracks.TB && "X"}</td>
+                      <td className="tdCinza espaco">{cracks.JE && "X"}</td>
+                      <td className="tdCinza espaco">{cracks.TBE && "X"}</td>
+                      <td className="espaco">{sags.ALP && "X"}</td>
+                      <td className="espaco">{sags.ATP && "X"}</td>
+                      <td className="espaco">{sags.ALC && "X"}</td>
+                      <td className="espaco">{sags.ATC && "X"}</td>
                       <td className="tdCinza espaco">
-                        {cracks.FI && "X"}    
-                      </td>
-                      <td className="tdCinza espaco">
-                      {cracks.TTC && "X"}
-                      </td>
-                      <td className="tdCinza espaco">
-                      {cracks.TTL && "X"}
-                      </td>
-                      <td className="tdCinza espaco">
-                      {cracks.TLC && "X"}
-                      </td>
-                      <td className="tdCinza espaco">
-                      {cracks.TLL && "X"}
-                      </td>
-                      <td className="tdCinza espaco">
-                      {cracks.TRR && "X"}
-                      </td>
-                      <td className="espaco">
-                      {cracks.J && "X"}
-                      </td>
-                      <td className="espaco">
-                      {cracks.TB && "X"}
+                        {otherDefects.O && "X"}
                       </td>
                       <td className="tdCinza espaco">
-                      {cracks.JE && "X"}
+                        {otherDefects.P && "X"}
                       </td>
                       <td className="tdCinza espaco">
-                      {cracks.TBE && "X"}
+                        {otherDefects.E && "X"}
                       </td>
-                      <td className="espaco">
-                      {sags.ALP && "X"} 
-                      </td>
-                      <td className="espaco">
-                      {sags.ATP && "X"}
-                      </td>
-                      <td className="espaco">
-                      {sags.ALC && "X"}
-                      </td>
-                      <td className="espaco">
-                      {sags.ATC && "X"}
-                      </td>
-                      <td className="tdCinza espaco">
-                      {otherDefects.O && "X"}
-                      </td>
-                      <td className="tdCinza espaco">
-                      {otherDefects.P && "X"}
-                      </td>
-                      <td className="tdCinza espaco">
-                      {otherDefects.E && "X"}
-                      </td>
-                      <td className="espaco">
-                      {otherDefects.EX && "X"}
-                      </td>
+                      <td className="espaco">{otherDefects.EX && "X"}</td>
                       <td className="tdCinza espaco">
                         {otherDefects.D && "X"}
                       </td>
-                      <td className="espaco">
-                        {otherDefects.R && "X"}
-                      </td>
+                      <td className="espaco">{otherDefects.R && "X"}</td>
                       <td className="tdLaranja espaco"></td>
                       <td className="tdLaranja espaco"></td>
                       <td>{patology.observation}</td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
           </div>
         </InventarioIGG>
-  
+
         <InventarioImage>
           <div className="logo">
             <img src={LogoEncibra} alt="" />
@@ -1112,18 +1131,20 @@ export function ReportsPdf() {
           </div>
           <ul className="divPhoto">
             {splitArrayforFour()?.map((image) => {
-              return(
+              return (
                 <li>
                   <header>
                     <h3>Foto 12</h3>
                     <ul className="title">
-                      <li>{image?.observation ? "Observação:" : "Patologias:"}</li>
+                      <li>
+                        {image?.observation ? "Observação:" : "Patologias:"}
+                      </li>
                       <li>{image.descrption}</li>
                     </ul>
                   </header>
                   <img src={image?.screenshotUrl} alt="teste" />
                 </li>
-              )
+              );
             })}
           </ul>
         </InventarioImage>

@@ -25,6 +25,7 @@ export function List() {
     }
   }
 
+  console.log(dataRoad);
 
   if (dataRoad) {
     if (
@@ -85,7 +86,7 @@ export function List() {
       );
     } else if (dataUser.position === "ENGINEER") {
       const dataVideoFilter = dataRoad.videos?.filter(
-        (item) => item.createdBy === 4
+        (item) => item.createdBy === dataUser.id
       );
       return (
         <section className="w-full">

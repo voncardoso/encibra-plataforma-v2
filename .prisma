@@ -18,60 +18,71 @@ model City {
   sequence  String
   roadId    Int    @map("road_id")
   roads     Roads  @relation(fields: [roadId], references: [id])
+
   @@map("city")
 }
 
 model Company {
   id   Int    @id @default(autoincrement())
   name String
+
   createdAt    DateTime       @default(now()) @map("created_at")
   updatedAt    DateTime       @updatedAt @map("updated_at")
   deletedAt    DateTime?      @map("deleted_at")
   userXCompany UserXCompany[]
   videos       Videos[]
+
   @@map("company")
 }
 
 model Iggs {
-  id       Int      @id @default(autoincrement())
-  date     DateTime
-  level    Level
-  regional String
-  videoId  Int      @map("video_id")
-  roadId   Int      @map("road_id")
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  level       Level
+  regional    String
+  videoId     Int      @map("video_id")
+  roadId      Int      @map("road_id")
+  section     String
+  description String   @db.Text
+
   deletedAt DateTime? @map("deleted_at")
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
+
   roads  Roads   @relation(fields: [roadId], references: [id])
   videos Videos? @relation(fields: [videoId], references: [id])
+
   reports  Reports[]
   patology Patology[]
+
   @@map("iggs")
 }
 
 model Patology {
-  id            Int    @id @default(autoincrement())
-  acronym       String //sigla da rodovias
-  code          String 
-  cracks        String @db.Text // rachaduras = trincas
-  descrption    String // descrption
-  iggsId        Int? // id do igg
+  id            Int     @id @default(autoincrement())
+  acronym       String
+  code          String
+  cracks        String  @db.Text
+  descrption    String
+  iggsId        Int?
   km            String
-  level         Level // principal ou sub
-  roadId        Int    @map("road_id") // id da rodovia
-  roadSide      String @map("road_side") @db.Text //lado
-  screenshotUrl String @map("screenshot_url") // imagem
-  type          String //
-  videoId       Int    @map("video_id") // id video
-  videoTime     String @map("video_time") // tempo do video 
+  level         Level
+  roadId        Int     @map("road_id")
+  roadSide      String  @map("road_side") @db.Text
+  screenshotUrl String  @map("screenshot_url")
+  type          String
+  videoId       Int     @map("video_id")
+  videoTime     String  @map("video_time")
   observation   String? @db.Text
   sags          String? @db.Text
   otherDefects  String? @db.Text
   latitude      String? @db.Text
   longitude     String? @db.Text
+
   roads  Roads  @relation(fields: [roadId], references: [id])
   videos Videos @relation(fields: [videoId], references: [id])
   iggs   Iggs?  @relation(fields: [iggsId], references: [id])
+
   @@map("patology")
 }
 
@@ -83,22 +94,30 @@ model Points {
   description String @db.Text
   kilometer   String
   roadId      Int    @map("road_id")
+
   roads Roads @relation(fields: [roadId], references: [id])
+
   @@map("points")
 }
 
 model Reports {
-  id      Int    @id @default(autoincrement())
-  userId  Int    @map("user_id")
-  level   Level
-  videoId Int    @map("video_id")
-  iggId   Int    @map("igg_id")
-  users   Users  @relation(fields: [userId], references: [id])
-  iggs    Iggs   @relation(fields: [id], references: [id])
-  videos  Videos @relation(fields: [videoId], references: [id])
+  id          Int    @id @default(autoincrement())
+  userId      Int    @map("user_id")
+  level       Level
+  videoId     Int    @map("video_id")
+  iggId       Int    @map("igg_id")
+  users       Users  @relation(fields: [userId], references: [id])
+  iggs        Iggs   @relation(fields: [id], references: [id])
+  videos      Videos @relation(fields: [videoId], references: [id])
+  initialKm   String @map("initial_km")
+  finalKm     String @map("final_km")
+  section     String
+  description String @db.Text
+
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
+
   @@map("reports")
 }
 
@@ -107,7 +126,9 @@ model Revetment {
   type      String
   extention String
   roadId    Int    @map("road_id")
+
   roads Roads @relation(fields: [roadId], references: [id])
+
   @@map("revetments")
 }
 
@@ -122,12 +143,14 @@ model Roads {
   revesment String
   stretch   String             @db.Text
   uf        StatesAbbreviation
+
   city      City[]
   iggs      Iggs[]
   patology  Patology[]
   points    Points[]
   revetment Revetment[]
   videos    Videos[]
+
   @@map("roads")
 }
 
@@ -142,12 +165,15 @@ model Users {
   enrollment    String?  @unique
   corporationId Int?     @map("corporation_id")
   token         String?  @db.VarChar(500)
+
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
+
   reports      Reports[]
   userXCompany UserXCompany[]
   videos       Videos[]
+
   @@map("users")
 }
 
@@ -155,11 +181,14 @@ model UserXCompany {
   id        Int @id @default(autoincrement())
   userId    Int @map("user_id")
   companyId Int @map("company_id")
+
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
+
   users   Users   @relation(fields: [userId], references: [id])
   company Company @relation(fields: [companyId], references: [id])
+
   @@map("user_x_company")
 }
 
@@ -176,15 +205,19 @@ model Videos {
   roadId    Int              @map("road_id")
   companyId Int              @map("company_id")
   createdBy Int              @map("created_by")
+
   createdAt DateTime  @default(now()) @map("created_at")
   deletedAt DateTime? @map("deleted_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
+
   company Company @relation(fields: [companyId], references: [id])
   roads   Roads   @relation(fields: [roadId], references: [id])
   users   Users   @relation(fields: [createdBy], references: [id])
+
   iggs     Iggs[]
   patology Patology[]
   reports  Reports[]
+
   @@map("videos")
 }
 
@@ -239,3 +272,4 @@ enum ProcessingStatus {
   PROCESSING
   PROCESSED
 }
+

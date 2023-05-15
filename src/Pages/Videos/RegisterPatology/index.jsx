@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { UserContextRoad } from "../../../Context/useContextRoad";
 import { useParams } from "react-router-dom";
@@ -10,6 +10,7 @@ export function RegisterPatology() {
   const [fileImage, setFileImage] = useState("");
   const [preview, setPreview] = useState(null);
   const [formData, setFormData] = useState(new FormData());
+  const [descrptionTeste, setDescriptionTeste] = useState("");
 
   const {
     register,
@@ -17,6 +18,9 @@ export function RegisterPatology() {
     formState: { errors },
     control,
     reset,
+    setField,
+    watch,
+    setValue,
   } = useForm({
     defaultValues: {},
   });
@@ -46,7 +50,7 @@ export function RegisterPatology() {
             JE: data.JE,
             TBE: data.TBE,
           }),
-          descrption: data.descrption,
+          descrption: descrptionTeste,
           km: data.km,
           level: "MAIN",
           roadId: dataRoad.id,
@@ -97,7 +101,7 @@ export function RegisterPatology() {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log("imagem", response);
       // verifica se a imagem foi cadstrada no storage
       if (response.status === 200) {
         // adiciona a url da imagem ao file image
@@ -121,7 +125,7 @@ export function RegisterPatology() {
               JE: data.JE,
               TBE: data.TBE,
             }),
-            descrption: data.descrption,
+            descrption: descrptionTeste,
             km: data.km,
             level: "MAIN",
             roadId: dataRoad.id,
@@ -183,6 +187,84 @@ export function RegisterPatology() {
     }
     return true;
   };
+
+  useEffect(() => {
+    function handleDescrptionPatology() {
+      if (watch("FI") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+      if (watch("TTC") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+      if (watch("TTL") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+      if (watch("TTC") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+      if (watch("TRR") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+      if (watch("J") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+      if (watch("TB") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+      if (watch("JE") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+      if (watch("TBE") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+
+      // afundamentos
+      if (watch("ALP") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+
+      if (watch("ATP") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+
+      if (watch("ALC") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+
+      if (watch("ATC") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+
+      // outros dedefirtos
+      if (watch("O") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+
+      if (watch("P") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+
+      if (watch("E") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+
+      if (watch("EX") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+
+      if (watch("D") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+
+      if (watch("R") === true) {
+        setValue("descrption", descrptionTeste);
+      }
+    }
+    handleDescrptionPatology();
+  }, [descrptionTeste]);
+
+  console.log("---descrptionTeste---", descrptionTeste);
+  console.log("---descrption---", watch("descrption"));
 
   return (
     <section className="mt-5 flex overflow-auto w-full   border-b-8 border-background rounded-md">
@@ -279,6 +361,9 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="FI"
+              onClick={() => {
+                setDescriptionTeste(descrptionTeste + " Fissuras - FI;");
+              }}
               {...register("FI")}
             />
             <label htmlFor="FI">FI</label>
@@ -288,6 +373,12 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="TTC"
+              onClick={() => {
+                setDescriptionTeste(
+                  descrptionTeste +
+                    " Trincas Isoladas Tranversais Curtas - TTC;"
+                );
+              }}
               {...register("TTC")}
             />
             <label htmlFor="TTC">TTC</label>
@@ -297,6 +388,12 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="TTL"
+              onClick={() => {
+                setDescriptionTeste(
+                  descrptionTeste +
+                    " Trincas Isoladas Tranversais Longas - TTL;"
+                );
+              }}
               {...register("TTL")}
             />
             <label htmlFor="TTL">TTL</label>
@@ -306,6 +403,12 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="TLC"
+              onClick={() => {
+                setDescriptionTeste(
+                  descrptionTeste +
+                    " Trincas Isoladas Longitudinais Curtas - TLC;"
+                );
+              }}
               {...register("TLC")}
             />
             <label htmlFor="TLC">TLC</label>
@@ -315,6 +418,12 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="TLL"
+              onClick={() => {
+                setDescriptionTeste(
+                  descrptionTeste +
+                    " Trincas Isoladas Longitudinais Longas - TLL"
+                );
+              }}
               {...register("TLL")}
             />
             <label htmlFor="TLL">TLL</label>
@@ -324,6 +433,11 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="TRR"
+              onClick={() => {
+                setDescriptionTeste(
+                  descrptionTeste + " Trincas Isolodas Devido a Retração - TRR"
+                );
+              }}
               {...register("TRR")}
             />
             <label htmlFor="TRR">TRR</label>
@@ -333,6 +447,12 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="J"
+              onClick={() => {
+                setDescriptionTeste(
+                  descrptionTeste +
+                    "Trincas Interligadas Tipo jacaré Sem Erosão - J"
+                );
+              }}
               {...register("J")}
             />
             <label htmlFor="J">J</label>
@@ -342,6 +462,12 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="TB"
+              onClick={() => {
+                setDescriptionTeste(
+                  descrptionTeste +
+                    "Trincas Interligadas Tipo Bloco sem Erosão - TB"
+                );
+              }}
               {...register("TB")}
             />
             <label htmlFor="TB">TB</label>
@@ -351,6 +477,12 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="JE"
+              onClick={() => {
+                setDescriptionTeste(
+                  descrptionTeste +
+                    " Trincas Interligadas Tipo jacaré com Erosão - JE;"
+                );
+              }}
               {...register("JE")}
             />
             <label htmlFor="JE">JE</label>
@@ -360,6 +492,12 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="TBE"
+              onClick={() => {
+                setDescriptionTeste(
+                  descrptionTeste +
+                    " Trincas Interligadas Tipo Bloco com Erosão - TBE;"
+                );
+              }}
               {...register("TBE")}
             />
             <label htmlFor="TBE">TBE</label>
@@ -375,6 +513,11 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="ALP"
+              onClick={() => {
+                setDescriptionTeste(
+                  descrptionTeste + " Afundamento Plástico Local - ALP;"
+                );
+              }}
               {...register("ALP")}
             />
             <label htmlFor="ALP">ALP</label>
@@ -384,6 +527,11 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="ATP"
+              onClick={() => {
+                setDescriptionTeste(
+                  descrptionTeste + " Afundamento Plástico Da Trilha - ATP;"
+                );
+              }}
               {...register("ATP")}
             />
             <label htmlFor="ATP">ATP</label>
@@ -393,6 +541,11 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="ALC"
+              onClick={() => {
+                setDescriptionTeste(
+                  descrptionTeste + " Afundamento De Consolidção Local - ALC;"
+                );
+              }}
               {...register("ALC")}
             />
             <label htmlFor="ALC">ALC</label>
@@ -402,6 +555,12 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="ATC"
+              onClick={() => {
+                setDescriptionTeste(
+                  descrptionTeste +
+                    " Afundamento De Consolidação Da Trilha - ATC;"
+                );
+              }}
               {...register("ATC")}
             />
             <label htmlFor="ATC">ATC</label>
@@ -417,6 +576,9 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="O"
+              onClick={() => {
+                setDescriptionTeste(descrptionTeste + " Ondulação - O;");
+              }}
               {...register("O")}
             />
             <label htmlFor="O">O</label>
@@ -426,6 +588,9 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="P"
+              onClick={() => {
+                setDescriptionTeste(descrptionTeste + " Panela ou Buraco - P;");
+              }}
               {...register("P")}
             />
             <label htmlFor="P">P</label>
@@ -435,6 +600,9 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="E"
+              onClick={() => {
+                setDescriptionTeste(descrptionTeste + " Escorregamento - E;");
+              }}
               {...register("E")}
             />
             <label htmlFor="E">E</label>
@@ -444,6 +612,9 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="EX"
+              onClick={() => {
+                setDescriptionTeste(descrptionTeste + " Exsudação - EX;");
+              }}
               {...register("EX")}
             />
             <label htmlFor="EX">EX</label>
@@ -453,6 +624,9 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="D"
+              onClick={() => {
+                setDescriptionTeste(descrptionTeste + " Desgaste - D;");
+              }}
               {...register("D")}
             />
             <label htmlFor="D">D</label>
@@ -462,6 +636,9 @@ export function RegisterPatology() {
               className="w-4 h-4 cursor-pointer"
               type="checkbox"
               id="R"
+              onClick={() => {
+                setDescriptionTeste(descrptionTeste + " Remendo - R;");
+              }}
               {...register("R")}
             />
             <label htmlFor="R">R</label>
@@ -526,8 +703,8 @@ export function RegisterPatology() {
             cols="30"
             rows="10"
             required
-            on
-            {...register("descrption", { required: true })}
+            value={descrptionTeste}
+            onChange={(event) => setDescriptionTeste(event.target.value)}
           ></textarea>
         </div>
 
