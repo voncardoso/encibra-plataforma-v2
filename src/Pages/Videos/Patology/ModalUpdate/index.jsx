@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 export function ModalUpdate(props) {
   const params = useParams();
   const [preview, setPreview] = useState(null);
-
+  console.log(props)
   //roadSide
   const [activeBD, setActiveBD] = useState(false)
   const [activeBE, setActiveBE] = useState(false)
@@ -38,6 +38,14 @@ export function ModalUpdate(props) {
   const [activeALC,  setActiveALC ] = useState(false)
   const [activeATC,  setActiveATC ] = useState(false)
 
+  //otherDefects
+  const [activeO,   setActiveO  ] = useState(false)
+  const [activeP,   setActiveP  ] = useState(false)
+  const [activeE,   setActiveE  ] = useState(false)
+  const [activeEX,  setActiveEX ] = useState(false)
+  const [activeD,   setActiveD  ] = useState(false)
+  const [activeR,   setActiveR  ] = useState(false)
+
   useEffect(() =>{
     function active(){
       setActiveBD(props.roadSide.BD)
@@ -60,6 +68,14 @@ export function ModalUpdate(props) {
       setActiveATP(props.sags.ATP)
       setActiveALC(props.sags.ALC)
       setActiveATC(props.sags.ATC)
+
+      setActiveO(props.otherDefects.O)
+      setActiveP(props.otherDefects.P)
+      setActiveE(props.otherDefects.E)
+      setActiveEX(props.otherDefects.EX)
+      setActiveD(props.otherDefects.D)
+      setActiveR(props.otherDefects.R)
+      
     }
 
     active()
@@ -881,66 +897,232 @@ export function ModalUpdate(props) {
               Outros Defeitos
             </h2>
             <ul className="flex gap-x-10 gap-y-5 flex-wrap">
-              <li className="flex gap-2 items-center ">
+              {activeO ? 
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="O"
+                    checked
+                     onClick={() =>{
+                    if(activeO === true){
+                      setActiveO(false)
+                    }else{
+                      setActiveO(true)
+                    }
+                  }}
+                    {...register("O")}
+                  />
+                  <label htmlFor="O">O</label>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="O"
+                    
+                    onClick={() =>{
+                    if(activeO === true){
+                      setActiveO(false)
+                    }else{
+                      setActiveO(true)
+                    }
+                  }}
+                    {...register("O")}
+                  />
+                  <label htmlFor="O">O</label>
+                </li>
+              }
+
+              {activeP ?
+                <li className="flex gap-2 items-center ">
                 <input
-                  className="w-4 h-4 cursor-pointer"
-                  type="checkbox"
-                  id="O"
-                  checked={props.otherDefects.O}
-                  {...register("O")}
-                />
-                <label htmlFor="O">O</label>
-              </li>
-              <li className="flex gap-2 items-center ">
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="P"
+                    checked
+                    onClick={() =>{
+                    if(activeP === true){
+                      setActiveP(false)
+                    }else{
+                      setActiveP(true)
+                    }
+                  }}
+                   {...register("P")}
+                  />
+                  <label htmlFor="P">P</label>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="P"
-                  checked={props.otherDefects.P}
+                 
+                  onClick={() =>{
+                    if(activeP === true){
+                      setActiveP(false)
+                    }else{
+                      setActiveP(true)
+                    }
+                  }}
                   {...register("P")}
                 />
                 <label htmlFor="P">P</label>
-              </li>
-              <li className="flex gap-2 items-center ">
+                </li>
+              }
+              
+              {activeE ? 
+                <li className="flex gap-2 items-center ">
+                <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="E"
+                    checked
+                    onClick={() =>{
+                    if(activeE === true){
+                      setActiveE(false)
+                    }else{
+                      setActiveE(true)
+                    }
+                  }}
+                    {...register("E")}
+                  />
+                  <label htmlFor="E">E</label>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="E"
-                  checked={props.otherDefects.E}
+                  onClick={() =>{
+                    if(activeE === true){
+                      setActiveE(false)
+                    }else{
+                      setActiveE(true)
+                    }
+                  }}
                   {...register("E")}
                 />
                 <label htmlFor="E">E</label>
+                </li>
+              }
+              
+              {activeEX ?
+                <li className="flex gap-2 items-center ">
+                <input
+                  className="w-4 h-4 cursor-pointer"
+                  type="checkbox"
+                  id="EX"
+                  checked
+                  onClick={() =>{
+                    if(activeEX === true){
+                      setActiveEX(false)
+                    }else{
+                      setActiveEX(true)
+                    }
+                  }}
+                  {...register("EX")}
+                />
+                <label htmlFor="EX">EX</label>
               </li>
+              :
               <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="EX"
-                  checked={props.otherDefects.EX}
+                  onClick={() =>{
+                    if(activeEX === true){
+                      setActiveEX(false)
+                    }else{
+                      setActiveEX(true)
+                    }
+                  }}
                   {...register("EX")}
                 />
                 <label htmlFor="EX">EX</label>
               </li>
-              <li className="flex gap-2 items-center ">
+              }
+              
+              {activeD ? 
+                <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="D"
-                  checked={props.otherDefects.D}
+                  checked
+                  onClick={() =>{
+                    if(activeD === true){
+                      setActiveD(false)
+                    }else{
+                      setActiveD(true)
+                    }
+                  }}
+                  {...register("D")}
+                />
+                  <label htmlFor="D">D</label>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
+                <input
+                  className="w-4 h-4 cursor-pointer"
+                  type="checkbox"
+                  id="D"
+                  
+                  onClick={() =>{
+                    if(activeD === true){
+                      setActiveD(false)
+                    }else{
+                      setActiveD(true)
+                    }
+                  }}
                   {...register("D")}
                 />
                 <label htmlFor="D">D</label>
-              </li>
-              <li className="flex gap-2 items-center ">
+                </li>
+              }
+              
+              {activeR ? 
+                <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="R"
-                  checked={props.otherDefects.R}
+                  checked
+                  onClick={() =>{
+                    if(activeR === true){
+                      setActiveR(false)
+                    }else{
+                      setActiveR(true)
+                    }
+                  }}
                   {...register("R")}
                 />
                 <label htmlFor="R">R</label>
-              </li>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
+                <input
+                  className="w-4 h-4 cursor-pointer"
+                  type="checkbox"
+                  id="R"
+                  
+                  onClick={() =>{
+                    if(activeR === true){
+                      setActiveR(false)
+                    }else{
+                      setActiveR(true)
+                    }
+                  }}
+                  {...register("R")}
+                />
+                <label htmlFor="R">R</label>
+                </li>
+              }
+              
             </ul>
             <h2 className="border-b-2 border-gray-300 w-full col-span-3 mt-5 mb-3 text-lg font-bold text-text-100">
               Observação
