@@ -263,8 +263,7 @@ export function RegisterPatology() {
     handleDescrptionPatology();
   }, [descrptionTeste]);
 
-  console.log("---descrptionTeste---", descrptionTeste);
-  console.log("---descrption---", watch("descrption"));
+
 
   return (
     <section className="mt-5 flex overflow-auto w-full   border-b-8 border-background rounded-md">
@@ -368,6 +367,7 @@ export function RegisterPatology() {
             />
             <label htmlFor="FI">FI</label>
           </li>
+
           <li className="flex gap-2 items-center ">
             <input
               className="w-4 h-4 cursor-pointer"
@@ -383,6 +383,7 @@ export function RegisterPatology() {
             />
             <label htmlFor="TTC">TTC</label>
           </li>
+
           <li className="flex gap-2 items-center ">
             <input
               className="w-4 h-4 cursor-pointer"
@@ -428,6 +429,7 @@ export function RegisterPatology() {
             />
             <label htmlFor="TLL">TLL</label>
           </li>
+
           <li className="flex gap-2 items-center ">
             <input
               className="w-4 h-4 cursor-pointer"
@@ -442,6 +444,7 @@ export function RegisterPatology() {
             />
             <label htmlFor="TRR">TRR</label>
           </li>
+          
           <li className="flex gap-2 items-center ">
             <input
               className="w-4 h-4 cursor-pointer"

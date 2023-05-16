@@ -7,7 +7,7 @@ export function Igg(){
     const { dataRoad } = useContext(UserContextRoad);
     const params = useParams()
 
-    console.log(dataRoad)
+    
 
 
     return(
@@ -15,7 +15,7 @@ export function Igg(){
             <div className="flex justify-end p-4">
                 <NavLink
                     className="flex items-center gap-1 hover:text-gold-400 hover:underline"
-                    to={`/rodovias/igg/${params.id}/cadastro`}
+                    to={`/rodovias/${params.id}/igg/cadastro`}
                 >
                     <PlusCircle className="text-gold-400" size={22} />
                     Cadastrar Igg

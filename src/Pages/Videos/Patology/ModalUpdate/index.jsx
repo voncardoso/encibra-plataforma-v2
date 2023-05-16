@@ -13,7 +13,18 @@ import { useEffect, useState } from "react";
 export function ModalUpdate(props) {
   const params = useParams();
   const [preview, setPreview] = useState(null);
-  console.log(props)
+  const [descrption, setDescription] = useState("");
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+    reset,
+    watch, 
+    setValue
+  } = useForm({
+    defaultValues: {},
+  });
   //roadSide
   const [activeBD, setActiveBD] = useState(false)
   const [activeBE, setActiveBE] = useState(false)
@@ -46,6 +57,81 @@ export function ModalUpdate(props) {
   const [activeD,   setActiveD  ] = useState(false)
   const [activeR,   setActiveR  ] = useState(false)
 
+  useEffect(() => {
+    function handleDescrptionPatology() {
+      if (watch("FI") === true) {
+        setValue("descrption", descrption);
+      }
+      if (watch("TTC") === true) {
+        setValue("descrption", descrption);
+      }
+      if (watch("TTL") === true) {
+        setValue("descrption", descrption);
+      }
+      if (watch("TTC") === true) {
+        setValue("descrption", descrption);
+      }
+      if (watch("TRR") === true) {
+        setValue("descrption", descrption);
+      }
+      if (watch("J") === true) {
+        setValue("descrption", descrption);
+      }
+      if (watch("TB") === true) {
+        setValue("descrption", descrption);
+      }
+      if (watch("JE") === true) {
+        setValue("descrption", descrption);
+      }
+      if (watch("TBE") === true) {
+        setValue("descrption", descrption);
+      }
+
+      // afundamentos
+      if (watch("ALP") === true) {
+        setValue("descrption", descrption);
+      }
+
+      if (watch("ATP") === true) {
+        setValue("descrption", descrption);
+      }
+
+      if (watch("ALC") === true) {
+        setValue("descrption", descrption);
+      }
+
+      if (watch("ATC") === true) {
+        setValue("descrption", descrption);
+      }
+
+      // outros dedefirtos
+      if (watch("O") === true) {
+        setValue("descrption", descrption);
+      }
+
+      if (watch("P") === true) {
+        setValue("descrption", descrption);
+      }
+
+      if (watch("E") === true) {
+        setValue("descrption", descrption);
+      }
+
+      if (watch("EX") === true) {
+        setValue("descrption", descrption);
+      }
+
+      if (watch("D") === true) {
+        setValue("descrption", descrption);
+      }
+
+      if (watch("R") === true) {
+        setValue("descrption", descrption);
+      }
+    }
+    handleDescrptionPatology();
+  }, [descrption]);
+
   useEffect(() =>{
     function active(){
       setActiveBD(props.roadSide.BD)
@@ -76,20 +162,13 @@ export function ModalUpdate(props) {
       setActiveD(props.otherDefects.D)
       setActiveR(props.otherDefects.R)
       
+      setDescription(props.data.descrption);
     }
 
     active()
   }, [])
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-    reset,
-  } = useForm({
-    defaultValues: {},
-  });
+  console.log("descrption", props.data.descrption)
 
   const timeValidation = (value) => {
     const pattern =
@@ -145,6 +224,7 @@ export function ModalUpdate(props) {
         }),
         latitude: data.latitude,
         longitude: data.longitude,
+        observation: data.observation
       },
       {
         headers: {
@@ -380,6 +460,7 @@ export function ModalUpdate(props) {
                         setActiveFI(false)
                       }else{
                         setActiveFI(true)
+                        setDescription(descrption + " Fissuras - FI;");
                       }
                     }}
                     {...register("FI")}
@@ -397,6 +478,7 @@ export function ModalUpdate(props) {
                         setActiveFI(false)
                       }else{
                         setActiveFI(true)
+                        setDescription(descrption + " Fissuras - FI;");
                       }
                     }}
                     {...register("FI")}
@@ -417,6 +499,7 @@ export function ModalUpdate(props) {
                         setActiveTTC(false)
                       }else{
                         setActiveTTC(true)
+                        setDescription(descrption + " Trincas Isoladas Tranversais Curtas - TTC;");
                       }
                     }}
                     {...register("TTC")}
@@ -434,6 +517,7 @@ export function ModalUpdate(props) {
                         setActiveTTC(false)
                       }else{
                         setActiveTTC(true)
+                        setDescription(descrption + " Trincas Isoladas Tranversais Curtas - TTC;");
                       }
                     }}
                     {...register("TTC")}
@@ -454,6 +538,10 @@ export function ModalUpdate(props) {
                         setActiveTTL(false)
                       }else{
                         setActiveTTL(true)
+                        setDescription(
+                          descrption +
+                            " Trincas Isoladas Tranversais Longas - TTL;"
+                        );
                       }
                     }}
                     {...register("TTL")}
@@ -471,6 +559,10 @@ export function ModalUpdate(props) {
                         setActiveTTL(false)
                       }else{
                         setActiveTTL(true)
+                        setDescription(
+                          descrption +
+                            " Trincas Isoladas Tranversais Longas - TTL;"
+                        );
                       }
                     }}
                     {...register("TTL")}
@@ -490,6 +582,10 @@ export function ModalUpdate(props) {
                         setActiveTLC(false)
                       }else{
                         setActiveTLC(true)
+                        setDescription(
+                          descrption +
+                            " Trincas Isoladas Longitudinais Curtas - TLC;"
+                        );
                       }
                     }}
                     {...register("TLC")}
@@ -507,6 +603,10 @@ export function ModalUpdate(props) {
                         setActiveTLC(false)
                       }else{
                         setActiveTLC(true)
+                        setDescription(
+                          descrption +
+                            " Trincas Isoladas Longitudinais Curtas - TLC;"
+                        );
                       }
                     }}
                     {...register("TLC")}
@@ -527,6 +627,10 @@ export function ModalUpdate(props) {
                         setActiveTLL(false)
                       }else{
                         setActiveTLL(true)
+                        setDescription(
+                          descrption +
+                            " Trincas Isoladas Longitudinais Longas - TLL"
+                        );
                       }
                     }}
                     {...register("TLL")}
@@ -544,6 +648,10 @@ export function ModalUpdate(props) {
                         setActiveTLL(false)
                       }else{
                         setActiveTLL(true)
+                        setDescription(
+                          descrption +
+                            " Trincas Isoladas Longitudinais Longas - TLL"
+                        );
                       }
                     }}
                     {...register("TLL")}
@@ -564,6 +672,9 @@ export function ModalUpdate(props) {
                         setActiveTRR(false)
                       }else{
                         setActiveTRR(true)
+                        setDescription(
+                          descrption + " Trincas Isolodas Devido a Retração - TRR"
+                        );
                       }
                     }}
                     {...register("TRR")}
@@ -581,6 +692,9 @@ export function ModalUpdate(props) {
                         setActiveTRR(false)
                       }else{
                         setActiveTRR(true)
+                        setDescription(
+                          descrption + " Trincas Isolodas Devido a Retração - TRR"
+                        );
                       }
                     }}
                     {...register("TRR")}
@@ -601,6 +715,10 @@ export function ModalUpdate(props) {
                         setActiveJ(false)
                       }else{
                         setActiveJ(true)
+                        setDescription(
+                          descrption +
+                            "Trincas Interligadas Tipo jacaré Sem Erosão - J"
+                        );
                       }
                     }}
                     {...register("J")}
@@ -618,6 +736,10 @@ export function ModalUpdate(props) {
                         setActiveJ(false)
                       }else{
                         setActiveJ(true)
+                        setDescription(
+                          descrption +
+                            "Trincas Interligadas Tipo jacaré Sem Erosão - J"
+                        );
                       }
                     }}
                     {...register("J")}
@@ -638,6 +760,10 @@ export function ModalUpdate(props) {
                       setActiveTB(false)
                     }else{
                       setActiveTB(true)
+                      setDescription(
+                        descrption +
+                          "Trincas Interligadas Tipo Bloco sem Erosão - TB"
+                      );
                     }
                   }}
                   {...register("TB")}
@@ -655,6 +781,10 @@ export function ModalUpdate(props) {
                       setActiveTB(false)
                     }else{
                       setActiveTB(true)
+                      setDescription(
+                        descrption +
+                          "Trincas Interligadas Tipo Bloco sem Erosão - TB"
+                      );
                     }
                   }}
                   {...register("TB")}
@@ -675,6 +805,10 @@ export function ModalUpdate(props) {
                       setActiveJE(false)
                     }else{
                       setActiveJE(true)
+                      setDescription(
+                        descrption +
+                          " Trincas Interligadas Tipo jacaré com Erosão - JE;"
+                      );
                     }
                   }}
                   {...register("JE")}
@@ -692,6 +826,10 @@ export function ModalUpdate(props) {
                       setActiveJE(false)
                     }else{
                       setActiveJE(true)
+                      setDescription(
+                        descrption +
+                          " Trincas Interligadas Tipo jacaré com Erosão - JE;"
+                      );
                     }
                   }}
                   {...register("JE")}
@@ -712,6 +850,10 @@ export function ModalUpdate(props) {
                         setActiveTBE(false)
                       }else{
                         setActiveTBE(true)
+                        setDescription(
+                          descrption +
+                            " Trincas Interligadas Tipo Bloco com Erosão - TBE;"
+                        );
                       }
                     }}
                     {...register("TBE")}
@@ -729,6 +871,10 @@ export function ModalUpdate(props) {
                         setActiveTBE(false)
                       }else{
                         setActiveTBE(true)
+                        setDescription(
+                          descrption +
+                            " Trincas Interligadas Tipo Bloco com Erosão - TBE;"
+                        );
                       }
                     }}
                     {...register("TBE")}
@@ -755,6 +901,9 @@ export function ModalUpdate(props) {
                         setActiveALP(false)
                       }else{
                         setActiveALP(true)
+                        setDescription(
+                          descrption + " Afundamento Plástico Local - ALP;"
+                        );
                       }
                     }}
                     {...register("ALP")}
@@ -772,6 +921,9 @@ export function ModalUpdate(props) {
                       setActiveALP(false)
                     }else{
                       setActiveALP(true)
+                      setDescription(
+                        descrption + " Afundamento Plástico Local - ALP;"
+                      );
                     }
                   }}
                   {...register("ALP")}
@@ -792,6 +944,9 @@ export function ModalUpdate(props) {
                         setActiveATP(false)
                       }else{
                         setActiveATP(true)
+                        setDescription(
+                          descrption + " Afundamento Plástico Da Trilha - ATP;"
+                        );
                       }
                     }}
                     {...register("ATP")}
@@ -809,6 +964,9 @@ export function ModalUpdate(props) {
                         setActiveATP(false)
                       }else{
                         setActiveATP(true)
+                        setDescription(
+                          descrption + " Afundamento Plástico Da Trilha - ATP;"
+                        );
                       }
                     }}
                     {...register("ATP")}
@@ -829,6 +987,9 @@ export function ModalUpdate(props) {
                         setActiveALC(false)
                       }else{
                         setActiveALC(true)
+                        setDescription(
+                          descrption + " Afundamento De Consolidção Local - ALC;"
+                        );
                       }
                     }}
                     {...register("ALC")}
@@ -846,6 +1007,9 @@ export function ModalUpdate(props) {
                       setActiveALC(false)
                     }else{
                       setActiveALC(true)
+                      setDescription(
+                        descrption + " Afundamento De Consolidção Local - ALC;"
+                      );
                     }
                   }}
                   {...register("ALC")}
@@ -866,6 +1030,10 @@ export function ModalUpdate(props) {
                         setActiveATC(false)
                       }else{
                         setActiveATC(true)
+                        setDescription(
+                          descrption +
+                            " Afundamento De Consolidação Da Trilha - ATC;"
+                        );
                       }
                     }}
                     {...register("ATC")}
@@ -883,6 +1051,10 @@ export function ModalUpdate(props) {
                       setActiveATC(false)
                     }else{
                       setActiveATC(true)
+                      setDescription(
+                        descrption +
+                          " Afundamento De Consolidação Da Trilha - ATC;"
+                      );
                     }
                   }}
                   {...register("ATC")}
@@ -909,6 +1081,7 @@ export function ModalUpdate(props) {
                       setActiveO(false)
                     }else{
                       setActiveO(true)
+                      setDescription(descrption + " Ondulação - O;");
                     }
                   }}
                     {...register("O")}
@@ -927,6 +1100,7 @@ export function ModalUpdate(props) {
                       setActiveO(false)
                     }else{
                       setActiveO(true)
+                      setDescription(descrption + " Ondulação - O;");
                     }
                   }}
                     {...register("O")}
@@ -947,6 +1121,7 @@ export function ModalUpdate(props) {
                       setActiveP(false)
                     }else{
                       setActiveP(true)
+                      setDescription(descrption + " Panela ou Buraco - P;");
                     }
                   }}
                    {...register("P")}
@@ -965,6 +1140,7 @@ export function ModalUpdate(props) {
                       setActiveP(false)
                     }else{
                       setActiveP(true)
+                      setDescription(descrption + " Panela ou Buraco - P;");
                     }
                   }}
                   {...register("P")}
@@ -985,6 +1161,7 @@ export function ModalUpdate(props) {
                       setActiveE(false)
                     }else{
                       setActiveE(true)
+                      setDescription(descrption + " Escorregamento - E;");
                     }
                   }}
                     {...register("E")}
@@ -1002,6 +1179,7 @@ export function ModalUpdate(props) {
                       setActiveE(false)
                     }else{
                       setActiveE(true)
+                      setDescription(descrption + " Escorregamento - E;");
                     }
                   }}
                   {...register("E")}
@@ -1022,6 +1200,7 @@ export function ModalUpdate(props) {
                       setActiveEX(false)
                     }else{
                       setActiveEX(true)
+                      setDescription(descrption + " Exsudação - EX;");
                     }
                   }}
                   {...register("EX")}
@@ -1039,6 +1218,7 @@ export function ModalUpdate(props) {
                       setActiveEX(false)
                     }else{
                       setActiveEX(true)
+                      setDescription(descrption + " Exsudação - EX;");
                     }
                   }}
                   {...register("EX")}
@@ -1059,6 +1239,7 @@ export function ModalUpdate(props) {
                       setActiveD(false)
                     }else{
                       setActiveD(true)
+                      setDescription(descrption + " Desgaste - D;");
                     }
                   }}
                   {...register("D")}
@@ -1077,6 +1258,7 @@ export function ModalUpdate(props) {
                       setActiveD(false)
                     }else{
                       setActiveD(true)
+                      setDescription(descrption + " Desgaste - D;");
                     }
                   }}
                   {...register("D")}
@@ -1097,6 +1279,7 @@ export function ModalUpdate(props) {
                       setActiveR(false)
                     }else{
                       setActiveR(true)
+                      setDescription(descrption + " Remendo - R;");
                     }
                   }}
                   {...register("R")}
@@ -1115,6 +1298,7 @@ export function ModalUpdate(props) {
                       setActiveR(false)
                     }else{
                       setActiveR(true)
+                      setDescription(descrption + " Remendo - R;");
                     }
                   }}
                   {...register("R")}
