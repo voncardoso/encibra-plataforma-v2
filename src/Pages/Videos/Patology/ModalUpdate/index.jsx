@@ -13,10 +13,24 @@ import { useEffect, useState } from "react";
 export function ModalUpdate(props) {
   const params = useParams();
   const [preview, setPreview] = useState(null);
+
+  //roadSide
   const [activeBD, setActiveBD] = useState(false)
   const [activeBE, setActiveBE] = useState(false)
   const [activeEIXO, setActiveEIXO] = useState(false)
   const [activePISTA, setActivePISTA] = useState(false)
+
+  //Cracks
+  const [activeFI,  setActiveFI ] = useState(false)
+  const [activeTTC, setActiveTTC] = useState(false)
+  const [activeTTL, setActiveTTL] = useState(false)
+  const [activeTLC, setActiveTLC] = useState(false)
+  const [activeTLL, setActiveTLL] = useState(false)
+  const [activeTRR, setActiveTRR] = useState(false)
+  const [activeJ,   setActiveJ  ] = useState(false)
+  const [activeTB,  setActiveTB ] = useState(false)
+  const [activeJE,  setActiveJE ] = useState(false)
+  const [activeTBE, setActiveTBE] = useState(false)
 
   useEffect(() =>{
     function active(){
@@ -24,6 +38,16 @@ export function ModalUpdate(props) {
       setActiveBE(props.roadSide.BE)
       setActiveEIXO(props.roadSide.EIXO)
       setActivePISTA(props.roadSide.PISTA)
+      setActiveFI(props.cracks.FI)
+      setActiveTTC(props.cracks.TTC)
+      setActiveTTL(props.cracks.TTL)
+      setActiveTLC(props.cracks.TLC)
+      setActiveTLL(props.cracks.TLL)
+      setActiveTRR(props.cracks.TRR)
+      setActiveJ(props.cracks.J)
+      setActiveTB(props.cracks.TB)
+      setActiveJE(props.cracks.JE)
+      setActiveTBE(props.cracks.TBE)
     }
 
     active()
@@ -316,106 +340,375 @@ export function ModalUpdate(props) {
               Trincas
             </h2>
             <ul className="flex gap-x-10 gap-y-5 flex-wrap">
-              <li className="flex gap-2 items-center ">
+              {activeFI ? 
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="FI"
+                    checked
+                    onClick={() =>{
+                      if(activeFI === true){
+                        setActiveFI(false)
+                      }else{
+                        setActiveFI(true)
+                      }
+                    }}
+                    {...register("FI")}
+                  />
+                  <label htmlFor="FI">FI</label>
+                </li>
+              :
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="FI"
+                    onClick={() =>{
+                      if(activeFI === true){
+                        setActiveFI(false)
+                      }else{
+                        setActiveFI(true)
+                      }
+                    }}
+                    {...register("FI")}
+                  />
+                  <label htmlFor="FI">FI</label>
+                </li>
+              }
+
+              {activeTTC ? 
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="TTC"
+                    checked
+                    onClick={() =>{
+                      if(activeTTC === true){
+                        setActiveTTC(false)
+                      }else{
+                        setActiveTTC(true)
+                      }
+                    }}
+                    {...register("TTC")}
+                  />
+                  <label htmlFor="TTC">TTC</label>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="TTC"
+                    onClick={() =>{
+                      if(activeTTC === true){
+                        setActiveTTC(false)
+                      }else{
+                        setActiveTTC(true)
+                      }
+                    }}
+                    {...register("TTC")}
+                  />
+                  <label htmlFor="TTC">TTC</label>
+                </li>
+              }
+
+              {activeTTL ?
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="TTL"
+                    checked
+                    onClick={() =>{
+                      if(activeTTL === true){
+                        setActiveTTL(false)
+                      }else{
+                        setActiveTTL(true)
+                      }
+                    }}
+                    {...register("TTL")}
+                  />
+                  <label htmlFor="TTL">TTL</label>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="TTL"
+                    onClick={() =>{
+                      if(activeTTL === true){
+                        setActiveTTL(false)
+                      }else{
+                        setActiveTTL(true)
+                      }
+                    }}
+                    {...register("TTL")}
+                  />
+                  <label htmlFor="TTL">TTL</label>
+                </li>
+              }
+
+              {activeTLC ?
+                <li className="flex gap-2 items-center ">
+                <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="TLC"
+                    onClick={() =>{
+                      if(activeTLC === true){
+                        setActiveTLC(false)
+                      }else{
+                        setActiveTLC(true)
+                      }
+                    }}
+                    {...register("TLC")}
+                  />
+                  <label htmlFor="TLC">TLC</label>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
+                <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="TLC"
+                    onClick={() =>{
+                      if(activeTLC === true){
+                        setActiveTLC(false)
+                      }else{
+                        setActiveTLC(true)
+                      }
+                    }}
+                    {...register("TLC")}
+                  />
+                  <label htmlFor="TLC">TLC</label>
+                </li>
+              }
+              
+              {activeTLL ? 
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="TLL"
+                    checked
+                    onClick={() =>{
+                      if(activeTLL === true){
+                        setActiveTLL(false)
+                      }else{
+                        setActiveTLL(true)
+                      }
+                    }}
+                    {...register("TLL")}
+                  />
+                  <label htmlFor="TLL">TLL</label>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="TLL"
+                    onClick={() =>{
+                      if(activeTLL === true){
+                        setActiveTLL(false)
+                      }else{
+                        setActiveTLL(true)
+                      }
+                    }}
+                    {...register("TLL")}
+                  />
+                  <label htmlFor="TLL">TLL</label>
+                </li>
+              }
+              
+              {activeTRR ? 
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="TRR"
+                    checked
+                    onClick={() =>{
+                      if(activeTRR === true){
+                        setActiveTRR(false)
+                      }else{
+                        setActiveTRR(true)
+                      }
+                    }}
+                    {...register("TRR")}
+                  />
+                  <label htmlFor="TRR">TRR</label>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="TRR"
+                    onClick={() =>{
+                      if(activeTRR === true){
+                        setActiveTRR(false)
+                      }else{
+                        setActiveTRR(true)
+                      }
+                    }}
+                    {...register("TRR")}
+                  />
+                  <label htmlFor="TRR">TRR</label>
+                </li>
+              }
+              
+              {activeJ ?
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="J"
+                    checked
+                    onClick={() =>{
+                      if(activeJ === true){
+                        setActiveJ(false)
+                      }else{
+                        setActiveJ(true)
+                      }
+                    }}
+                    {...register("J")}
+                  />
+                  <label htmlFor="J">J</label>
+                </li>
+              :
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="J"
+                    onClick={() =>{
+                      if(activeJ === true){
+                        setActiveJ(false)
+                      }else{
+                        setActiveJ(true)
+                      }
+                    }}
+                    {...register("J")}
+                  />
+                  <label htmlFor="J">J</label>
+                </li>  
+              }
+
+              {activeTB ? 
+                <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
-                  id="FI"
-                  checked={props.cracks.FI}
-                  {...register("FI")}
+                  id="TB"
+                  checked
+                  onClick={() =>{
+                    if(activeTB === true){
+                      setActiveTB(false)
+                    }else{
+                      setActiveTB(true)
+                    }
+                  }}
+                  {...register("TB")}
                 />
-                <label htmlFor="FI">FI</label>
+                <label htmlFor="TB">TB</label>
               </li>
-              <li className="flex gap-2 items-center ">
-                <input
-                  className="w-4 h-4 cursor-pointer"
-                  type="checkbox"
-                  id="TTC"
-                  checked={props.cracks.TTC}
-                  {...register("TTC")}
-                />
-                <label htmlFor="TTC">TTC</label>
-              </li>
-              <li className="flex gap-2 items-center ">
-                <input
-                  className="w-4 h-4 cursor-pointer"
-                  type="checkbox"
-                  id="TTL"
-                  checked={props.cracks.TTL}
-                  {...register("TTL")}
-                />
-                <label htmlFor="TTL">TTL</label>
-              </li>
-              <li className="flex gap-2 items-center ">
-                <input
-                  className="w-4 h-4 cursor-pointer"
-                  type="checkbox"
-                  id="TLC"
-                  checked={props.cracks.TLC}
-                  {...register("TLC")}
-                />
-                <label htmlFor="TLC">TLC</label>
-              </li>
-              <li className="flex gap-2 items-center ">
-                <input
-                  className="w-4 h-4 cursor-pointer"
-                  type="checkbox"
-                  id="TLL"
-                  checked={props.cracks.TLL}
-                  {...register("TLL")}
-                />
-                <label htmlFor="TLL">TLL</label>
-              </li>
-              <li className="flex gap-2 items-center ">
-                <input
-                  className="w-4 h-4 cursor-pointer"
-                  type="checkbox"
-                  id="TRR"
-                  checked={props.cracks.TRR}
-                  {...register("TRR")}
-                />
-                <label htmlFor="TRR">TRR</label>
-              </li>
-              <li className="flex gap-2 items-center ">
-                <input
-                  className="w-4 h-4 cursor-pointer"
-                  type="checkbox"
-                  id="J"
-                  checked={props.cracks.J}
-                  {...register("J")}
-                />
-                <label htmlFor="J">J</label>
-              </li>
+              :
               <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="TB"
-                  checked={props.cracks.TB}
+                  onClick={() =>{
+                    if(activeTB === true){
+                      setActiveTB(false)
+                    }else{
+                      setActiveTB(true)
+                    }
+                  }}
                   {...register("TB")}
                 />
                 <label htmlFor="TB">TB</label>
+              </li>  
+              }
+              
+              {activeJE ? 
+                <li className="flex gap-2 items-center ">
+                <input
+                  className="w-4 h-4 cursor-pointer"
+                  type="checkbox"
+                  id="JE"
+                  checked
+                  onClick={() =>{
+                    if(activeJE === true){
+                      setActiveJE(false)
+                    }else{
+                      setActiveJE(true)
+                    }
+                  }}
+                  {...register("JE")}
+                />
+                <label htmlFor="JE">JE</label>
               </li>
+              :
               <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="JE"
-                  checked={props.cracks.JE}
+                  onClick={() =>{
+                    if(activeJE === true){
+                      setActiveJE(false)
+                    }else{
+                      setActiveJE(true)
+                    }
+                  }}
                   {...register("JE")}
                 />
                 <label htmlFor="JE">JE</label>
               </li>
-              <li className="flex gap-2 items-center ">
-                <input
-                  className="w-4 h-4 cursor-pointer"
-                  type="checkbox"
-                  id="TBE"
-                  checked={props.cracks.TBE}
-                  {...register("TBE")}
-                />
+              }
+
+              {activeTBE ? 
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="TBE"
+                    checked
+                    onClick={() =>{
+                      if(activeTBE === true){
+                        setActiveTBE(false)
+                      }else{
+                        setActiveTBE(true)
+                      }
+                    }}
+                    {...register("TBE")}
+                  />
+                  <label htmlFor="TBE">TBE</label>
+                </li>
+              :
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="TBE"
+                    onClick={() =>{
+                      if(activeTBE === true){
+                        setActiveTBE(false)
+                      }else{
+                        setActiveTBE(true)
+                      }
+                    }}
+                    {...register("TBE")}
+                  />
                 <label htmlFor="TBE">TBE</label>
               </li>
+              }
+              
             </ul>
 
             <h2 className="border-b-2 border-gray-300 w-full col-span-3 mt-5 mb-3 text-lg font-bold text-text-100">
