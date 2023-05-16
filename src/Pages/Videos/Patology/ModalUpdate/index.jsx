@@ -32,12 +32,19 @@ export function ModalUpdate(props) {
   const [activeJE,  setActiveJE ] = useState(false)
   const [activeTBE, setActiveTBE] = useState(false)
 
+  // Sags
+  const [activeALP,  setActiveALP ] = useState(false)
+  const [activeATP,  setActiveATP ] = useState(false)
+  const [activeALC,  setActiveALC ] = useState(false)
+  const [activeATC,  setActiveATC ] = useState(false)
+
   useEffect(() =>{
     function active(){
       setActiveBD(props.roadSide.BD)
       setActiveBE(props.roadSide.BE)
       setActiveEIXO(props.roadSide.EIXO)
       setActivePISTA(props.roadSide.PISTA)
+
       setActiveFI(props.cracks.FI)
       setActiveTTC(props.cracks.TTC)
       setActiveTTL(props.cracks.TTL)
@@ -48,6 +55,11 @@ export function ModalUpdate(props) {
       setActiveTB(props.cracks.TB)
       setActiveJE(props.cracks.JE)
       setActiveTBE(props.cracks.TBE)
+
+      setActiveALP(props.sags.ALP)
+      setActiveATP(props.sags.ATP)
+      setActiveALC(props.sags.ALC)
+      setActiveATC(props.sags.ATC)
     }
 
     active()
@@ -715,46 +727,154 @@ export function ModalUpdate(props) {
               Afundamentos
             </h2>
             <ul className="flex gap-x-10 gap-y-5 flex-wrap">
-              <li className="flex gap-2 items-center ">
+              {activeALP ? 
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="ALP"
+                    checked
+                    onClick={() =>{
+                      if(activeALP === true){
+                        setActiveALP(false)
+                      }else{
+                        setActiveALP(true)
+                      }
+                    }}
+                    {...register("ALP")}
+                  />
+                  <label htmlFor="ALP">ALP</label>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="ALP"
-                  checked={props.sags.ALP}
+                  onClick={() =>{
+                    if(activeALP === true){
+                      setActiveALP(false)
+                    }else{
+                      setActiveALP(true)
+                    }
+                  }}
                   {...register("ALP")}
                 />
                 <label htmlFor="ALP">ALP</label>
               </li>
-              <li className="flex gap-2 items-center ">
+              }
+
+              {activeATP ? 
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="ATP"
+                    checked
+                    onClick={() =>{
+                      if(activeATP === true){
+                        setActiveATP(false)
+                      }else{
+                        setActiveATP(true)
+                      }
+                    }}
+                    {...register("ATP")}
+                  />
+                  <label htmlFor="ATP">ATP</label>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
                 <input
-                  className="w-4 h-4 cursor-pointer"
-                  type="checkbox"
-                  id="ATP"
-                  checked={props.sags.ATP}
-                  {...register("ATP")}
-                />
-                <label htmlFor="ATP">ATP</label>
-              </li>
-              <li className="flex gap-2 items-center ">
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="ATP"
+                    onClick={() =>{
+                      if(activeATP === true){
+                        setActiveATP(false)
+                      }else{
+                        setActiveATP(true)
+                      }
+                    }}
+                    {...register("ATP")}
+                  />
+                  <label htmlFor="ATP">ATP</label>
+                </li>
+              }
+              
+              {activeALC ? 
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="ALC"
+                    checked
+                    onClick={() =>{
+                      if(activeALC === true){
+                        setActiveALC(false)
+                      }else{
+                        setActiveALC(true)
+                      }
+                    }}
+                    {...register("ALC")}
+                  />
+                  <label htmlFor="ALC">ALC</label>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="ALC"
-                  checked={props.sags.ALC}
+                  onClick={() =>{
+                    if(activeALC === true){
+                      setActiveALC(false)
+                    }else{
+                      setActiveALC(true)
+                    }
+                  }}
                   {...register("ALC")}
                 />
-                <label htmlFor="ALC">ALC</label>
-              </li>
-              <li className="flex gap-2 items-center ">
+                  <label htmlFor="ALC">ALC</label>
+                </li>
+              }
+
+              {activeATC ? 
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="ATC"
+                    checked
+                    onClick={() =>{
+                      if(activeATC === true){
+                        setActiveATC(false)
+                      }else{
+                        setActiveATC(true)
+                      }
+                    }}
+                    {...register("ATC")}
+                  />
+                  <label htmlFor="ATC">ATC</label>
+                </li>
+                :
+                <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="ATC"
-                  checked={props.sags.ATC}
+                  onClick={() =>{
+                    if(activeATC === true){
+                      setActiveATC(false)
+                    }else{
+                      setActiveATC(true)
+                    }
+                  }}
                   {...register("ATC")}
                 />
                 <label htmlFor="ATC">ATC</label>
-              </li>
+                </li>
+              }
+              
             </ul>
 
             <h2 className="border-b-2 border-gray-300 w-full col-span-3 mt-5 mb-3 text-lg font-bold text-text-100">
