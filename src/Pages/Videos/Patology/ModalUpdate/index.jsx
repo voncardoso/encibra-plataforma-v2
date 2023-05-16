@@ -8,11 +8,27 @@ import {
 } from "@radix-ui/react-dialog";
 import { useParams } from "react-router-dom";
 import { api } from "../../../../lib/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function ModalUpdate(props) {
-  const [preview, setPreview] = useState(null);
   const params = useParams();
+  const [preview, setPreview] = useState(null);
+  const [activeBD, setActiveBD] = useState(false)
+  const [activeBE, setActiveBE] = useState(false)
+  const [activeEIXO, setActiveEIXO] = useState(false)
+  const [activePISTA, setActivePISTA] = useState(false)
+
+  useEffect(() =>{
+    function active(){
+      setActiveBD(props.roadSide.BD)
+      setActiveBE(props.roadSide.BE)
+      setActiveEIXO(props.roadSide.EIXO)
+      setActivePISTA(props.roadSide.PISTA)
+    }
+
+    active()
+  }, [])
+
   const {
     register,
     handleSubmit,
@@ -147,46 +163,153 @@ export function ModalUpdate(props) {
               Lado
             </h2>
             <ul className="flex gap-x-10 gap-y-5 flex-wrap">
+              {activeBD ? 
+                <li className="flex gap-2 items-center ">
+                <input
+                  className="w-4 h-4 cursor-pointer"
+                  type="checkbox"
+                  id="BD"
+                  checked
+                  onClick={() =>{
+                    if(activeBD === true){
+                      setActiveBD(false)
+                    }else{
+                      setActiveBD(true)
+                    }
+                  }}
+                  {...register("BD")}
+                />
+                <label htmlFor="BD">BD</label>
+              </li> 
+              :
               <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="BD"
-                  checked={props.roadSide.BD}
+                  onClick={() =>{
+                    if(activeDB === true){
+                      setActiveBD(false)
+                    }else{
+                      setActiveBD(true)
+                    }
+                  }}
                   {...register("BD")}
                 />
                 <label htmlFor="BD">BD</label>
               </li>
-              <li className="flex gap-2 items-center ">
+              }
+
+              {activeBE ? 
+                <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="BE"
                   checked={props.roadSide.BE}
+                  onClick={() =>{
+                    if(activeBE === true){
+                      setActiveBE(false)
+                    }else{
+                      setActiveBE(true)
+                    }
+                  }}
                   {...register("BE")}
                 />
                 <label htmlFor="BE">BE</label>
-              </li>
+              </li> 
+              :
               <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
-                  id="EIXO"
-                  checked={props.roadSide.EIXO}
-                  {...register("EIXO")}
+                  id="BE"
+                  onClick={() =>{
+                    if(activeBE === true){
+                      setActiveBE(false)
+                    }else{
+                      setActiveBE(true)
+                    }
+                  }}
+                  {...register("BE")}
                 />
-                <label htmlFor="EIXO">EIXO</label>
+                <label htmlFor="BE">BE</label>
               </li>
+              }
+
+              {activeEIXO ? 
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="EIXO"
+                    checked={props.roadSide.EIXO}
+                    onClick={() =>{
+                      if(activeEIXO === true){
+                        setActiveEIXO(false)
+                      }else{
+                        setActiveEIXO(true)
+                      }
+                    }}
+                    {...register("EIXO")}
+                  />
+                  <label htmlFor="EIXO">EIXO</label>
+                </li>
+              :
+                <li className="flex gap-2 items-center ">
+                  <input
+                    className="w-4 h-4 cursor-pointer"
+                    type="checkbox"
+                    id="EIXO"
+                    onClick={() =>{
+                      if(activeEIXO === true){
+                        setActiveEIXO(false)
+                      }else{
+                        setActiveEIXO(true)
+                      }
+                    }}
+                    {...register("EIXO")}
+                  />
+                  <label htmlFor="EIXO">EIXO</label>
+                </li>
+              }
+
+              {activePISTA ? 
               <li className="flex gap-2 items-center ">
                 <input
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="PISTA"
-                  checked={props.roadSide.PISTA}
+                  checked
+                  onClick={() =>{
+                    if(activePISTA === true){
+                      setActivePISTA(false)
+                    }else{
+                      setActivePISTA(true)
+                    }
+                  }}
+                  {...register("PISTA")}
+                />
+                <label htmlFor="PISTA">PISTA</label>
+              </li> 
+              : 
+              <li className="flex gap-2 items-center ">
+                <input
+                  className="w-4 h-4 cursor-pointer"
+                  type="checkbox"
+                  id="PISTA"
+                  onClick={() =>{
+                    if(activePISTA === true){
+                      setActivePISTA(false)
+                    }else{
+                      setActivePISTA(true)
+                    }
+                  }}
                   {...register("PISTA")}
                 />
                 <label htmlFor="PISTA">PISTA</label>
               </li>
+              }
             </ul>
 
             <h2 className="border-b-2 border-gray-300 w-full col-span-3 mt-5 mb-3 text-lg font-bold text-text-100">
