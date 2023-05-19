@@ -27,6 +27,7 @@ import ReactMapGL, {
     Popup,
     Map,
   } from "react-map-gl";
+import ModalUpdateInfomationMain from "./ModalUpdateInfomationMain";
 
 export function SubReportsInformation(){
     const params = useParams()
@@ -226,9 +227,17 @@ export function SubReportsInformation(){
       });
   }, [startPatology]);
 
-  let teste1 = startPatology.latitude 
-  let teste2 = startPatology.longitude
-      console.log(startPatology, endPatology)
+  function arrayUpdate(object){
+    setDataPoints(dataPoints.map(item => {
+      if (item.id === object.id) {
+        return object;
+      }
+      return item;
+    })) 
+  }
+
+
+    
     if(arrayPatologyConcat){
         return(
             <section className="flex flex-col justify-center">
@@ -241,21 +250,30 @@ export function SubReportsInformation(){
                             Cadastrar patologia
                     </NavLink>
                 </header>
-                <div className="flex flex justify-between items-end p-2.5 mt-5 bg-white rounded-md mt-2.5 shadow-lg ">
-                <div className="flex flex-col">
-                    <strong className="py-2 text-text-100">
-                        <span className="text-gray-400 tracking-wider mr-2">Trecho:</span>
-                        {dataReports?.description}
-                    </strong>
-                    <strong className="py-2 text-text-100">
-                        <span className="text-gray-400 tracking-wider mr-2">Km ínicial:</span>
-                        {dataReports?.initialKm}
-                    </strong>
-                    <strong className="py-2 text-text-100">
-                        <span className="text-gray-400 tracking-wider mr-2">Km final:</span>
-                        {dataReports?.finalKm}
-                    </strong>
-                </div>
+
+                <div className=" flex justify-between items-end p-2.5 mt-5 bg-white rounded-md mt-2.5 shadow-lg ">
+                  <div className="flex flex-col">
+                      <strong className="py-2 text-text-100">
+                          <span className="text-gray-400 tracking-wider mr-2">Trecho:</span>
+                          {dataReports?.description}
+                      </strong>
+                      <strong className="py-2 text-text-100">
+                          <span className="text-gray-400 tracking-wider mr-2">Km ínicial:</span>
+                          {dataReports?.initialKm}
+                      </strong>
+                      <strong className="py-2 text-text-100">
+                          <span className="text-gray-400 tracking-wider mr-2">Km final:</span>
+                          {dataReports?.finalKm}
+                      </strong>
+                  </div>
+                  <div>
+                  <Dialog>
+                      <DialogTrigger  className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
+                            <PencilLine size={18} />
+                      </DialogTrigger >
+                    <ModalUpdateInfomationMain data={dataReports} arrayUpdate={arrayUpdate}/>
+                  </Dialog>
+                  </div>
                 </div>
     
                 <table className="mt-4 table-auto w-full text-center shadow-lg ">
@@ -396,113 +414,113 @@ export function SubReportsInformation(){
                     />
                 </div>
                 <div className="mb-5">
-          <ReactMapGL
-            key={`${+startPatology.latitude}-${+startPatology.longitude}`}
-            initialViewState={{
-              latitude: +startPatology.latitude,
-              longitude: +startPatology.longitude,
-              zoom: 10,
-            }}
-            cooperativeGestures={true}
-            style={{ width: "100%", height: "500px", borderRadius: "6px" }}
-            mapStyle="mapbox://styles/mapbox/streets-v11"
-            mapboxAccessToken="pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw"
-          >
-            {console.log(startPatology.latitude)}
-             {/**Tra a rota dos pontos iniciais */}
-            <Marker
-              latitude={+startPatology.latitude}
-              longitude={+startPatology.longitude}
-              offsetLeft={-20}
-              offsetTop={-10}
-            >
-              <div className="marker" />
-            </Marker>
-            <Marker
-              latitude={+endPatology.latitude}
-              longitude={+endPatology.longitude}
-              offsetLeft={-20}
-              offsetTop={-10}
-            >
-              <div className="marker" />
-            </Marker>
-
-           
-            {route && (
-              <Source type="geojson" data={route.geometry}>
-                <Layer
-                  id="route"
-                  type="line"
-                  paint={{ "line-color": "#0070f3", "line-width": 4 }}
-                />
-              </Source>
-            )}
-
-            {/**Mostrar a imagem ao clicar no pin correspondente */}
-            {arrayPatologyConcat.map((item) =>{
-              return(
-                <section key={item.id}>
+                <ReactMapGL
+                  key={`${+startPatology.latitude}-${+startPatology.longitude}`}
+                  initialViewState={{
+                    latitude: +startPatology.latitude,
+                    longitude: +startPatology.longitude,
+                    zoom: 10,
+                  }}
+                  cooperativeGestures={true}
+                  style={{ width: "100%", height: "500px", borderRadius: "6px" }}
+                  mapStyle="mapbox://styles/mapbox/streets-v11"
+                  mapboxAccessToken="pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw"
+                >
+                  {console.log(startPatology.latitude)}
+                   {/**Tra a rota dos pontos iniciais */}
                   <Marker
-                    latitude={+item?.latitude}
-                    longitude={+item?.longitude}
-                    anchor="bottom"
-                    closeButton={(e) => setShowPopup(false)}
-                    onClick={(e) => {
-                      e.originalEvent.stopPropagation();
-                        setShowPopup(item);
-                        
-                    }}
+                    latitude={+startPatology.latitude}
+                    longitude={+startPatology.longitude}
+                    offsetLeft={-20}
+                    offsetTop={-10}
                   >
-                    {item.screenshotUrl !== "" && <MapPin className="text-sky-600 cursor-pointer" size={50} weight="duotone"/>}
-                    {item.screenshotUrl === "" && <MapPin className="text-red-500 cursor-pointer" size={50} weight="duotone"/>}
-                    {item.observation === "Vila" && <HouseLine className="text-emerald-500 cursor-pointer" size={50} weight="duotone"/>}
+                    <div className="marker" />
                   </Marker>
-                </section>
-              )
-            })}
+                  <Marker
+                    latitude={+endPatology.latitude}
+                    longitude={+endPatology.longitude}
+                    offsetLeft={-20}
+                    offsetTop={-10}
+                  >
+                    <div className="marker" />
+                  </Marker>
+                
+                
+                  {route && (
+                    <Source type="geojson" data={route.geometry}>
+                      <Layer
+                        id="route"
+                        type="line"
+                        paint={{ "line-color": "#0070f3", "line-width": 4 }}
+                      />
+                    </Source>
+                  )}
 
-            {showPopup && 
-            <Popup
-              longitude={showPopup.longitude}
-              latitude={showPopup.latitude}
-              anchor="center"
-              onClose={(e) => {
-                setShowPopup(null);
-              }}
-              maxWidth={"60vw"}
-            >
-              {showPopup.screenshotUrl ? 
-                <img src={showPopup.screenshotUrl} alt="" /> 
-                : 
-                <h1 className="text-4xl">
-                  {showPopup.km} km   
-                </h1>
-              }
-            </Popup>}
+                  {/**Mostrar a imagem ao clicar no pin correspondente */}
+                  {arrayPatologyConcat.map((item) =>{
+                    return(
+                      <section key={item.id}>
+                        <Marker
+                          latitude={+item?.latitude}
+                          longitude={+item?.longitude}
+                          anchor="bottom"
+                          closeButton={(e) => setShowPopup(false)}
+                          onClick={(e) => {
+                            e.originalEvent.stopPropagation();
+                              setShowPopup(item);
 
-            {/**controle dos mapa  */}
-            <div className="m-2 p-2 relative z-10 bg-white w-52 rounded-md">
-                  <ul>
-                    <li className="p-2 flex items-center gap-2 text-sm font-medium">
-                      <MapPin weight="duotone" className="text-sky-600" size={22}/>
-                     Com imagem
-                    </li>
-                    <li className="p-2 flex items-center gap-2 text-sm font-medium ">
-                      <MapPin weight="duotone" className="text-red-500"  size={22}/>
-                      Sem Imagem
-                    </li>
-                    <li className="p-2 flex items-center gap-2 text-sm">
-                      <HouseLine className="text-emerald-500" weight="duotone" size={22}/>
-                      Vila
-                    </li>
-                  </ul>
-                </div>
-            <GeolocateControl position="top-right" />
-            <FullscreenControl position="top-right" />
-            <NavigationControl position="top-right" />
-            <ScaleControl />
-          </ReactMapGL>
-        </div>
+                          }}
+                        >
+                          {item.screenshotUrl !== "" && <MapPin className="text-sky-600 cursor-pointer" size={50} weight="duotone"/>}
+                          {item.screenshotUrl === "" && <MapPin className="text-red-500 cursor-pointer" size={50} weight="duotone"/>}
+                          {item.observation === "Vila" && <HouseLine className="text-emerald-500 cursor-pointer" size={50} weight="duotone"/>}
+                        </Marker>
+                      </section>
+                    )
+                  })}
+
+                  {showPopup && 
+                  <Popup
+                    longitude={showPopup.longitude}
+                    latitude={showPopup.latitude}
+                    anchor="center"
+                    onClose={(e) => {
+                      setShowPopup(null);
+                    }}
+                    maxWidth={"60vw"}
+                  >
+                    {showPopup.screenshotUrl ? 
+                      <img src={showPopup.screenshotUrl} alt="" /> 
+                      : 
+                      <h1 className="text-4xl">
+                        {showPopup.km} km   
+                      </h1>
+                    }
+                  </Popup>}
+                  
+                  {/**controle dos mapa  */}
+                  <div className="m-2 p-2 relative z-10 bg-white w-52 rounded-md">
+                        <ul>
+                          <li className="p-2 flex items-center gap-2 text-sm font-medium">
+                            <MapPin weight="duotone" className="text-sky-600" size={22}/>
+                           Com imagem
+                          </li>
+                          <li className="p-2 flex items-center gap-2 text-sm font-medium ">
+                            <MapPin weight="duotone" className="text-red-500"  size={22}/>
+                            Sem Imagem
+                          </li>
+                          <li className="p-2 flex items-center gap-2 text-sm">
+                            <HouseLine className="text-emerald-500" weight="duotone" size={22}/>
+                            Vila
+                          </li>
+                        </ul>
+                      </div>
+                  <GeolocateControl position="top-right" />
+                  <FullscreenControl position="top-right" />
+                  <NavigationControl position="top-right" />
+                  <ScaleControl />
+                </ReactMapGL>
+              </div>
             </section>
         )
     }
