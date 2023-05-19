@@ -51,6 +51,7 @@ export function Dashboard() {
       const response = await api.get("/road", {
         headers: { Authorization: "Bearer " + token },
       });
+      console.log("response", response)
       setData(response.data);
     }
     GetRoads();

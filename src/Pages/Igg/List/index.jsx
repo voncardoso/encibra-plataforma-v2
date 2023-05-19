@@ -8,7 +8,7 @@ export function Igg(){
     const params = useParams()
 
     
-
+    console.log(dataRoad)
 
     return(
         <section className="w-full">
@@ -31,12 +31,12 @@ export function Igg(){
                 });
                 return(
                     <NavLink 
-                        className="text-text-100 flex items-center w-60 bg-white shadow-md shadow-[rgba(0,0,0,0.3)] rounded-lg cursor-pointer hover:bg-gray-300"
+                        className="text-text-100 flex items-center w-72 bg-white shadow-md shadow-[rgba(0,0,0,0.3)] rounded-lg cursor-pointer hover:bg-gray-300"
                         to={`/rodovias/${params.id}/igg/${igg.id}`}
                     >
                         <Files size={80}/>
                         <div className="p-4 w-full">
-                            <strong className="text-sm py-2">Nome do Trecho</strong>
+                            <strong className="text-sm py-2">{igg.description}</strong>
                             <div className="flex justify-between  text-sm py-2">
                                 <p>Video: {dataUTC}</p>
                             </div>

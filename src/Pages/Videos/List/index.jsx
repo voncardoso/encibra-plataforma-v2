@@ -25,7 +25,6 @@ export function List() {
     }
   }
 
-  console.log(dataRoad);
 
   if (dataRoad) {
     if (

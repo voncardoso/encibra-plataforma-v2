@@ -3,9 +3,11 @@ import { useForm } from "react-hook-form";
 import { UserContextRoad } from "../../../Context/useContextRoad";
 import { useParams } from "react-router-dom";
 import { api } from "../../../lib/api";
+import { UserContextLogin } from "../../../Context/useContextLogin";
 
 export function RegisterSubReports(){
     const { dataRoad } = useContext(UserContextRoad);
+    const {dataUser} = useContext(UserContextLogin)
     const params = useParams()
     console.log(params)
     const {
@@ -17,18 +19,31 @@ export function RegisterSubReports(){
       } = useForm({
         defaultValues: {},
       });
-      const dataIgg = dataRoad.iggs?.filter((igg) => igg.id === Number(params.id))
-      console.log(dataIgg)
-      console.log("rodovia",dataRoad)
+
+      const dataIgg = dataRoad.iggs?.filter((igg) => igg.roadId === Number(params.id))
+      console.log("rodovia", dataRoad)
+      console.log("user", dataUser)
       async function handleCreateReports(data){
         const userId = window.localStorage.getItem("encibraappId-v2");
         const token = window.localStorage.getItem("encibraapptoken-v2");
-
+        console.log("data", data)
         const reports = {
-            userId: Number(userId),
             level: "SUB",
-            videoId: Number(dataIgg[0].videoId),
-            iggId: Number(dataIgg[0].id),
+            videos: {
+                connect: {
+                    id: Number(dataIgg[0].videoId),
+                }
+            },
+            iggs: {
+                connect: {
+                    id: Number(dataIgg[0].id)
+                }
+            },
+            users: {
+                connect: {
+                   id: dataUser.id
+                }
+            },
             initialKm: data.initialKm,
             finalKm: data.finalKm,
             section: "",
@@ -38,8 +53,8 @@ export function RegisterSubReports(){
         }
         console.log( "teste",reports)
 
-        const response = await api.put(
-            `/road/${params.id}/reports/null/create`,
+        const response = await api.post(
+            `/reports`,
             reports,
             {
               headers: {

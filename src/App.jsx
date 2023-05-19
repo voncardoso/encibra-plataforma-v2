@@ -29,9 +29,10 @@ import { IggItem } from "./Pages/Igg/IggItem";
 import { ReportsPdf } from "./Pages/Igg/ReportsPdf";
 import { SubReportsList } from "./Pages/Videos/SubReportsList";
 import { RegisterSubReports } from "./Pages/Videos/RegisterSubReports";
-import { SubReportsPatology } from "./Pages/Videos/SubReportsPatology";
-import { DefaultLayoutSubReports } from "./components/DefaultLayoutSubReports";
 import { SubReportsInformation } from "./Pages/Videos/SubReportsInformation";
+import { SubReportsRegisterPatology } from "./Pages/Videos/SubReportsRegisterPatology";
+import { ReportsSubPdf } from "./Pages/Igg/ReportsSubPdf";
+
 
 
 function App() {
@@ -45,10 +46,19 @@ function App() {
 
             <Route
               path="/:id/igg/:igg/pdf"
-                    element={
-                      <PrivateRoutes>
-                        <ReportsPdf />
-                      </PrivateRoutes>
+                element={
+                  <PrivateRoutes>
+                    <ReportsPdf />
+                  </PrivateRoutes>
+              }
+            />
+
+            <Route
+              path="/:id/igg/:igg/reportspdf/:reports"
+                element={
+                  <PrivateRoutes>
+                    <ReportsSubPdf />
+                  </PrivateRoutes>
               }
             />  
 
@@ -213,14 +223,31 @@ function App() {
                     }
                   />
                   <Route
-                    path="/rodovias/videos/:id/subtrecho/:video/information"
+                    path="/rodovias/videos/:id/subtrecho/:video/information/:reports"
                     element={
                       <PrivateRoutes>
                         <SubReportsInformation />
                       </PrivateRoutes>
                     }
                   />
-                    
+
+                  <Route
+                    path="/rodovias/videos/:id/subtrecho/:video/information"
+                    element={
+                      <PrivateRoutes>
+                        <SubReportsInformation />
+                      </PrivateRoutes>
+                    }
+                  />  
+
+                  <Route
+                    path="/rodovias/videos/:id/subtrecho/:video/information/:reports/register"
+                    element={
+                      <PrivateRoutes>
+                        <SubReportsRegisterPatology />
+                      </PrivateRoutes>
+                    }
+                  />
                    
                   <Route
                     path="/rodovias/videos/:id/subtrecho/:video/register"

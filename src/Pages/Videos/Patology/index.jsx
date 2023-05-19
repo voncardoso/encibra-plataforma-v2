@@ -60,7 +60,6 @@ export function Patology() {
       "pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw",
   });
 
-  console.log("patologia", dataPatology);
   let strech = null;
   if (dataRoad.stretch) {
     strech = JSON.parse(dataRoad?.stretch);
@@ -80,10 +79,10 @@ export function Patology() {
           },
         }
       );
-      // function filtarar as patologias
+      // function filtrar as patologias
       setDataPatology(
         response.data
-          .filter((item) => item.videoId === Number(video))
+          .filter((item) => item.videoId === Number(video) &&  item.reportId === null )
           .sort((a, b) => a.km - b.km)
       );
     }
@@ -205,7 +204,7 @@ export function Patology() {
     setCurrentPage(pageNumber);
   }
 
-  console.log(dataPatology)
+  console.log("patalogy",paginatedData)
   return (
     <div className="mt-5 flex flex-col justify-center">
       <header className="flex justify-end ">

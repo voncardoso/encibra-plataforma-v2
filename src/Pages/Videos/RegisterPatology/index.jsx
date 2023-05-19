@@ -26,7 +26,7 @@ export function RegisterPatology() {
   });
 
   async function handleRegisterPatology(data) {
-    console.log(data);
+
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const formData = new FormData();
     formData.append("file", data.file);
@@ -34,7 +34,7 @@ export function RegisterPatology() {
     // se imagem não exister
     if (data.file === undefined) {
       const response1 = await api.put(
-        `/road/${id}/patology/null/create`,
+        `/road/${dataRoad.id}/patology/null/create`,
         {
           acronym: dataRoad.acronym,
           code: "",
@@ -81,6 +81,7 @@ export function RegisterPatology() {
           }),
           latitude: data.latitude,
           longitude: data.longitude,
+          
         },
         {
           headers: {
