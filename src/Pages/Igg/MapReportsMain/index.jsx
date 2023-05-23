@@ -99,7 +99,7 @@ export default function MapReportsMain(){
                     zoom: 11,
                   }}
                 cooperativeGestures={true}
-                mapStyle="mapbox://styles/mapbox/streets-v11"
+                mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
                 mapboxAccessToken="pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw"
                 style={{height: "790px", padding:"20px", borderRadius: "6px" }}
             >
