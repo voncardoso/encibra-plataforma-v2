@@ -2,9 +2,10 @@ import { useForm } from "react-hook-form";
 import { X } from "@phosphor-icons/react";
 import { Dialog, DialogClose, DialogContent, DialogOverlay, DialogPortal } from "@radix-ui/react-dialog";
 import { api } from "../../../../lib/api";
+import { useParams } from "react-router-dom";
 
 export default function ModalUpdateInfomationMain({data, arrayUpdate}){
-    console.log("modal", data)
+    const params = useParams()
     const {
         register,
         handleSubmit,
@@ -18,14 +19,24 @@ export default function ModalUpdateInfomationMain({data, arrayUpdate}){
       
       async function handleUpdate(data){
         const token = window.localStorage.getItem("encibraapptoken-v2");
-        const response = await api.put(`/reports/${params.reports}`,  {
+        const response = await api.put(`/reports/${params.reports}`,
+        {
+            description: data.description,
+            finalKm: data.finalKm,
+            initialKm: data.initialKm
+        },{
             headers: {
               Authorization: `Bearer ${token}`,
             },
         })
-        console.log(response.data)
-        setDataReport(response.data)
-        setDataPatologySubTrecho(response.data.patology)
+        console.log(response)
+
+        if(response.status === 200){
+            window.alert("Atualizado com sucesso")
+        }
+
+       // setDataReport(response.data)
+       // setDataPatologySubTrecho(response.data.patology)
       }
     return(
         <DialogPortal>

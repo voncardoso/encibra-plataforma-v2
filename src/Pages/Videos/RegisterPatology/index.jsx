@@ -692,6 +692,7 @@ export function RegisterPatology() {
               <option value="Rotatória">Rotatória</option>
               <option value="Cruzamento">Cruzamento</option>
               <option value="Entroncamento">Entroncamento</option>
+              <option value="Em obras">Trecho em Obras</option>
             </select>
           </label>
         </div>

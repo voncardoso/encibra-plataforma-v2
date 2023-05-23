@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContextRoad } from "../../../../Context/useContextRoad";
-import { useLocation, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { X } from "@phosphor-icons/react";
 import {
   DialogOverlay,
@@ -25,6 +25,7 @@ export function ModalUpadate(props) {
   });
 
   async function handleUpdateVideo(data) {
+    console.log("data", data)
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const dataObjeto = new Date(data.date);
     const response = await api.put(
@@ -36,10 +37,10 @@ export function ModalUpadate(props) {
         kmInitial: data.kmInitial,
         kmFinal: data.kmFinal,
         core: props.data.core,
-        processed: "PENDING",
+        processed: data.processed,
         stretch: data.stretch,
         roadId: +props.data.roadId,
-        companyId: 1,
+        companyId: 3,
         createdBy: +props.data.createdBy,
         createdAt: props.data.createdAt,
         updatedAt: new Date().toISOString(),
@@ -66,7 +67,7 @@ export function ModalUpadate(props) {
     .split("/")
     .reverse()
     .join("-");
-  console.log(dataUTC);
+  
   return (
     <DialogPortal className="fixed inset-0 bg-black bg-opacity-50">
       <DialogOverlay className=" fixed inset-0 bg-black bg-opacity-50" />
@@ -130,6 +131,21 @@ export function ModalUpadate(props) {
               {...register("kmFinal", { required: true })}
             />
           </label>
+
+          <label htmlFor="">
+          Status
+          <select
+            name=""
+            id=""
+            className="bg-gray-input w-full rounded-md p-2"
+            {...register("processed", { required: true })}
+          >
+            <option value="">Selecione a Malha</option>
+            <option value="PENDING">Pendente</option>
+            <option value="PROCESSING"> Em análise</option>
+            <option value="PROCESSED"> Analisado</option>
+          </select>
+        </label>
           <button className="mt-6 bg-gold-400 w-full p-2 text-white rounded hover:bg-gold-300">
             Atualizar
           </button>
