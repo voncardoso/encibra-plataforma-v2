@@ -43,8 +43,8 @@ export function ModalUpdate(props) {
       }
     );
 
-    if(response.status === 200){
-      props.arrayUpdate(response.data)
+    if (response.status === 200) {
+      props.arrayUpdate(response.data);
       window.alert("Município atualizado com sucesso");
     }
   }
@@ -68,7 +68,7 @@ export function ModalUpdate(props) {
               id="name"
               type="text"
               className="mb-4 bg-gray-input w-full rounded-md p-2"
-              {...register("name", { required: true })}
+              {...register("name")}
             />
           </label>
 
@@ -78,7 +78,7 @@ export function ModalUpdate(props) {
               id="extention"
               type="text"
               className="bg-gray-input w-full rounded-md p-2"
-              {...register("extention", { required: true })}
+              {...register("extention")}
             />
           </label>
 

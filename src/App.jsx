@@ -14,18 +14,72 @@ import { CityInformation } from "./Pages/Rodovia/CityInformation";
 import { List } from "./Pages/Videos/List";
 import { DefaultLayoutVideos } from "./components/DefaultLayoutVideos";
 import { Information } from "./Pages/Videos/Information";
-import "./global.css";
 import { Patology } from "./Pages/Videos/Patology";
 import { UserStorageRoad } from "./Context/useContextRoad";
 import { RegisterVideo } from "./Pages/Videos/RegisterVideo";
+import { DefaultLayoutUser } from "./components/DefaultLayoutUser";
+import { DashboardUser } from "./Pages/User/Dashboard";
+import { RegisterUser } from "./Pages/User/Register";
+import { UserInformation } from "./Pages/User/UserInformation";
+import { RegisterPatology } from "./Pages/Videos/RegisterPatology";
+import { Igg } from "./Pages/Igg/List";
+import { RegisterIgg } from "./Pages/Igg/RegisterIgg";
+import { IggItem } from "./Pages/Igg/IggItem";
+import { ReportsPdf } from "./Pages/Igg/ReportsPdf";
+import { SubReportsList } from "./Pages/Videos/SubReportsList";
+import { RegisterSubReports } from "./Pages/Videos/RegisterSubReports";
+import { SubReportsInformation } from "./Pages/Videos/SubReportsInformation";
+import { SubReportsRegisterPatology } from "./Pages/Videos/SubReportsRegisterPatology";
+import { ReportsSubPdf } from "./Pages/Igg/ReportsSubPdf";
+import MapReportsMain from "./Pages/Igg/MapReportsMain";
+import MapReportsSub from "./Pages/Igg/MapReportsSub";
+import "./global.css";
+
 
 function App() {
   return (
     <BrowserRouter>
       <UserStorageLogin>
         <UserStorageRoad>
+
           <Routes>
             <Route path="/" element={<Login />} />
+
+            <Route
+              path="/:id/igg/:igg/pdf"
+                element={
+                  <PrivateRoutes>
+                    <ReportsPdf />
+                  </PrivateRoutes>
+              }
+            />
+
+            <Route
+              path="/:id/igg/:igg/pdf/map"
+                element={
+                  <PrivateRoutes>
+                    <MapReportsMain/>
+                  </PrivateRoutes>
+              }
+            />
+
+            <Route
+              path="/:id/igg/:igg/reportspdf/:reports"
+                element={
+                  <PrivateRoutes>
+                    <ReportsSubPdf />
+                  </PrivateRoutes>
+              }
+            />
+
+            <Route
+              path="/:id/igg/:igg/reportspdf/:reports/map"
+                element={
+                  <PrivateRoutes>
+                    <MapReportsSub />
+                  </PrivateRoutes>
+              }
+            />  
 
             <Route path="/rodovias" element={<DefaultLayout />}>
               <Route
@@ -117,6 +171,33 @@ function App() {
                     }
                   />
 
+                  <Route
+                    path="/rodovias/:id/igg"
+                    element={
+                      <PrivateRoutes>
+                        <Igg />
+                      </PrivateRoutes>
+                    }
+                  />
+
+                  <Route
+                    path="/rodovias/:id/igg/:igg"
+                    element={
+                      <PrivateRoutes>
+                        <IggItem />
+                      </PrivateRoutes>
+                    }
+                  />  
+
+                  <Route
+                    path="/rodovias/:id/igg/cadastro"
+                    element={
+                      <PrivateRoutes>
+                        <RegisterIgg />
+                      </PrivateRoutes>
+                    }
+                  />
+
                 <Route
                   path="/rodovias/videos/:id"
                   element={
@@ -125,6 +206,7 @@ function App() {
                     </PrivateRoutes>
                   }
                 >
+                  
                   <Route
                     path="/rodovias/videos/:id/information/:video"
                     element={
@@ -142,8 +224,87 @@ function App() {
                       </PrivateRoutes>
                     }
                   />
+                  <Route
+                    path="/rodovias/videos/:id/patology/:video/register"
+                    element={
+                      <PrivateRoutes>
+                        <RegisterPatology />
+                      </PrivateRoutes>
+                    }
+                  />
+
+                  <Route
+                    path="/rodovias/videos/:id/subtrecho/:video/"
+                    element={
+                      <PrivateRoutes>
+                        <SubReportsList />
+                      </PrivateRoutes>
+                    }
+                  />
+                  <Route
+                    path="/rodovias/videos/:id/subtrecho/:video/information/:reports"
+                    element={
+                      <PrivateRoutes>
+                        <SubReportsInformation />
+                      </PrivateRoutes>
+                    }
+                  />
+
+                  <Route
+                    path="/rodovias/videos/:id/subtrecho/:video/information"
+                    element={
+                      <PrivateRoutes>
+                        <SubReportsInformation />
+                      </PrivateRoutes>
+                    }
+                  />  
+
+                  <Route
+                    path="/rodovias/videos/:id/subtrecho/:video/information/:reports/register"
+                    element={
+                      <PrivateRoutes>
+                        <SubReportsRegisterPatology />
+                      </PrivateRoutes>
+                    }
+                  />
+                   
+                  <Route
+                    path="/rodovias/videos/:id/subtrecho/:video/register"
+                    element={
+                      <PrivateRoutes>
+                        <RegisterSubReports />
+                      </PrivateRoutes>
+                    }
+                  />
                 </Route>
               </Route>
+            </Route>
+
+            <Route path="/user" element={<DefaultLayoutUser/>}>
+              <Route
+                path="/user"
+                element={
+                  <PrivateRoutes>
+                    <DashboardUser  />
+                  </PrivateRoutes>
+                }
+              />
+              <Route
+                path="/user/registro"
+                element={
+                  <PrivateRoutes>
+                    <RegisterUser  />
+                  </PrivateRoutes>
+                }
+              />
+              <Route
+                path="/user/:id"
+                element={
+                  <PrivateRoutes>
+                    <UserInformation  />
+                  </PrivateRoutes>
+                }
+              />
             </Route>
           </Routes>
         </UserStorageRoad>

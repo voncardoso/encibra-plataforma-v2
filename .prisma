@@ -27,7 +27,7 @@ model Company {
   name String
 
   createdAt    DateTime       @default(now()) @map("created_at")
-  updatedAt    DateTime       @updatedAt @map("updated_at")
+  updatedAt    DateTime?      @updatedAt @map("updated_at")
   deletedAt    DateTime?      @map("deleted_at")
   userXCompany UserXCompany[]
   videos       Videos[]
@@ -36,16 +36,18 @@ model Company {
 }
 
 model Iggs {
-  id       Int      @id @default(autoincrement())
-  date     DateTime
-  level    Level
-  regional String
-  videoId  Int      @map("video_id")
-  roadId   Int      @map("road_id")
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  level       Level
+  regional    String
+  videoId     Int      @map("video_id")
+  roadId      Int      @map("road_id")
+  section     String
+  description String   @db.Text
 
   deletedAt DateTime? @map("deleted_at")
   createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
   roads  Roads   @relation(fields: [roadId], references: [id])
   videos Videos? @relation(fields: [videoId], references: [id])
@@ -57,24 +59,31 @@ model Iggs {
 }
 
 model Patology {
-  id            Int    @id @default(autoincrement())
+  id            Int     @id @default(autoincrement())
   acronym       String
   code          String
-  cracks        String @db.Text
+  cracks        String  @db.Text
   descrption    String
   iggsId        Int?
-  km            Int
+  km            String
   level         Level
-  roadId        Int    @map("road_id")
-  roadSide      String @map("road_side") @db.Text
-  screenshotUrl String @map("screenshot_url")
+  roadId        Int     @map("road_id")
+  roadSide      String  @map("road_side") @db.Text
+  reportId      Int?    @map("report_id")
+  screenshotUrl String  @map("screenshot_url")
   type          String
-  videoId       Int    @map("video_id")
-  videoTime     String @map("video_time")
+  videoId       Int     @map("video_id")
+  videoTime     String  @map("video_time")
+  observation   String? @db.Text
+  sags          String? @db.Text
+  otherDefects  String? @db.Text
+  latitude      String? @db.Text
+  longitude     String? @db.Text
 
-  roads  Roads  @relation(fields: [roadId], references: [id])
-  videos Videos @relation(fields: [videoId], references: [id])
-  iggs   Iggs?  @relation(fields: [iggsId], references: [id])
+  roads   Roads    @relation(fields: [roadId], references: [id])
+  videos  Videos   @relation(fields: [videoId], references: [id])
+  iggs    Iggs?    @relation(fields: [iggsId], references: [id])
+  respots Reports? @relation(fields: [reportId], references: [id])
 
   @@map("patology")
 }
@@ -94,18 +103,24 @@ model Points {
 }
 
 model Reports {
-  id      Int    @id @default(autoincrement())
-  userId  Int    @map("user_id")
-  level   Level
-  videoId Int    @map("video_id")
-  iggId   Int    @map("igg_id")
-  users   Users  @relation(fields: [userId], references: [id])
-  iggs    Iggs   @relation(fields: [id], references: [id])
-  videos  Videos @relation(fields: [videoId], references: [id])
+  id          Int       @id @default(autoincrement())
+  level       Level
+  initialKm   String    @map("initial_km")
+  finalKm     String    @map("final_km")
+  section     String
+  description String    @db.Text
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
 
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
+  iggId   Int @map("igg_id")
+  videoId Int @map("video_id")
+  userId  Int @map("user_id")
+
+  iggs     Iggs       @relation(fields: [iggId], references: [id])
+  users    Users      @relation(fields: [userId], references: [id])
+  videos   Videos     @relation(fields: [videoId], references: [id])
+  patology Patology[]
 
   @@map("reports")
 }
@@ -144,23 +159,23 @@ model Roads {
 }
 
 model Users {
-  id            Int      @id @default(autoincrement())
-  email         String   @unique
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
   password      String
   name          String
-  cpf           String?  @unique
-  position      Position @default(ENGENEER)
-  phone         String?  @unique
-  enrollment    String?  @unique
-  corporationId Int?     @map("corporation_id")
-  token         String?  @db.VarChar(500)
-
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
+  cpf           String?   @unique
+  position      Position  @default(ANALYST_ENGINEER)
+  phone         String?   @unique
+  enrollment    String?   @unique
+  corporationId Int?      @map("corporation_id")
+  token         String?   @db.VarChar(500)
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime? @updatedAt @map("updated_at")
+  deletedAt     DateTime? @map("deleted_at")
 
   reports      Reports[]
   userXCompany UserXCompany[]
+  videos       Videos[]
 
   @@map("users")
 }
@@ -171,7 +186,7 @@ model UserXCompany {
   companyId Int @map("company_id")
 
   createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
 
   users   Users   @relation(fields: [userId], references: [id])
@@ -181,23 +196,26 @@ model UserXCompany {
 }
 
 model Videos {
-  id        Int      @id @default(autoincrement())
+  id        Int              @id @default(autoincrement())
   url       String
   date      DateTime
   extension String
-  kmInitial Int      @map("km_initial")
-  kmFinal   Int      @map("km_final")
+  kmInitial String           @map("km_initial")
+  kmFinal   String           @map("km_final")
   core      String
-  roadId    Int      @map("road_id")
-  processed Boolean  @default(false)
-  companyId Int      @map("company_id")
+  processed ProcessingStatus @default(PENDING)
+  stretch   String
+  roadId    Int              @map("road_id")
+  companyId Int              @map("company_id")
+  createdBy Int              @map("created_by")
 
   createdAt DateTime  @default(now()) @map("created_at")
   deletedAt DateTime? @map("deleted_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
   company Company @relation(fields: [companyId], references: [id])
   roads   Roads   @relation(fields: [roadId], references: [id])
+  users   Users   @relation(fields: [createdBy], references: [id])
 
   iggs     Iggs[]
   patology Patology[]
@@ -215,7 +233,8 @@ enum Level {
 
 enum Position {
   ADMIN
-  ENGENEER
+  ENGINEER
+  ANALYST_ENGINEER
   ARCHITECT
   INTERN
   OTHER
@@ -249,4 +268,10 @@ enum StatesAbbreviation {
   SP
   SE
   TO
+}
+
+enum ProcessingStatus {
+  PENDING
+  PROCESSING
+  PROCESSED
 }

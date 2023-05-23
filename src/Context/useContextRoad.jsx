@@ -28,6 +28,7 @@ export const UserStorageRoad = ({ children }) => {
     const response = await api.get("/road", {
       headers: { Authorization: "Bearer " + token },
     });
+    console.log("teste", response)
     setRoad(response.data);
   }
 

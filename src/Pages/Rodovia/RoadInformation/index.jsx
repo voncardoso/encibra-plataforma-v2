@@ -218,7 +218,7 @@ export function RoadInformation() {
        
         {start.latitude ?   
         <div className="mb-5">
-          {console.log("teste",+start.latitude)}
+          
               <ReactMapGL
                key={`${start.latitude}-${start.longitude}`}
               initialViewState={{
@@ -251,9 +251,9 @@ export function RoadInformation() {
                   )}
           
 
-                <GeolocateControl position="top-left" />
-                <FullscreenControl position="top-left" />
-                <NavigationControl position="top-left" />
+                <GeolocateControl position="top-right" />
+                <FullscreenControl position="top-right" />
+                <NavigationControl position="top-right" />
                 <ScaleControl />
               </ReactMapGL>
           </div>: ""}

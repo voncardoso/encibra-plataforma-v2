@@ -53,7 +53,7 @@ export function DefaultLayoutRoad() {
           <NavLink className="" to={`/rodovias/videos/${params.id}`}>
             Videos
           </NavLink>
-          <NavLink className="" to={"/teste"}>
+          <NavLink className="" to={`/rodovias/${params.id}/igg`}>
             Igg
           </NavLink>
         </Nav>
