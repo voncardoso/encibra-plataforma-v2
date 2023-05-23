@@ -114,7 +114,7 @@ export default function MapReportsSub(){
 
       console.log("data patology", DataPatology)
     return (
-        <section className="flex items-center h-screen w-screen">
+        <section style={{width: "1094px", height: "760px"}} className="m-auto h-auto flex items-center">
             <ReactMapGL
                 key={`${+startPatology.latitude}-${+startPatology.longitude}`}
                 initialViewState={{
@@ -123,7 +123,7 @@ export default function MapReportsSub(){
                     zoom: 11,
                   }}
                 cooperativeGestures={true}
-                mapStyle="mapbox://styles/mapbox/streets-v11"
+                mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
                 mapboxAccessToken="pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw"
                 style={{height: "790px", padding:"20px", borderRadius: "6px" }}
             >
