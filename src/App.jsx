@@ -20,7 +20,6 @@ import { RegisterVideo } from "./Pages/Videos/RegisterVideo";
 import { DefaultLayoutUser } from "./components/DefaultLayoutUser";
 import { DashboardUser } from "./Pages/User/Dashboard";
 import { RegisterUser } from "./Pages/User/Register";
-import "./global.css";
 import { UserInformation } from "./Pages/User/UserInformation";
 import { RegisterPatology } from "./Pages/Videos/RegisterPatology";
 import { Igg } from "./Pages/Igg/List";
@@ -32,7 +31,9 @@ import { RegisterSubReports } from "./Pages/Videos/RegisterSubReports";
 import { SubReportsInformation } from "./Pages/Videos/SubReportsInformation";
 import { SubReportsRegisterPatology } from "./Pages/Videos/SubReportsRegisterPatology";
 import { ReportsSubPdf } from "./Pages/Igg/ReportsSubPdf";
-
+import MapReportsMain from "./Pages/Igg/MapReportsMain";
+import MapReportsSub from "./Pages/Igg/MapReportsSub";
+import "./global.css";
 
 
 function App() {
@@ -54,10 +55,28 @@ function App() {
             />
 
             <Route
+              path="/:id/igg/:igg/pdf/map"
+                element={
+                  <PrivateRoutes>
+                    <MapReportsMain/>
+                  </PrivateRoutes>
+              }
+            />
+
+            <Route
               path="/:id/igg/:igg/reportspdf/:reports"
                 element={
                   <PrivateRoutes>
                     <ReportsSubPdf />
+                  </PrivateRoutes>
+              }
+            />
+
+            <Route
+              path="/:id/igg/:igg/reportspdf/:reports/map"
+                element={
+                  <PrivateRoutes>
+                    <MapReportsSub />
                   </PrivateRoutes>
               }
             />  

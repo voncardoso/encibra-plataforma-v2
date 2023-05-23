@@ -1,4 +1,4 @@
-import { FileText, Files, PlusCircle, CaretRight } from "@phosphor-icons/react";
+import { FileText, Files, PlusCircle, CaretRight, MapTrifold } from "@phosphor-icons/react";
 import { useContext, useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { UserContextRoad } from "../../../Context/useContextRoad";
@@ -57,7 +57,7 @@ export function IggItem(){
                 
                 <h1 className="text-lg text-text-100 border-b border-gray-400 ">Relatorio Principal</h1>
                     <ul className=" gap-5 mt-5  ">
-                            <NavLink 
+                            <li
                                 className="text-text-100 flex items-center w-80 bg-white shadow-md shadow-[rgba(0,0,0,0.3)] rounded-lg cursor-pointer"
                                 to={`/${params.id}/igg/${params.igg}/pdf/`}
                             >
@@ -72,8 +72,12 @@ export function IggItem(){
                                     <NavLink to={`/${params.id}/igg/${params.igg}/pdf/`}>
                                         <FileText className="text-gold-400" size={30}/>
                                     </NavLink >
+
+                                    <NavLink to={`/${params.id}/igg/${params.igg}/pdf/map`}>
+                                        <MapTrifold className="text-emerald-500" weight="duotone"  size={30}/>
+                                    </NavLink >
                                 </ul>
-                            </NavLink>
+                            </li>
                     </ul>
 
                     <h1 className="text-lg text-text-100 border-b border-gray-400 mt-5">Sub Relatorios</h1>
@@ -94,7 +98,10 @@ export function IggItem(){
                                 </div>
                                 <ul className=" p-2 flex flex-col gap-2 ">
                                     <NavLink to={`/${params.id}/igg/${params.igg}/reportspdf/${item.id}`}>
-                                        <FileText className="text-gold-400" size={30}/>
+                                        <FileText className="text-gold-400"  size={30}/>
+                                    </NavLink >
+                                    <NavLink to={`/${params.id}/igg/${params.igg}/reportspdf/${item.id}/map`}>
+                                        <MapTrifold className="text-emerald-500" weight="duotone"  size={30}/>
                                     </NavLink >
                                 </ul>
                             </NavLink>

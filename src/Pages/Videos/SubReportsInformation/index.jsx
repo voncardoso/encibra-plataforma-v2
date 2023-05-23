@@ -72,7 +72,7 @@ export function SubReportsInformation(){
 
         handleGetReports()
     }, [])
-    console.log("reportes",dataReports)
+
     
     useEffect(() => {
         async function getPatology() {
@@ -426,7 +426,6 @@ export function SubReportsInformation(){
                   mapStyle="mapbox://styles/mapbox/streets-v11"
                   mapboxAccessToken="pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw"
                 >
-                  {console.log(startPatology.latitude)}
                    {/**Tra a rota dos pontos iniciais */}
                   <Marker
                     latitude={+startPatology.latitude}
