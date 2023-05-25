@@ -37,18 +37,21 @@ export function Sidbar() {
           <Truck className="ml-2" size={24} />
           <p className="md:hidden md:m-auto">Rodovias</p>
         </NavLink>
+        
         {/**
          * <li className="md:hidden md:w-16 md:m-auto  mb-1 py-2.5 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md   ">
             <Calculator className="ml-2" size={24} />
             <p className="md:hidden md:m-auto">IGG</p>
           </li> 
         */}
+
         {/**
          * <li className="md:hidden md:w-16 md:m-auto mb-1 py-2.5  font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md   ">
             <Notebook className="ml-2" size={24} />
             <p className="md:hidden  md:invisible">Contratos</p>
           </li>
          */}
+        
         {dataUser?.position === "ADMIN" && <NavLink
           className={` md:hidden md:w-16 md:m-auto mb-1 py-2.5 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md`}
           to="/user"
