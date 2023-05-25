@@ -14,7 +14,7 @@ export function RoadCore() {
     GetRoads()
   }, [])
 
-  const dataRoad = road.filter((item) => item.regional === `0${params.id}`)
+  const dataRoad = road.filter((item) => item.regional === `0${params.id}` || item.regional === `${params.id}`)
 
   
   const someRoadRegional = dataRoad.reduce(

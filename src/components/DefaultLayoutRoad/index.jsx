@@ -15,6 +15,8 @@ export function DefaultLayoutRoad() {
     setIdReloadRoad(params.id)
   }, [pathname]);
 
+  console.log(dataRoad)
+
   if(dataRoad){
     return (
       <section className="gap-5 bg-background h-screen overflow-y-scroll w-full pr-5 ">
@@ -25,7 +27,7 @@ export function DefaultLayoutRoad() {
                 <strong className="text-2xl hover:underline">Rodovias </strong>
               </NavLink>
               <NavLink to={`/rodovias/nucleo/${1}`}>
-                <strong className="text-2xl hover:underline"> | NR-01 </strong>
+                <strong className="text-2xl hover:underline"> | NR {dataRoad.regional} </strong>
               </NavLink>
               <strong className="text-2xl"> | </strong>
               <NavLink to={`#`}>
