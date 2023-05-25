@@ -34,7 +34,7 @@ export function RegisterVideo() {
       processed: "PENDING",
       stretch: data.stretch,
       roadId: +params.id,
-      companyId: 3,
+      companyId: 1,
       createdBy: +userId,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
