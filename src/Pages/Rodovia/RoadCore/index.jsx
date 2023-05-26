@@ -110,7 +110,7 @@ export function RoadCore() {
         <table className="w-full text-center">
           <thead>
             <tr className="bg-gray-300 ">
-              <th className="p-2 rounded-ss-md">Rodovia</th>
+              <th className="p-2 pl-4 rounded-ss-md text-left">Rodovia</th>
               <th className="p-2">Tipo</th>
               <th className="p-2">Extensão</th>
               <th className="p-2">Latitude</th>
@@ -120,7 +120,9 @@ export function RoadCore() {
             </tr>
           </thead>
           <tbody>
-            {paginatedData.map((road) =>{  stretch = JSON.parse(road?.stretch);
+            {paginatedData.sort(function (a, b) {
+              return a.acronym < b.acronym ? -1 : a.acronym > b.acronym ? 1 : 0;
+            }).map((road) =>{  stretch = JSON.parse(road?.stretch);
               return(
                 <tr 
                   className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
@@ -128,7 +130,7 @@ export function RoadCore() {
                     navigate(`/rodovias/information/${road.id}`);
                   }}  
                 >
-                <td className="p-2  ">{road.acronym}</td>
+                <td className="p-2 rounded-ss-md pl-4 text-left">{road.acronym}</td>
                 <td className="p-2  ">{road.mesh}</td>
                 <td className="p-2  ">{road.extention}</td>
                 <td className="p-2  ">{stretch?.initialLatitude}</td>

@@ -92,6 +92,7 @@ export function RegisterPatology() {
       if (response1.status === 200) {
         reset();
         setPreview("");
+        setDescriptionTeste("")
         window.alert("Patologia cadastrada com sucesso");
       }
     } else {
@@ -164,10 +165,11 @@ export function RegisterPatology() {
             },
           }
         );
-        console.log("teste", response1);
+        
         if (response1.status === 200) {
           reset();
           setPreview("");
+          setDescriptionTeste("")
           window.alert("Patologia cadastrada com sucesso");
         }
       } else {

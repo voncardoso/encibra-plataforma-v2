@@ -547,7 +547,7 @@ export function Dashboard() {
         <table className="w-full text-center">
           <thead>
             <tr className="bg-gray-300 ">
-              <th className="p-2 rounded-ss-md">Rodovia</th>
+              <th className="p-2 pl-4 rounded-ss-md text-left ">Rodovia</th>
               <th className="p-2">Malha</th>
               <th className="p-2">Extensão</th>
               <th className="p-2">Latitude</th>
@@ -558,7 +558,9 @@ export function Dashboard() {
           </thead>
           <tbody>
            {filteredRoad.length > 0 ?  
-           paginatedDataFilter.map((road) => {
+           paginatedDataFilter.sort(function (a, b) {
+            return a.acronym < b.acronym ? -1 : a.acronym > b.acronym ? 1 : 0;
+          }).map((road) => {
               stretch = JSON.parse(road?.stretch);
               return (
                 <tr
@@ -568,7 +570,7 @@ export function Dashboard() {
                   }}
                   className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
                 >
-                  <td className="p-2  ">{road.acronym}</td>
+                  <td className="p-2 pl-4  text-left">{road.acronym}</td>
                   <td className="p-2  ">{road.mesh}</td>
                   <td className="p-2  ">{road.extention}</td>
                   <td className="p-2  ">{stretch?.initialLatitude}</td>
@@ -585,7 +587,9 @@ export function Dashboard() {
                 </tr>
               );
             }) :  
-            paginatedData.map((road) => {
+            paginatedData.sort(function (a, b) {
+              return a.acronym < b.acronym ? -1 : a.acronym > b.acronym ? 1 : 0;
+            }).map((road) => {
               stretch = JSON.parse(road?.stretch);
               return (
                 <tr
@@ -595,7 +599,7 @@ export function Dashboard() {
                   }}
                   className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
                 >
-                  <td className="p-2  ">{road.acronym}</td>
+                  <td className="p-2 pl-4 text-left">{road.acronym}</td>
                   <td className="p-2  ">{road.mesh}</td>
                   <td className="p-2  ">{road.extention}</td>
                   <td className="p-2  ">{stretch?.initialLatitude}</td>
