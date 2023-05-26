@@ -22,6 +22,9 @@ export function ReportsPdf() {
   let totalPaginas = 0;
   let totalPaginasPhoto = 0;
   let totalIgg = 0;
+  let countPageInventario = 0;
+  let countPagePhoto = 0;
+  let countPaginas = 0
 
   useEffect(() => {
     Roads(params.id);
@@ -31,9 +34,9 @@ export function ReportsPdf() {
   const DataIgg = dataRoad.iggs?.filter((igg) => igg.id === Number(params.igg));
   const DataVideo = dataRoad.videos?.filter(
     (video) => video.id === Number(DataIgg[0].videoId)
-  );
+  )[0];
   const DataPatology = dataRoad.patology
-    ?.filter((patologys) => patologys.videoId === DataVideo[0].id)
+    ?.filter((patologys) => patologys.videoId === DataVideo.id)
     .sort((a, b) => a.km - b.km);
 
   // função para mostrar o array em lista de 14 items
@@ -306,6 +309,16 @@ export function ReportsPdf() {
     }
   }
 
+  console.log("datavideo",DataVideo);
+  console.log("dataRoad", dataRoad)
+
+
+
+    const date = new Date(DataVideo?.date);
+    const dataUTC = date.toLocaleDateString("pt-BR", {
+        timeZone: "UTC",
+    });
+  
   if (DataPatology) {
     return (
       <section className="bg-white h-screen w-screen">
@@ -331,18 +344,18 @@ export function ReportsPdf() {
                 <li className="dados">
                   <div>
                     <strong>
-                      Rodovia: <p>Teste</p>
+                      Rodovia: <p>{dataRoad.acronym}</p>
                     </strong>
                     <strong>
-                      Trecho: <p>Teste</p>
+                      Trecho: <p>{DataVideo[0]?.stretch}</p>
                     </strong>
                     <strong>
-                      Extensão: <p>12 km</p>
+                      Extensão: <p>{dataRoad.extention} km</p>
                     </strong>
                   </div>
                   <div>
                     <strong>
-                      Núcleo Regional: <p>01</p>
+                      Núcleo Regional: <p>{dataRoad.regional}</p>
                     </strong>
                     <strong>
                       Revestimento: <p>CBUQ</p>
@@ -351,14 +364,21 @@ export function ReportsPdf() {
                 </li>
                 <li className="data">
                   <ul>
-                    <li>DATA: 12/12/12</li>
-                    <li>ESTACA/KM: 12 KM</li>
+                    <li>DATA: {dataUTC}</li>
+                    <li>ESTACA/KM: {Intl.NumberFormat('pt-br',{
+                          minimumFractionDigits: 3,
+                          maximumFractionDigits: 3,
+                        }).format(0).replace(/,/g, '.')} KM</li>
                   </ul>
                 </li>
                 <li className="folhaEstacao">
                   <ul>
                     <li style={{ color: "#fff" }}>.</li>
-                    <li>ESTACA/KM: 12 KM</li>
+                    <li>ESTACA/KM: 
+                        {Intl.NumberFormat('pt-br',{
+                          minimumFractionDigits: 3,
+                          maximumFractionDigits: 3,
+                        }).format(dataRoad.extention).replace(/,/g, '.')} KM</li>
                   </ul>
                 </li>
               </ul>
@@ -938,18 +958,21 @@ export function ReportsPdf() {
                   <li className="dados">
                     <div>
                       <strong>
-                        Rodovia: <p>teste</p>
+                        Rodovia: <p>{dataRoad.acronym}</p>
                       </strong>
                       <strong>
-                        Trecho: <p>teste</p>
+                        Trecho: <p>{DataVideo?.stretch}</p>
                       </strong>
                       <strong>
-                        Extensão: <p>12 km</p>
+                        Extensão: <p>{Intl.NumberFormat('pt-br',{
+                                  minimumFractionDigits: 3,
+                                  maximumFractionDigits: 3,
+                                }).format(dataRoad.extention).replace(/,/g, '.')} km</p>
                       </strong>
                     </div>
                     <div>
                       <strong>
-                        Núcleo Regional: <p>12</p>
+                        Núcleo Regional: <p>{dataRoad.regional}</p>
                       </strong>
                       <strong>
                         Revestimento: <p>CBUQ</p>
@@ -958,14 +981,20 @@ export function ReportsPdf() {
                   </li>
                   <li className="data">
                     <ul>
-                      <li>DATA: 12</li>
-                      <li>ESTACA/KM: 21 KM</li>
+                      <li>DATA: {dataUTC}</li>
+                      <li>ESTACA/KM: {Intl.NumberFormat('pt-br',{
+                          minimumFractionDigits: 3,
+                          maximumFractionDigits: 3,
+                        }).format(0).replace(/,/g, '.')} KM</li>
                     </ul>
                   </li>
                   <li className="folhaEstacao">
                     <ul>
-                      <li>FOLHA: 21</li>
-                      <li>ESTACA/KM: 12 KM</li>
+                      <li>FOLHA: {(countPaginas++) + 1}</li>
+                      <li>ESTACA/KM: {Intl.NumberFormat('pt-br',{
+                          minimumFractionDigits: 3,
+                          maximumFractionDigits: 3,
+                        }).format(dataRoad.extention).replace(/,/g, '.')} KM</li>
                     </ul>
                   </li>
                 </ul>
@@ -1031,7 +1060,7 @@ export function ReportsPdf() {
                     const otherDefects = JSON.parse(patology.otherDefects);
                     return (
                       <tr>
-                        <td>12</td>
+                        <td>{(countPageInventario++) + 1}</td>
                         <td>
                           {Intl.NumberFormat("pt-br", {
                             minimumFractionDigits: 3,
@@ -1101,18 +1130,21 @@ export function ReportsPdf() {
                           <li className="dados">
                             <div>
                               <strong>
-                                Rodovia: <p>teste</p>
+                                Rodovia: <p>{dataRoad.acronym}</p>
                               </strong>
                               <strong>
-                                Trecho: <p>teste</p>
+                                Trecho: <p>{DataVideo?.stretch}</p>
                               </strong>
                               <strong>
-                                Extensão: <p>12 km</p>
+                                Extensão: <p>{Intl.NumberFormat('pt-br',{
+                                  minimumFractionDigits: 3,
+                                  maximumFractionDigits: 3,
+                                }).format(dataRoad.extention).replace(/,/g, '.')} km</p>
                               </strong>
                             </div>
                             <div>
                               <strong>
-                                Núcleo Regional: <p>01</p>
+                                Núcleo Regional: <p>{dataRoad.regional}</p>
                               </strong>
                               <strong>
                                 Revestimento: <p>CBUQ</p>
@@ -1121,14 +1153,21 @@ export function ReportsPdf() {
                           </li>
                           <li className="data">
                             <ul>
-                              <li>12/12/12</li>
-                              <li>ESTACA/KM: 12 KM</li>
+                              <li>DATA: {dataUTC}</li>
+                              <li>ESTACA/KM: 
+                                  {Intl.NumberFormat('pt-br',{
+                                    minimumFractionDigits: 3,
+                                    maximumFractionDigits: 3,
+                                  }).format(0).replace(/,/g, '.')} KM</li>
                             </ul>
                           </li>
                           <li className="folhaEstacao">
                             <ul>
-                              <li>FOLHA: 12</li>
-                              <li>ESTACA/KM: 12 KM</li>
+                              <li>FOLHA: {(countPaginas++) + 1}</li>
+                              <li>ESTACA/KM: {Intl.NumberFormat('pt-br',{
+                                  minimumFractionDigits: 3,
+                                  maximumFractionDigits: 3,
+                                }).format(dataRoad.extention).replace(/,/g, '.')} KM</li>
                             </ul>
                           </li>
                         </ul>
@@ -1138,7 +1177,7 @@ export function ReportsPdf() {
                           return (
                             <li>
                               <header>
-                                <h3>Foto 12</h3>
+                                <h3>Foto {(countPagePhoto++) + 1}</h3>
                                 <ul className="title">
                                   <li>
                                     {image?.observation ? "Observação:" : "Patologias:"}
