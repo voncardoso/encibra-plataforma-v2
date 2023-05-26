@@ -320,7 +320,7 @@ export function ModalUpdate(props) {
                   type="checkbox"
                   id="BD"
                   onClick={() =>{
-                    if(activeDB === true){
+                    if(activeBD === true){
                       setActiveBD(false)
                     }else{
                       setActiveBD(true)
@@ -338,7 +338,7 @@ export function ModalUpdate(props) {
                   className="w-4 h-4 cursor-pointer"
                   type="checkbox"
                   id="BE"
-                  checked={props.roadSide.BE}
+                  checked
                   onClick={() =>{
                     if(activeBE === true){
                       setActiveBE(false)
@@ -375,7 +375,7 @@ export function ModalUpdate(props) {
                     className="w-4 h-4 cursor-pointer"
                     type="checkbox"
                     id="EIXO"
-                    checked={props.roadSide.EIXO}
+                    checked
                     onClick={() =>{
                       if(activeEIXO === true){
                         setActiveEIXO(false)

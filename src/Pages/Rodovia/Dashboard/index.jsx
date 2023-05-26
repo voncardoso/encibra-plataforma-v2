@@ -225,6 +225,7 @@ export function Dashboard() {
     const endIndex = startIndex + itemsPerPage;
     return items.slice(startIndex, endIndex);
   }
+  
   const paginatedData = paginate(data, currentPage, itemsPerPage);
   const totalPages = Math.ceil(data.length / itemsPerPage);
   
