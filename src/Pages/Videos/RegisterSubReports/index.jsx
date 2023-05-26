@@ -9,7 +9,7 @@ export function RegisterSubReports(){
     const { dataRoad } = useContext(UserContextRoad);
     const {dataUser} = useContext(UserContextLogin)
     const params = useParams()
-    console.log(params)
+    
     const {
         register,
         handleSubmit,
@@ -21,12 +21,11 @@ export function RegisterSubReports(){
       });
 
       const dataIgg = dataRoad.iggs?.filter((igg) => igg.roadId === Number(params.id))
-      console.log("rodovia", dataRoad)
-      console.log("user", dataUser)
+      
       async function handleCreateReports(data){
         const userId = window.localStorage.getItem("encibraappId-v2");
         const token = window.localStorage.getItem("encibraapptoken-v2");
-        console.log("data", data)
+
         const reports = {
             level: "SUB",
             videos: {
@@ -51,7 +50,6 @@ export function RegisterSubReports(){
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
         }
-        console.log( "teste",reports)
 
         const response = await api.post(
             `/reports`,
@@ -63,7 +61,10 @@ export function RegisterSubReports(){
             }
           );
 
-          console.log(response)
+          if(response.status === 201){
+            reset()
+            window.alert("Sub-trecho cadastrado com sucesso")
+          }
       }
     return(
         <section className="  mt-5  flex overflow-auto w-full border-b-8 border-background rounded-md">
