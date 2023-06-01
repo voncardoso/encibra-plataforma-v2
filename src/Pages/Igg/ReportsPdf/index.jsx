@@ -22,6 +22,9 @@ export function ReportsPdf() {
   let totalPaginas = 0;
   let totalPaginasPhoto = 0;
   let totalIgg = 0;
+  let countPageInventario = 0;
+  let countPagePhoto = 0;
+  let countPaginas = 0
 
   useEffect(() => {
     Roads(params.id);
@@ -31,9 +34,9 @@ export function ReportsPdf() {
   const DataIgg = dataRoad.iggs?.filter((igg) => igg.id === Number(params.igg));
   const DataVideo = dataRoad.videos?.filter(
     (video) => video.id === Number(DataIgg[0].videoId)
-  );
+  )[0];
   const DataPatology = dataRoad.patology
-    ?.filter((patologys) => patologys.videoId === DataVideo[0].id)
+    ?.filter((patologys) => patologys.videoId === DataVideo.id)
     .sort((a, b) => a.km - b.km);
 
   // função para mostrar o array em lista de 14 items
@@ -59,7 +62,7 @@ export function ReportsPdf() {
       totalPaginas = DataPatology.length / 10;
     }
 
-    return resultado[0];
+    return resultado
   }
 
   // função para mostrar o array em lista de 4 items
@@ -92,7 +95,7 @@ export function ReportsPdf() {
       }
     }
     totalPaginasPhoto = data2.length / 4;
-    return resultado[0];
+    return resultado;
   }
 
   // soma os item do inventario
@@ -305,9 +308,17 @@ export function ReportsPdf() {
       return "Pessimo";
     }
   }
-  console.log("Data", dataRoad);
-  console.log("Data igg", DataIgg);
 
+  console.log("datavideo",DataVideo);
+  console.log("dataRoad", dataRoad)
+
+
+
+    const date = new Date(DataVideo?.date);
+    const dataUTC = date.toLocaleDateString("pt-BR", {
+        timeZone: "UTC",
+    });
+  
   if (DataPatology) {
     return (
       <section className="bg-white h-screen w-screen">
@@ -333,18 +344,18 @@ export function ReportsPdf() {
                 <li className="dados">
                   <div>
                     <strong>
-                      Rodovia: <p>Teste</p>
+                      Rodovia: <p>{dataRoad.acronym}</p>
                     </strong>
                     <strong>
-                      Trecho: <p>Teste</p>
+                      Trecho: <p>{DataVideo[0]?.stretch}</p>
                     </strong>
                     <strong>
-                      Extensão: <p>12 km</p>
+                      Extensão: <p>{dataRoad.extention} km</p>
                     </strong>
                   </div>
                   <div>
                     <strong>
-                      Núcleo Regional: <p>01</p>
+                      Núcleo Regional: <p>{dataRoad.regional}</p>
                     </strong>
                     <strong>
                       Revestimento: <p>CBUQ</p>
@@ -353,14 +364,21 @@ export function ReportsPdf() {
                 </li>
                 <li className="data">
                   <ul>
-                    <li>DATA: 12/12/12</li>
-                    <li>ESTACA/KM: 12 KM</li>
+                    <li>DATA: {dataUTC}</li>
+                    <li>ESTACA/KM: {Intl.NumberFormat('pt-br',{
+                          minimumFractionDigits: 3,
+                          maximumFractionDigits: 3,
+                        }).format(0).replace(/,/g, '.')} KM</li>
                   </ul>
                 </li>
                 <li className="folhaEstacao">
                   <ul>
                     <li style={{ color: "#fff" }}>.</li>
-                    <li>ESTACA/KM: 12 KM</li>
+                    <li>ESTACA/KM: 
+                        {Intl.NumberFormat('pt-br',{
+                          minimumFractionDigits: 3,
+                          maximumFractionDigits: 3,
+                        }).format(dataRoad.extention).replace(/,/g, '.')} KM</li>
                   </ul>
                 </li>
               </ul>
@@ -681,19 +699,19 @@ export function ReportsPdf() {
                         {" "}
                         {IndividualIGGCalculation(
                           RelativeFrequency(somaOtherDefects.O),
-                          0.1
+                          1.0
                         ).toLocaleString()}
                       </li>
                       <li>
                         {IndividualIGGCalculation(
                           RelativeFrequency(somaOtherDefects.P),
-                          0.1
+                          1.0
                         ).toLocaleString()}
                       </li>
                       <li>
                         {IndividualIGGCalculation(
                           RelativeFrequency(somaOtherDefects.E),
-                          0.1
+                          1.0
                         ).toLocaleString()}
                       </li>
                     </ul>
@@ -924,230 +942,257 @@ export function ReportsPdf() {
           </div>
         </FormulaCalculoIGG>
 
-        <InventarioIGG>
-          <div>
-            <div className="logo">
-              <img src={LogoEncibra} alt="" />
-              <img src={LogoSetran} alt="" />
-            </div>
-
-            <h3>INVENTÁRIO DO ESTADO DA SUPERFÍCIE DO PAVIMENTO</h3>
-            <div className="dadosPrincipais">
-              <ul style={{ fontWeight: "bold" }}>
-                <li className="dados">
-                  <div>
-                    <strong>
-                      Rodovia: <p>teste</p>
-                    </strong>
-                    <strong>
-                      Trecho: <p>teste</p>
-                    </strong>
-                    <strong>
-                      Extensão: <p>12 km</p>
-                    </strong>
-                  </div>
-                  <div>
-                    <strong>
-                      Núcleo Regional: <p>12</p>
-                    </strong>
-                    <strong>
-                      Revestimento: <p>CBUQ</p>
-                    </strong>
-                  </div>
-                </li>
-                <li className="data">
-                  <ul>
-                    <li>DATA: 12</li>
-                    <li>ESTACA/KM: 21 KM</li>
-                  </ul>
-                </li>
-                <li className="folhaEstacao">
-                  <ul>
-                    <li>FOLHA: 21</li>
-                    <li>ESTACA/KM: 12 KM</li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-
-            <table>
-              <thead>
-                <tr>
-                  <th colSpan={4}></th>
-                  <th colSpan={10}>TRINCAS</th>
-
-                  <th colSpan={4}>AFUNDAMENTOS</th>
-                  <th colSpan={6}>OUTROS DEFEITOS</th>
-                  <th colSpan={2}>TRINCAS RODAS</th>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th colSpan={4}></th>
-                  <th colSpan={6}>ISOLADAS</th>
-                  <th colSpan={4}>INTERLIGADAS</th>
-                  <th colSpan={2}>PLASTICAS</th>
-                  <th colSpan={2}>CONSOLIDADAS</th>
-                  <th colSpan={6}></th>
-                  <th colSpan={2}></th>
-                  <th colSpan={2}></th>
-                </tr>
-                <tr>
-                  <th>Nº</th>
-                  <th>
-                    <p>Estaca ou km</p>
-                  </th>
-                  <th>Lado</th>
-                  <th>Seção Terrap</th>
-                  <th>FI</th>
-                  <th>TTC</th>
-                  <th>TTL</th>
-                  <th>TLC</th>
-                  <th>TLL</th>
-                  <th>TRR</th>
-                  <th>J</th>
-                  <th>TB</th>
-                  <th>JE</th>
-                  <th>TBE</th>
-                  <th>ALP</th>
-                  <th>ATP</th>
-                  <th>ALC</th>
-                  <th>ATC</th>
-                  <th>O</th>
-                  <th>P</th>
-                  <th>E</th>
-                  <th>EX</th>
-                  <th>D</th>
-                  <th>R</th>
-                  <th>TRI</th>
-                  <th>TRE</th>
-                  <th>OBSERVAÇÃO</th>
-                </tr>
-              </thead>
-              <tbody>
-                {splitArrayforTen()?.map((patology) => {
-                  const roadSide = JSON.parse(patology.roadSide);
-                  const cracks = JSON.parse(patology.cracks);
-                  const sags = JSON.parse(patology.sags);
-                  const otherDefects = JSON.parse(patology.otherDefects);
-                  return (
-                    <tr>
-                      <td>12</td>
-                      <td>
-                        {Intl.NumberFormat("pt-br", {
+        {/**Inventario */}
+        {splitArrayforTen()?.map((item) =>{
+          return(
+            <InventarioIGG>
+            <div>
+              <div className="logo">
+                <img src={LogoEncibra} alt="" />
+                <img src={LogoSetran} alt="" />
+              </div>
+  
+              <h3>INVENTÁRIO DO ESTADO DA SUPERFÍCIE DO PAVIMENTO</h3>
+              <div className="dadosPrincipais">
+                <ul style={{ fontWeight: "bold" }}>
+                  <li className="dados">
+                    <div>
+                      <strong>
+                        Rodovia: <p>{dataRoad.acronym}</p>
+                      </strong>
+                      <strong>
+                        Trecho: <p>{DataVideo?.stretch}</p>
+                      </strong>
+                      <strong>
+                        Extensão: <p>{Intl.NumberFormat('pt-br',{
+                                  minimumFractionDigits: 3,
+                                  maximumFractionDigits: 3,
+                                }).format(dataRoad.extention).replace(/,/g, '.')} km</p>
+                      </strong>
+                    </div>
+                    <div>
+                      <strong>
+                        Núcleo Regional: <p>{dataRoad.regional}</p>
+                      </strong>
+                      <strong>
+                        Revestimento: <p>CBUQ</p>
+                      </strong>
+                    </div>
+                  </li>
+                  <li className="data">
+                    <ul>
+                      <li>DATA: {dataUTC}</li>
+                      <li>ESTACA/KM: {Intl.NumberFormat('pt-br',{
                           minimumFractionDigits: 3,
                           maximumFractionDigits: 3,
-                        })
-                          .format(patology.km)
-                          .replace(/,/g, ".")}
-                      </td>
-                      <td>
-                        {(roadSide.BD && "BD") ||
-                          (roadSide.BE && "BE") ||
-                          (roadSide.EIXO && "EIXO") ||
-                          (roadSide.PISTA && "PISTA")}
-                      </td>
-                      <td>{}</td>
-                      <td className="tdCinza espaco">{cracks.FI && "X"}</td>
-                      <td className="tdCinza espaco">{cracks.TTC && "X"}</td>
-                      <td className="tdCinza espaco">{cracks.TTL && "X"}</td>
-                      <td className="tdCinza espaco">{cracks.TLC && "X"}</td>
-                      <td className="tdCinza espaco">{cracks.TLL && "X"}</td>
-                      <td className="tdCinza espaco">{cracks.TRR && "X"}</td>
-                      <td className="espaco">{cracks.J && "X"}</td>
-                      <td className="espaco">{cracks.TB && "X"}</td>
-                      <td className="tdCinza espaco">{cracks.JE && "X"}</td>
-                      <td className="tdCinza espaco">{cracks.TBE && "X"}</td>
-                      <td className="espaco">{sags.ALP && "X"}</td>
-                      <td className="espaco">{sags.ATP && "X"}</td>
-                      <td className="espaco">{sags.ALC && "X"}</td>
-                      <td className="espaco">{sags.ATC && "X"}</td>
-                      <td className="tdCinza espaco">
-                        {otherDefects.O && "X"}
-                      </td>
-                      <td className="tdCinza espaco">
-                        {otherDefects.P && "X"}
-                      </td>
-                      <td className="tdCinza espaco">
-                        {otherDefects.E && "X"}
-                      </td>
-                      <td className="espaco">{otherDefects.EX && "X"}</td>
-                      <td className="tdCinza espaco">
-                        {otherDefects.D && "X"}
-                      </td>
-                      <td className="espaco">{otherDefects.R && "X"}</td>
-                      <td className="tdLaranja espaco"></td>
-                      <td className="tdLaranja espaco"></td>
-                      <td>{patology.observation}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </InventarioIGG>
-
-        <InventarioImage>
-          <div className="logo">
-            <img src={LogoEncibra} alt="" />
-            <img src={LogoSetran} alt="" />
-          </div>
-          <h3>INVENTÁRIO DO ESTADO DA SUPERFÍCIE DO PAVIMENTO</h3>
-          <div className="dadosPrincipais">
-            <ul style={{ fontWeight: "bold" }}>
-              <li className="dados">
-                <div>
-                  <strong>
-                    Rodovia: <p>teste</p>
-                  </strong>
-                  <strong>
-                    Trecho: <p>teste</p>
-                  </strong>
-                  <strong>
-                    Extensão: <p>12 km</p>
-                  </strong>
-                </div>
-                <div>
-                  <strong>
-                    Núcleo Regional: <p>01</p>
-                  </strong>
-                  <strong>
-                    Revestimento: <p>CBUQ</p>
-                  </strong>
-                </div>
-              </li>
-              <li className="data">
-                <ul>
-                  <li>12/12/12</li>
-                  <li>ESTACA/KM: 12 KM</li>
-                </ul>
-              </li>
-              <li className="folhaEstacao">
-                <ul>
-                  <li>FOLHA: 12</li>
-                  <li>ESTACA/KM: 12 KM</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <ul className="divPhoto">
-            {splitArrayforFour()?.map((image) => {
-              return (
-                <li>
-                  <header>
-                    <h3>Foto 12</h3>
-                    <ul className="title">
-                      <li>
-                        {image?.observation ? "Observação:" : "Patologias:"}
-                      </li>
-                      <li>{image.descrption}</li>
+                        }).format(0).replace(/,/g, '.')} KM</li>
                     </ul>
-                  </header>
-                  <img src={image?.screenshotUrl} alt="teste" />
-                </li>
-              );
-            })}
-          </ul>
-        </InventarioImage>
+                  </li>
+                  <li className="folhaEstacao">
+                    <ul>
+                      <li>FOLHA: {(countPaginas++) + 1}</li>
+                      <li>ESTACA/KM: {Intl.NumberFormat('pt-br',{
+                          minimumFractionDigits: 3,
+                          maximumFractionDigits: 3,
+                        }).format(dataRoad.extention).replace(/,/g, '.')} KM</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th colSpan={4}></th>
+                    <th colSpan={10}>TRINCAS</th>
+  
+                    <th colSpan={4}>AFUNDAMENTOS</th>
+                    <th colSpan={6}>OUTROS DEFEITOS</th>
+                    <th colSpan={2}>TRINCAS RODAS</th>
+                    <th></th>
+                  </tr>
+                  <tr>
+                    <th colSpan={4}></th>
+                    <th colSpan={6}>ISOLADAS</th>
+                    <th colSpan={4}>INTERLIGADAS</th>
+                    <th colSpan={2}>PLASTICAS</th>
+                    <th colSpan={2}>CONSOLIDADAS</th>
+                    <th colSpan={6}></th>
+                    <th colSpan={2}></th>
+                    <th colSpan={2}></th>
+                  </tr>
+                  <tr>
+                    <th>Nº</th>
+                    <th>
+                      <p>Estaca ou km</p>
+                    </th>
+                    <th>Lado</th>
+                    <th>Seção Terrap</th>
+                    <th>FI</th>
+                    <th>TTC</th>
+                    <th>TTL</th>
+                    <th>TLC</th>
+                    <th>TLL</th>
+                    <th>TRR</th>
+                    <th>J</th>
+                    <th>TB</th>
+                    <th>JE</th>
+                    <th>TBE</th>
+                    <th>ALP</th>
+                    <th>ATP</th>
+                    <th>ALC</th>
+                    <th>ATC</th>
+                    <th>O</th>
+                    <th>P</th>
+                    <th>E</th>
+                    <th>EX</th>
+                    <th>D</th>
+                    <th>R</th>
+                    <th>TRI</th>
+                    <th>TRE</th>
+                    <th>OBSERVAÇÃO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {item.map((patology) => {
+                    const roadSide = JSON.parse(patology.roadSide);
+                    const cracks = JSON.parse(patology.cracks);
+                    const sags = JSON.parse(patology.sags);
+                    const otherDefects = JSON.parse(patology.otherDefects);
+                    return (
+                      <tr>
+                        <td>{(countPageInventario++) + 1}</td>
+                        <td>
+                          {Intl.NumberFormat("pt-br", {
+                            minimumFractionDigits: 3,
+                            maximumFractionDigits: 3,
+                          })
+                            .format(patology.km)
+                            .replace(/,/g, ".")}
+                        </td>
+                        <td>
+                          {(roadSide.BD && "BD") ||
+                            (roadSide.BE && "BE") ||
+                            (roadSide.EIXO && "EIXO") ||
+                            (roadSide.PISTA && "PISTA")}
+                        </td>
+                        <td>{}</td>
+                        <td className="tdCinza espaco">{cracks.FI && "X"}</td>
+                        <td className="tdCinza espaco">{cracks.TTC && "X"}</td>
+                        <td className="tdCinza espaco">{cracks.TTL && "X"}</td>
+                        <td className="tdCinza espaco">{cracks.TLC && "X"}</td>
+                        <td className="tdCinza espaco">{cracks.TLL && "X"}</td>
+                        <td className="tdCinza espaco">{cracks.TRR && "X"}</td>
+                        <td className="espaco">{cracks.J && "X"}</td>
+                        <td className="espaco">{cracks.TB && "X"}</td>
+                        <td className="tdCinza espaco">{cracks.JE && "X"}</td>
+                        <td className="tdCinza espaco">{cracks.TBE && "X"}</td>
+                        <td className="espaco">{sags.ALP && "X"}</td>
+                        <td className="espaco">{sags.ATP && "X"}</td>
+                        <td className="espaco">{sags.ALC && "X"}</td>
+                        <td className="espaco">{sags.ATC && "X"}</td>
+                        <td className="tdCinza espaco">
+                          {otherDefects.O && "X"}
+                        </td>
+                        <td className="tdCinza espaco">
+                          {otherDefects.P && "X"}
+                        </td>
+                        <td className="tdCinza espaco">
+                          {otherDefects.E && "X"}
+                        </td>
+                        <td className="espaco">{otherDefects.EX && "X"}</td>
+                        <td className="tdCinza espaco">
+                          {otherDefects.D && "X"}
+                        </td>
+                        <td className="espaco">{otherDefects.R && "X"}</td>
+                        <td className="tdLaranja espaco"></td>
+                        <td className="tdLaranja espaco"></td>
+                        <td>{patology.observation}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </InventarioIGG>
+          )
+        })}
+
+        {splitArrayforFour()?.map((item) =>{
+                    return(
+                      <InventarioImage>
+                      <div className="logo">
+                        <img src={LogoEncibra} alt="" />
+                        <img src={LogoSetran} alt="" />
+                      </div>
+                      <h3>INVENTÁRIO DO ESTADO DA SUPERFÍCIE DO PAVIMENTO</h3>
+                      <div className="dadosPrincipais">
+                        <ul style={{ fontWeight: "bold" }}>
+                          <li className="dados">
+                            <div>
+                              <strong>
+                                Rodovia: <p>{dataRoad.acronym}</p>
+                              </strong>
+                              <strong>
+                                Trecho: <p>{DataVideo?.stretch}</p>
+                              </strong>
+                              <strong>
+                                Extensão: <p>{Intl.NumberFormat('pt-br',{
+                                  minimumFractionDigits: 3,
+                                  maximumFractionDigits: 3,
+                                }).format(dataRoad.extention).replace(/,/g, '.')} km</p>
+                              </strong>
+                            </div>
+                            <div>
+                              <strong>
+                                Núcleo Regional: <p>{dataRoad.regional}</p>
+                              </strong>
+                              <strong>
+                                Revestimento: <p>CBUQ</p>
+                              </strong>
+                            </div>
+                          </li>
+                          <li className="data">
+                            <ul>
+                              <li>DATA: {dataUTC}</li>
+                              <li>ESTACA/KM: 
+                                  {Intl.NumberFormat('pt-br',{
+                                    minimumFractionDigits: 3,
+                                    maximumFractionDigits: 3,
+                                  }).format(0).replace(/,/g, '.')} KM</li>
+                            </ul>
+                          </li>
+                          <li className="folhaEstacao">
+                            <ul>
+                              <li>FOLHA: {(countPaginas++) + 1}</li>
+                              <li>ESTACA/KM: {Intl.NumberFormat('pt-br',{
+                                  minimumFractionDigits: 3,
+                                  maximumFractionDigits: 3,
+                                }).format(dataRoad.extention).replace(/,/g, '.')} KM</li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                      <ul className="divPhoto">
+                        {item?.map((image) => {
+                          return (
+                            <li>
+                              <header>
+                                <h3>Foto {(countPagePhoto++) + 1}</h3>
+                                <ul className="title">
+                                  <li>
+                                    {image?.observation ? "Observação:" : "Patologias:"}
+                                  </li>
+                                  <li>{image.descrption}</li>
+                                </ul>
+                              </header>
+                              <img src={image?.screenshotUrl} alt="teste" />
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </InventarioImage>
+                    )
+        })}
       </section>
     );
   }

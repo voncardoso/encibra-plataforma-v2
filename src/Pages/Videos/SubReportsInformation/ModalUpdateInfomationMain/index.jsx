@@ -56,7 +56,7 @@ export default function ModalUpdateInfomationMain({data, arrayUpdate}){
                     <input
                     id="description"
                     type="text"
-                    defaultValue={data.description}
+                    defaultValue={data?.description}
                     className="mb-4 bg-gray-input w-full rounded-md p-2"
                     {...register("description")}
                     />
@@ -66,7 +66,7 @@ export default function ModalUpdateInfomationMain({data, arrayUpdate}){
                     <input
                     id="initialKm"
                     type="text"
-                    defaultValue={data.initialKm}
+                    defaultValue={data?.initialKm}
                     className="mb-4 bg-gray-input w-full rounded-md p-2"
                     {...register("initialKm")}
                     />
@@ -76,7 +76,7 @@ export default function ModalUpdateInfomationMain({data, arrayUpdate}){
                     <input
                     id="finalKm"
                     type="text"
-                    defaultValue={data.finalKm}
+                    defaultValue={data?.finalKm}
                     className="mb-4 bg-gray-input w-full rounded-md p-2"
                     {...register("finalKm")}
                     />

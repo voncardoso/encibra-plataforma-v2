@@ -401,14 +401,7 @@ export function RegisterRoad() {
               {...register("initialLatitude", { required: true })}
             />
           </label>
-          <label htmlFor="">
-            Latitude Final
-            <input
-              type="text"
-              className="bg-gray-input w-full rounded-md p-2"
-              {...register("endLatitude", { required: true })}
-            />
-          </label>
+          
           <label htmlFor="">
             Longitude Inicial
             <input
@@ -417,6 +410,16 @@ export function RegisterRoad() {
               {...register("initialLongitude", { required: true })}
             />
           </label>
+
+          <label htmlFor="">
+            Latitude Final
+            <input
+              type="text"
+              className="bg-gray-input w-full rounded-md p-2"
+              {...register("endLatitude", { required: true })}
+            />
+          </label>
+
           <label htmlFor="">
             Longitude Final
             <input

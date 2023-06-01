@@ -1,11 +1,12 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   Notebook,
   Truck,
   ChartBar,
   Calculator,
   CaretRight,
-  Users
+  Users,
+  Browser
 } from "@phosphor-icons/react";
 import Logo from "../../assets/Logo-sidbar.svg";
 import LogoMobile from "../../assets/LogoSidbarMin.svg";
@@ -59,6 +60,16 @@ export function Sidbar() {
           <Users className="ml-2" size={24} />
           <p className="md:hidden md:m-auto">Usuários</p>
         </NavLink>}
+
+        {dataUser?.position === "ADMIN" &&
+          <NavLink
+            className={` md:hidden md:w-16 md:m-auto mb-1 py-2.5 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md`}
+            to="https://www.encibra.app.br/"
+          >
+            <Browser className="ml-2" size={24} />
+            <p className="md:hidden md:m-auto">Site Antigo</p>
+          </NavLink>
+        }
 
         {/** mobile */}
         <img className="hidden md:block m-auto pb-4" src={LogoMobile} alt="" />

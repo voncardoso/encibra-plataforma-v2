@@ -40,7 +40,7 @@ export function ModalUpadate(props) {
         processed: data.processed,
         stretch: data.stretch,
         roadId: +props.data.roadId,
-        companyId: 3,
+        companyId: 1,
         createdBy: +props.data.createdBy,
         createdAt: props.data.createdAt,
         updatedAt: new Date().toISOString(),
@@ -51,7 +51,7 @@ export function ModalUpadate(props) {
         },
       }
     );
-
+      console.log("teste", response)
     if (response.status === 200) {
       props.arrayUpadeInformation(response.data);
       window.alert("Município atualizado com sucesso");
