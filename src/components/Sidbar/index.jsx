@@ -64,11 +64,21 @@ export function Sidbar() {
         {dataUser?.position === "ADMIN" &&
           <NavLink
             className={` md:hidden md:w-16 md:m-auto mb-1 py-2.5 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md`}
-            to="https://www.encibra.app.br/"
+            to="https://fantastic-otter-f1d37a.netlify.app"
           >
             <Browser className="ml-2" size={24} />
             <p className="md:hidden md:m-auto">Site Antigo</p>
           </NavLink>
+        }
+
+        {dataUser?.position === "ANALYST_ENGINEER" && 
+          <NavLink
+          className={` md:hidden md:w-16 md:m-auto mb-1 py-2.5 font-medium flex gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md`}
+          to="https://fantastic-otter-f1d37a.netlify.app"
+        >
+          <Browser className="ml-2" size={24} />
+          <p className="md:hidden md:m-auto">Site Antigo</p>
+        </NavLink>
         }
 
         {/** mobile */}
