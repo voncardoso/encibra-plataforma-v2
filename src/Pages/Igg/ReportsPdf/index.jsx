@@ -347,10 +347,10 @@ export function ReportsPdf() {
                       Rodovia: <p>{dataRoad.acronym}</p>
                     </strong>
                     <strong>
-                      Trecho: <p>{DataVideo[0]?.stretch}</p>
+                      Trecho: <p>{DataVideo?.stretch}</p>
                     </strong>
                     <strong>
-                      Extensão: <p>{dataRoad.extention} km</p>
+                      Extensão: <p>{DataVideo.kmFinal} km</p>
                     </strong>
                   </div>
                   <div>
@@ -967,7 +967,7 @@ export function ReportsPdf() {
                         Extensão: <p>{Intl.NumberFormat('pt-br',{
                                   minimumFractionDigits: 3,
                                   maximumFractionDigits: 3,
-                                }).format(dataRoad.extention).replace(/,/g, '.')} km</p>
+                                }).format(DataVideo.kmFinal).replace(/,/g, '.')} km</p>
                       </strong>
                     </div>
                     <div>
@@ -1139,7 +1139,7 @@ export function ReportsPdf() {
                                 Extensão: <p>{Intl.NumberFormat('pt-br',{
                                   minimumFractionDigits: 3,
                                   maximumFractionDigits: 3,
-                                }).format(dataRoad.extention).replace(/,/g, '.')} km</p>
+                                }).format(DataVideo.kmFinal).replace(/,/g, '.')} km</p>
                               </strong>
                             </div>
                             <div>
