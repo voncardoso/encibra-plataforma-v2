@@ -408,7 +408,7 @@ export function Patology() {
                         
                     }}
                   >
-                    {item.screenshotUrl !== "" && <MapPin className="text-sky-600 cursor-pointer" size={50} weight="duotone"/>}
+                    {item.screenshotUrl !== "" && item.observation === "" && <MapPin className="text-sky-600 cursor-pointer" size={50} weight="duotone"/>}                  
                     {item.screenshotUrl === "" && <MapPin className="text-red-500 cursor-pointer" size={50} weight="duotone"/>}
                     {item.observation === "Vila" && <HouseLine className="text-emerald-500 cursor-pointer" size={50} weight="duotone"/>}
                   </Marker>

@@ -25,6 +25,7 @@ export function ReportsPdf() {
   let countPageInventario = 0;
   let countPagePhoto = 0;
   let countPaginas = 0
+  let countPaginasTotalPhoto = 0
 
   useEffect(() => {
     Roads(params.id);
@@ -84,9 +85,7 @@ export function ReportsPdf() {
         }
 
         resultado[grupo].push(
-          data2.sort(function (a, b) {
-            return a.km < b.km ? -1 : a.km > b.km ? 1 : 0;
-          })[i]
+          data2.sort((a, b) => a.km - b.km)[i]
         );
 
         if ((i + 1) % 4 === 0) {
@@ -95,6 +94,7 @@ export function ReportsPdf() {
       }
     }
     totalPaginasPhoto = data2.length / 4;
+    console.log("resultado", resultado)
     return resultado;
   }
 
@@ -347,10 +347,10 @@ export function ReportsPdf() {
                       Rodovia: <p>{dataRoad.acronym}</p>
                     </strong>
                     <strong>
-                      Trecho: <p>{DataVideo[0]?.stretch}</p>
+                      Trecho: <p>{DataVideo?.stretch}</p>
                     </strong>
                     <strong>
-                      Extensão: <p>{dataRoad.extention} km</p>
+                      Extensão: <p>{DataVideo.kmFinal} km</p>
                     </strong>
                   </div>
                   <div>
@@ -967,7 +967,7 @@ export function ReportsPdf() {
                         Extensão: <p>{Intl.NumberFormat('pt-br',{
                                   minimumFractionDigits: 3,
                                   maximumFractionDigits: 3,
-                                }).format(dataRoad.extention).replace(/,/g, '.')} km</p>
+                                }).format(DataVideo.kmFinal).replace(/,/g, '.')} km</p>
                       </strong>
                     </div>
                     <div>
@@ -1139,7 +1139,7 @@ export function ReportsPdf() {
                                 Extensão: <p>{Intl.NumberFormat('pt-br',{
                                   minimumFractionDigits: 3,
                                   maximumFractionDigits: 3,
-                                }).format(dataRoad.extention).replace(/,/g, '.')} km</p>
+                                }).format(DataVideo.kmFinal).replace(/,/g, '.')} km</p>
                               </strong>
                             </div>
                             <div>
@@ -1163,7 +1163,7 @@ export function ReportsPdf() {
                           </li>
                           <li className="folhaEstacao">
                             <ul>
-                              <li>FOLHA: {(countPaginas++) + 1}</li>
+                              <li>FOLHA: {(countPaginasTotalPhoto++) + 1}</li>
                               <li>ESTACA/KM: {Intl.NumberFormat('pt-br',{
                                   minimumFractionDigits: 3,
                                   maximumFractionDigits: 3,
