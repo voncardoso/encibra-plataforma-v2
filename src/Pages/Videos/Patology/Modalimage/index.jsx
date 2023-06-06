@@ -12,7 +12,7 @@ import { TrashSimple, X } from "@phosphor-icons/react";
 
 export function Modalimage(props) {
   const [preview, setPreview] = useState(null);
-  console.log("teste props", props);
+  console.log("teste props", props)
   const params = useParams();
   const {
     register,
@@ -32,7 +32,6 @@ export function Modalimage(props) {
   }, [props.image]);
 
   async function handleUpdate(data) {
-    console.log(data);
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const formData = new FormData();
     formData.append("file", data.file);
@@ -56,6 +55,7 @@ export function Modalimage(props) {
             },
           }
         );
+
         if (response.status === 200) {
           props.arrayUpdate(response.data)
           window.alert("Imagem atualizado com sucesso");
@@ -86,6 +86,7 @@ export function Modalimage(props) {
       console.log("imagem", response);
       if (response.status === 200) {
         setPreview("");
+        props.arrayUpdate(response.data)
         window.alert("Imagem deletada com sucesso");
       }
     }

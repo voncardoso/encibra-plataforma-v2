@@ -157,12 +157,13 @@ export function Patology() {
   function arrayUpdate(object){
     const newArray = [...dataPatology];
     const index = newArray.findIndex(item => item.id === object.id)
-    setDataPatology(dataPoints.map(item => {
-      if (item.id === object.id) {
-        return object;
-      }
-      return item;
-    })) 
+
+    if (index !== -1) {
+      // Substitua o objeto no novo array
+      newArray[index] = object;
+    }
+
+    setDataPatology(newArray)
   }
 
   function handleLock() {
@@ -189,6 +190,8 @@ export function Patology() {
           },
         }
       );
+
+      
 
       if (response.status === 200) {
         // function para deleter o imtem do array dataCity
@@ -332,6 +335,7 @@ export function Patology() {
                         <Modalimage
                           image={patology.screenshotUrl}
                           id={patology.id}
+                          arrayUpdate={arrayUpdate}
                         />
                       </Dialog>
                     )}
