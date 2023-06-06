@@ -12,6 +12,7 @@ import { TrashSimple, X } from "@phosphor-icons/react";
 
 export function Modalimage(props) {
   const [preview, setPreview] = useState(null);
+  console.log("teste props", props);
   const params = useParams();
   const {
     register,
@@ -56,6 +57,7 @@ export function Modalimage(props) {
           }
         );
         if (response.status === 200) {
+          props.arrayUpdate(response.data)
           window.alert("Imagem atualizado com sucesso");
         }
       }
@@ -88,7 +90,6 @@ export function Modalimage(props) {
       }
     }
   }
-
 
   return (
     <DialogPortal>

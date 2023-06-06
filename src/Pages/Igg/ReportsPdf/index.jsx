@@ -952,7 +952,7 @@ export function ReportsPdf() {
                 <img src={LogoSetran} alt="" />
               </div>
   
-              <h3>INVENTÁRIO DO ESTADO DA SUPERFÍCIE DO PAVIMENTO</h3>
+              <h3 className="font-bold">INVENTÁRIO DO ESTADO DA SUPERFÍCIE DO PAVIMENTO</h3>
               <div className="dadosPrincipais">
                 <ul style={{ fontWeight: "bold" }}>
                   <li className="dados">
@@ -1124,7 +1124,7 @@ export function ReportsPdf() {
                         <img src={LogoEncibra} alt="" />
                         <img src={LogoSetran} alt="" />
                       </div>
-                      <h3>INVENTÁRIO DO ESTADO DA SUPERFÍCIE DO PAVIMENTO</h3>
+                      <h3 className="font-bold">INVENTÁRIO DO ESTADO DA SUPERFÍCIE DO PAVIMENTO</h3>
                       <div className="dadosPrincipais">
                         <ul style={{ fontWeight: "bold" }}>
                           <li className="dados">
@@ -1177,7 +1177,7 @@ export function ReportsPdf() {
                           return (
                             <li>
                               <header>
-                                <h3>Foto {(countPagePhoto++) + 1}</h3>
+                                <h3 className="font-bold">Foto {(countPagePhoto++) + 1}</h3>
                                 <ul className="title">
                                   <li>
                                     {image?.observation ? "Observação:" : "Patologias:"}

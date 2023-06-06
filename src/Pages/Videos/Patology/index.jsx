@@ -155,7 +155,9 @@ export function Patology() {
   }, [startPatology]);
 
   function arrayUpdate(object){
-    setDataPoints(dataPoints.map(item => {
+    const newArray = [...dataPatology];
+    const index = newArray.findIndex(item => item.id === object.id)
+    setDataPatology(dataPoints.map(item => {
       if (item.id === object.id) {
         return object;
       }
@@ -319,6 +321,7 @@ export function Patology() {
                         <Modalimage
                           image={patology.screenshotUrl}
                           id={patology.id}
+                          arrayUpdate={arrayUpdate}
                         />
                       </Dialog>
                     ) : (
