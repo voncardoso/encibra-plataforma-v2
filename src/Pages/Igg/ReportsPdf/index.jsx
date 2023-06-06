@@ -25,6 +25,7 @@ export function ReportsPdf() {
   let countPageInventario = 0;
   let countPagePhoto = 0;
   let countPaginas = 0
+  let countPaginasTotalPhoto = 0
 
   useEffect(() => {
     Roads(params.id);
@@ -1162,7 +1163,7 @@ export function ReportsPdf() {
                           </li>
                           <li className="folhaEstacao">
                             <ul>
-                              <li>FOLHA: {(countPaginas++) + 1}</li>
+                              <li>FOLHA: {(countPaginasTotalPhoto++) + 1}</li>
                               <li>ESTACA/KM: {Intl.NumberFormat('pt-br',{
                                   minimumFractionDigits: 3,
                                   maximumFractionDigits: 3,
