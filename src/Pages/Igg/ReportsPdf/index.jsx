@@ -84,9 +84,7 @@ export function ReportsPdf() {
         }
 
         resultado[grupo].push(
-          data2.sort(function (a, b) {
-            return a.km < b.km ? -1 : a.km > b.km ? 1 : 0;
-          })[i]
+          data2.sort((a, b) => a.km - b.km)[i]
         );
 
         if ((i + 1) % 4 === 0) {
@@ -95,6 +93,7 @@ export function ReportsPdf() {
       }
     }
     totalPaginasPhoto = data2.length / 4;
+    console.log("resultado", resultado)
     return resultado;
   }
 
