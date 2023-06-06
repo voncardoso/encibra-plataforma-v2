@@ -29,6 +29,7 @@ export function ModalUpdete(props){
             email: data.email,
             phone: data.phone,
             position: data.position,
+            password: data.password,
             updatedAt: new Date().toISOString()
         }
         const response = await api.put(`/users/${params.id}`, user, {
@@ -101,12 +102,22 @@ export function ModalUpdete(props){
                             {...register("email")}
                         />
                     </label>
+
+                    <label htmlFor="password">
+                        Senha
+                        <input
+                            type="text"
+                            id="password"
+                            className="bg-gray-input w-full rounded-md p-2 mb-2"
+                            {...register("password")}
+                        />
+                    </label>
                 
                     <label htmlFor=""></label>
 
                     
                     <button className="w-full col-span-3 mt-5 mb-5 bg-gold-400  py-2.5 px-8 rounded-md text-white hover:bg-gold-300">
-                        Cadastrar
+                        Atualizar
                     </button>
                     
                 </form>
