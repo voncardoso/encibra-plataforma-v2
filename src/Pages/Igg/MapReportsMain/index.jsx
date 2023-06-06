@@ -44,10 +44,9 @@ export default function MapReportsMain(){
 
     useEffect(() => {
         function getCoordenadas() {
-            dataRoad.patology?.map((item, index) => {
-                console.log(index)
+            dataRoad.patology?.sort((a, b) => a.km - b.km).map((item, index) => {
             if (index === 0) {
-                console.log("teste",item)
+              console.log("1 teste", item)
               setStartPatology({
                 latitude: +item.latitude,
                 longitude: +item.longitude,
