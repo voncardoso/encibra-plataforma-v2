@@ -104,9 +104,7 @@ export function ReportsSubPdf() {
         }
 
         resultado[grupo].push(
-          data2.sort(function (a, b) {
-            return a.km < b.km ? -1 : a.km > b.km ? 1 : 0;
-          })[i]
+          data2.sort((a, b) => a.km - b.km)[i]
         );
 
         if ((i + 1) % 4 === 0) {
@@ -334,10 +332,7 @@ export function ReportsSubPdf() {
     const dataUTC = date.toLocaleDateString("pt-BR", {
         timeZone: "UTC",
     });
-  console.log("reports", dataReports);
-  console.log("Data igg", DataIgg);
-  console.log("rodovia",dataRoad)
-  console.log("video", dataVideo)
+
 
   if (DataPatology) {
     return (
