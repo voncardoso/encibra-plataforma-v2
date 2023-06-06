@@ -378,7 +378,7 @@ export function ReportsPdf() {
                         {Intl.NumberFormat('pt-br',{
                           minimumFractionDigits: 3,
                           maximumFractionDigits: 3,
-                        }).format(dataRoad.extention).replace(/,/g, '.')} KM</li>
+                        }).format(DataVideo.kmFinal).replace(/,/g, '.')} KM</li>
                   </ul>
                 </li>
               </ul>
@@ -994,7 +994,7 @@ export function ReportsPdf() {
                       <li>ESTACA/KM: {Intl.NumberFormat('pt-br',{
                           minimumFractionDigits: 3,
                           maximumFractionDigits: 3,
-                        }).format(dataRoad.extention).replace(/,/g, '.')} KM</li>
+                        }).format(DataVideo.kmFinal).replace(/,/g, '.')} KM</li>
                     </ul>
                   </li>
                 </ul>
@@ -1167,7 +1167,7 @@ export function ReportsPdf() {
                               <li>ESTACA/KM: {Intl.NumberFormat('pt-br',{
                                   minimumFractionDigits: 3,
                                   maximumFractionDigits: 3,
-                                }).format(dataRoad.extention).replace(/,/g, '.')} KM</li>
+                                }).format(DataVideo.kmFinal).replace(/,/g, '.')} KM</li>
                             </ul>
                           </li>
                         </ul>
