@@ -56,8 +56,8 @@ export function ModalUpdate(props) {
   }
   return (
     <DialogPortal>
-      <DialogOverlay className=" fixed inset-0 bg-black bg-opacity-50" />
-      <DialogContent className="fixed w-96 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-lg p-4">
+      <DialogOverlay className=" z-20 fixed inset-0 bg-black bg-opacity-50" />
+      <DialogContent className="fixed w-96 z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-lg p-4">
         <header className="flex mb-5 justify-between">
           <h1 className="text-xl text font-bold">Atualizar Pontos</h1>
           <DialogClose asChild >
@@ -92,7 +92,7 @@ export function ModalUpdate(props) {
             />
           </label>
           <label htmlFor="extention">
-            Extensão:
+            Km:
             <input
               id="extention"
               type="text"
