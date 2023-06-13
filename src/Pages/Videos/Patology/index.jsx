@@ -330,7 +330,7 @@ export function Patology() {
                     ) : (
                       <Dialog>
                         <DialogTrigger className="">
-                          <Image size={24} color={"#E8E4E4"} />
+                          <Image size={24} color={"#6b7280"} />
                         </DialogTrigger>
                         <Modalimage
                           image={patology.screenshotUrl}
