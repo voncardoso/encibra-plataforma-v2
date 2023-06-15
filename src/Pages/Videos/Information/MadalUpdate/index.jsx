@@ -140,7 +140,7 @@ export function ModalUpadate(props) {
             className="bg-gray-input w-full rounded-md p-2"
             {...register("processed", { required: true })}
           >
-            <option value="">Selecione a Malha</option>
+            <option value="">Selecione o status</option>
             <option value="PENDING">Pendente</option>
             <option value="PROCESSING"> Em análise</option>
             <option value="PROCESSED"> Analisado</option>
