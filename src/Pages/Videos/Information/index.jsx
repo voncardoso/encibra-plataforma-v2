@@ -29,20 +29,13 @@ export function Information() {
     getVideo();
   }, []);
 
-  //const dataVideos = dataRoad.videos?.filter(
-  //  (item) => item.id === Number(video)
-  //);
+
 
   function arrayUpadeInformation(object) {
     setDataVideos(object);
   }
 
-  console.log("teste", dataVideos);
-  //let dataString = dataVideos.date;
-  //const data = new Date(dataString);
-  //const dataUTC = data.toLocaleDateString("pt-BR", {
-  //  timeZone: "UTC",
-  //});
+
   if (dataVideos) {
     return (
       <div className="flex flex justify-between items-end p-2.5 mt-5 bg-white rounded-md mt-2.5 shadow-lg ">

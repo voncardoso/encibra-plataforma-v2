@@ -85,7 +85,6 @@ export function Revestment() {
   const totalPages = Math.ceil(datarevestments?.length / itemsPerPage);
   
   function goToPage(event, pageNumber) {
-    console.log("",pageNumber)
     setCurrentPage(pageNumber);
   }
 

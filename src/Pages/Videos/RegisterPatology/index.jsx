@@ -103,7 +103,6 @@ export function RegisterPatology() {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("imagem", response);
       // verifica se a imagem foi cadstrada no storage
       if (response.status === 200) {
         // adiciona a url da imagem ao file image

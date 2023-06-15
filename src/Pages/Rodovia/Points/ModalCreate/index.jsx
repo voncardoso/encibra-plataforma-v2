@@ -21,7 +21,6 @@ export function ModalCreate({arrayCretae}) {
   });
 
   async function handleCreatePoints(data) {
-    console.log(data);
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const response = await api.put(
       `/road/${params.id}/points/null/create`,

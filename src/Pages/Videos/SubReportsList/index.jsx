@@ -30,7 +30,7 @@ export function SubReportsList(){
                       Authorization: `Bearer ${token}`,
                     },
                 })
-                console.log("resposta", response)
+                
                 if(response.status === 200){
                     window.alert("Sub trecho deletado com sucesso")
                 }
@@ -59,7 +59,7 @@ export function SubReportsList(){
                     const dataUTC = data.toLocaleDateString("pt-BR", {
                       timeZone: "UTC",
                     });
-                    console.log(report)
+
                     return(
                         <div className="mb-2 hover:bg-gray-300 text-text-100 flex justify-between items-center w-80 bg-white shadow-md shadow-[rgba(0,0,0,0.3)] rounded-lg cursor-pointer">
                             <NavLink key={report.id} to={`/rodovias/videos/${params.id}/subtrecho/${params.video}/information/${report.id}`}>

@@ -49,7 +49,7 @@ export function RegisterRoad() {
       endLongitude: data1.endLongitude,
     };
     const token = window.localStorage.getItem("encibraapptoken-v2");
-    console.log(data1);
+
 
     try {
       const response = await api.post(

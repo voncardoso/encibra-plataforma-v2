@@ -214,11 +214,10 @@ export function Patology() {
   const totalPages = Math.ceil(dataPatology.length / itemsPerPage);
 
   function goToPage(event, pageNumber) {
-    console.log("", pageNumber);
+
     setCurrentPage(pageNumber);
   }
 
-  console.log("patalogy",paginatedData)
   return (
     <div className="mt-5 flex flex-col justify-center">
       <header className="flex justify-end ">

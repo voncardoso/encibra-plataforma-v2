@@ -31,8 +31,7 @@ export function Modalimage(props) {
   }, [props.image]);
 
   async function handleUpdate(data) {
-    console.log("foi");
-    console.log(data);
+
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const formData = new FormData();
     formData.append("file", data.file);
@@ -43,7 +42,7 @@ export function Modalimage(props) {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("imagem", responseImge);
+      
       if (responseImge.status === 200) {
         const response = await api.put(
           `/road/${params.id}/patology/${props.id}/update`,
@@ -82,7 +81,7 @@ export function Modalimage(props) {
           },
         }
       );
-      console.log("imagem", response);
+      
       if (response.status === 200) {
         setPreview("");
         window.alert("Imagem deletada com sucesso");

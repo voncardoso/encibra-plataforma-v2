@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { api } from "../../../../lib/api";
 
 export function ModalUpadate(props) {
-  console.log("pdate video", props);
+
   const params = useParams();
   const [dataInfomation, setDataInfomation] = useState([]);
   const {
@@ -25,7 +25,7 @@ export function ModalUpadate(props) {
   });
 
   async function handleUpdateVideo(data) {
-    console.log("data", data)
+   
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const dataObjeto = new Date(data.date);
     const response = await api.put(
@@ -51,7 +51,6 @@ export function ModalUpadate(props) {
         },
       }
     );
-      console.log("teste", response)
     if (response.status === 200) {
       props.arrayUpadeInformation(response.data);
       window.alert("Município atualizado com sucesso");

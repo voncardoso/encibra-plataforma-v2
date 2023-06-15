@@ -51,7 +51,6 @@ export function Dashboard() {
       const response = await api.get("/road", {
         headers: { Authorization: "Bearer " + token },
       });
-      console.log("response", response)
       setData(response.data);
     }
     GetRoads();
@@ -230,7 +229,6 @@ export function Dashboard() {
   const totalPages = Math.ceil(data.length / itemsPerPage);
   
   function goToPage(event, pageNumber) {
-    console.log("",pageNumber)
     setCurrentPage(pageNumber);
   }
 
@@ -252,7 +250,7 @@ export function Dashboard() {
   const totalPagesFilter = Math.ceil(filteredRoad.length / itemsPerPage);
   
   function goToPage(event, pageNumber) {
-    console.log("",pageNumber)
+
     setCurrentPage(pageNumber);
   }
 

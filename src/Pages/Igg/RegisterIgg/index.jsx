@@ -15,14 +15,14 @@ export function RegisterIgg() {
     defaultValues: {},
   });
 
-  console.log(dataRoad);
+
 
   async function HandleRegister(data) {
     const video = dataRoad.videos?.filter(
       (item) => item.id === Number(data.id)
     );
     const token = window.localStorage.getItem("encibraapptoken-v2");
-    console.log(video[0].id);
+  
     if (video) {
       try {
         const response = await api.put(

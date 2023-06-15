@@ -14,7 +14,6 @@ export function UserInformation(){
             const response = await api.get(`/users/${params.id}`, {
                 headers: { Authorization: "Bearer " + token },
               });
-            console.log(response)
             setUser(response.data)
         }
         GetUser()

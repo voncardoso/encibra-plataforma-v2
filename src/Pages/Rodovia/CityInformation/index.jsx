@@ -92,11 +92,11 @@ export function CityInformation() {
   const totalPages = Math.ceil(dataCity?.length / itemsPerPage);
   
   function goToPage(event, pageNumber) {
-    console.log("",pageNumber)
+
     setCurrentPage(pageNumber);
   }
 
-  console.log(dataCity)
+
   if(dataRoad){
     return (
       <>

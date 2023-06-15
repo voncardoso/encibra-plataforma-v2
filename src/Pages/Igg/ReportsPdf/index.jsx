@@ -94,7 +94,6 @@ export function ReportsPdf() {
       }
     }
     totalPaginasPhoto = data2.length / 4;
-    console.log("resultado", resultado)
     return resultado;
   }
 
@@ -309,8 +308,7 @@ export function ReportsPdf() {
     }
   }
 
-  console.log("datavideo",DataVideo);
-  console.log("dataRoad", dataRoad)
+
 
 
 

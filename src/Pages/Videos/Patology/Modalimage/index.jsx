@@ -12,7 +12,7 @@ import { TrashSimple, X } from "@phosphor-icons/react";
 
 export function Modalimage(props) {
   const [preview, setPreview] = useState(null);
-  console.log("teste props", props)
+
   const params = useParams();
   const {
     register,
@@ -42,7 +42,7 @@ export function Modalimage(props) {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("imagem", responseImge);
+
       if (responseImge.status === 200) {
         const response = await api.put(
           `/road/${params.id}/patology/${props.id}/update`,
@@ -83,7 +83,7 @@ export function Modalimage(props) {
           },
         }
       );
-      console.log("imagem", response);
+
       if (response.status === 200) {
         setPreview("");
         props.arrayUpdate(response.data)
