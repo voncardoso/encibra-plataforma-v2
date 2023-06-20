@@ -168,7 +168,7 @@ export function Dashboard() {
             acc.meshEstadual10 += 1;
             acc.totalEstadual += 1;
           } else {
-            cc.meshFederal10 += 1;
+            acc.meshFederal10 += 1;
             acc.totalFeferal += 1;
           }
           break;
