@@ -69,9 +69,9 @@ export default function MapReportsSub(){
     useEffect(() => {
         function getCoordenadas() {
           DataPatology?.map((item, index) => {
-                console.log(index)
+                
             if (index === 0) {
-                console.log("teste",item)
+              
               setStartPatology({
                 latitude: +item.latitude,
                 longitude: +item.longitude,
@@ -112,7 +112,7 @@ export default function MapReportsSub(){
           });
       }, [startPatology]);
 
-      console.log("data patology", DataPatology)
+
     return (
         <section style={{width: "1094px", height: "760px"}} className="m-auto h-auto flex items-center">
             <ReactMapGL

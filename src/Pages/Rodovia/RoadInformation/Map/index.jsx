@@ -49,7 +49,7 @@ export function MapRoad({startLatitude, startLongitude}){
    }, []);
 
 
-   console.log("sss",start)
+
    if(startLatitude){
     return(
         <div className="mb-5">

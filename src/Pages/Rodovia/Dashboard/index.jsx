@@ -51,7 +51,6 @@ export function Dashboard() {
       const response = await api.get("/road", {
         headers: { Authorization: "Bearer " + token },
       });
-      console.log("response", response)
       setData(response.data);
     }
     GetRoads();
@@ -169,7 +168,7 @@ export function Dashboard() {
             acc.meshEstadual10 += 1;
             acc.totalEstadual += 1;
           } else {
-            cc.meshFederal10 += 1;
+            acc.meshFederal10 += 1;
             acc.totalFeferal += 1;
           }
           break;
@@ -230,7 +229,6 @@ export function Dashboard() {
   const totalPages = Math.ceil(data.length / itemsPerPage);
   
   function goToPage(event, pageNumber) {
-    console.log("",pageNumber)
     setCurrentPage(pageNumber);
   }
 
@@ -252,7 +250,7 @@ export function Dashboard() {
   const totalPagesFilter = Math.ceil(filteredRoad.length / itemsPerPage);
   
   function goToPage(event, pageNumber) {
-    console.log("",pageNumber)
+
     setCurrentPage(pageNumber);
   }
 

@@ -168,7 +168,6 @@ export function ModalUpdate(props) {
     active()
   }, [])
 
-  console.log("descrption", props.data.descrption)
 
   const timeValidation = (value) => {
     const pattern =

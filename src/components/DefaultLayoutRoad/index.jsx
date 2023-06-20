@@ -15,7 +15,7 @@ export function DefaultLayoutRoad() {
     setIdReloadRoad(params.id)
   }, [pathname]);
 
-  console.log(dataRoad)
+
 
   if(dataRoad){
     return (

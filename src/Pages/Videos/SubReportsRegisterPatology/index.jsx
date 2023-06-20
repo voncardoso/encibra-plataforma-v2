@@ -26,7 +26,7 @@ export function SubReportsRegisterPatology(){
       });
 
       async function handleRegisterPatology(data) {
-        console.log(data);
+        
         const token = window.localStorage.getItem("encibraapptoken-v2");
         const formData = new FormData();
         formData.append("file", data.file);
@@ -103,7 +103,7 @@ export function SubReportsRegisterPatology(){
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log("imagem", response);
+          
           // verifica se a imagem foi cadstrada no storage
           if (response.status === 200) {
             // adiciona a url da imagem ao file image
@@ -166,7 +166,7 @@ export function SubReportsRegisterPatology(){
                 },
               }
             );
-            console.log("teste", response1);
+           
             if (response1.status === 200) {
               reset();
               setPreview("");

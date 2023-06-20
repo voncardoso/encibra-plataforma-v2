@@ -8,7 +8,6 @@ export function Igg(){
     const params = useParams()
 
     
-    console.log(dataRoad)
 
     return(
         <section className="w-full">

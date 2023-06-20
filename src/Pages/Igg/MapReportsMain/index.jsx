@@ -46,7 +46,7 @@ export default function MapReportsMain(){
         function getCoordenadas() {
             dataRoad.patology?.sort((a, b) => a.km - b.km).map((item, index) => {
             if (index === 0) {
-              console.log("1 teste", item)
+              
               setStartPatology({
                 latitude: +item.latitude,
                 longitude: +item.longitude,

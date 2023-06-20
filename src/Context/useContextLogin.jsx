@@ -45,11 +45,9 @@ export const UserStorageLogin = ({ children }) => {
           navigate('/rodovias')
           setErrorAuth(false)
         }else{
-          console.log("error")
           setLoadingAuth(false)
         }
       } catch {
-        console.log("error")
         setErrorAuth(true)
       } finally {
         

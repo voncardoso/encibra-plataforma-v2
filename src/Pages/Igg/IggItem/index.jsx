@@ -36,9 +36,8 @@ export function IggItem(){
     const dataUTC = data.toLocaleDateString("pt-BR", {
         timeZone: "UTC",
     });
-    console.log("reports",dataReports)
-    console.log("rodovia",dataRoad)
-    console.log("igg", dataIgg)
+
+    
   if(dataIgg){
     return(
         <div className="mt-5 flex flex-col justify-center">

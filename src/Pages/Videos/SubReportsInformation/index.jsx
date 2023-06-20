@@ -65,7 +65,7 @@ export function SubReportsInformation(){
                   Authorization: `Bearer ${token}`,
                 },
             })
-            console.log(response.data)
+      
             setDataReport(response.data)
             setDataPatologySubTrecho(response.data.patology)
         }
@@ -98,7 +98,6 @@ export function SubReportsInformation(){
         getPatology();
       }, [dataReports]);
 
-      console.log("patology", dataPatology)
 
      
 
@@ -183,9 +182,9 @@ export function SubReportsInformation(){
     useEffect(() => {
         function getCoordenadas() {
             arrayPatologyConcat.map((item, index) => {
-                console.log(index)
+              
             if (index === 0) {
-                console.log("teste",item)
+  
               setStartPatology({
                 latitude: +item.latitude,
                 longitude: +item.longitude,

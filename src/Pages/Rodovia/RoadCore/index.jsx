@@ -60,7 +60,6 @@ export function RoadCore() {
   const totalPages = Math.ceil(dataRoad.length / itemsPerPage);
   
   function goToPage(event, pageNumber) {
-    console.log("",pageNumber)
     setCurrentPage(pageNumber);
   }
 
@@ -68,7 +67,7 @@ export function RoadCore() {
     <section className="w-full overflow-y-scroll ">
       {/**Navegação */}
       <header className="flex justify-between pr-5 pt-5 pb-8 items-center">
-        <nav>
+        <nav>    
           <NavLink to={"/rodovias"}>
             <strong className="text-2xl hover:underline">Rodovias </strong>
           </NavLink>

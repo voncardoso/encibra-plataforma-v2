@@ -130,7 +130,6 @@ export function Points() {
   }
 
   async function deletePoint(id) {
-    console.log();
     const token = window.localStorage.getItem("encibraapptoken-v2");
     const points = {};
 
@@ -166,7 +165,6 @@ export function Points() {
   const totalPages = Math.ceil(dataPoints?.length / itemsPerPage);
   
   function goToPage(event, pageNumber) {
-    console.log("",pageNumber)
     setCurrentPage(pageNumber);
   }
 

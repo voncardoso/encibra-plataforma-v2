@@ -10,7 +10,7 @@ import { api } from "../../../../lib/api";
 import { useParams } from "react-router-dom";
 
 export function ModalUpdete(props){
-    console.log("props",props)
+    
     const params = useParams();
     const {
         register,
@@ -35,12 +35,12 @@ export function ModalUpdete(props){
         const response = await api.put(`/users/${params.id}`, user, {
             headers: { Authorization: "Bearer " + token },
         });
-        console.log(response.data)
+
         if(response.status === 200){
             props.arrayUpdateUser(response.data)
             window.alert("Usuário atualizado com sucesso");
         }
-        console.log(response)
+
       }
     return(
         <DialogPortal>
