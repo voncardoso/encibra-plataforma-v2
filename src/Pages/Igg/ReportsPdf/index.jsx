@@ -315,8 +315,10 @@ export function ReportsPdf() {
     const date = new Date(DataVideo?.date);
     const dataUTC = date.toLocaleDateString("pt-BR", {
         timeZone: "UTC",
-    });
+    })
   
+    const typeRodovia = dataRoad?.acronym?.includes('PA-')
+    
   if (DataPatology) {
     return (
       <section className="bg-white h-screen w-screen">
@@ -325,7 +327,7 @@ export function ReportsPdf() {
             <img src={LogoEncibra} alt="" />
             <img src={LogoSetran} alt="" />
           </header>
-          <h1 className="font-bold">RODOVIA {dataRoad.acronym}</h1>
+          <h1 className="font-bold">{typeRodovia ? "RODOVIA" : ""} {dataRoad.acronym}</h1>
           <h4>{DataIgg[0].description}</h4>
         </CapaRelatorio>
 
