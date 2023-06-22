@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   Notebook,
   Truck,
@@ -6,7 +6,8 @@ import {
   Calculator,
   CaretRight,
   Users,
-  Browser
+  Browser,
+  SignOut
 } from "@phosphor-icons/react";
 import Logo from "../../assets/Logo-sidbar.svg";
 import LogoMobile from "../../assets/LogoSidbarMin.svg";
@@ -15,11 +16,23 @@ import { useContext, useEffect } from "react";
 import { UserContextLogin } from "../../Context/useContextLogin";
 
 export function Sidbar() {
-  const {dataUser, getUserId} = useContext(UserContextLogin)
+  const navigate = useNavigate();
+  const {dataUser, getUserId} = useContext(UserContextLogin);
+  const nameMobile = dataUser?.name;
+  const partesName = String(nameMobile).split(" ");
+  const firsLetterName = partesName[0]?.charAt(0)?.toUpperCase();
+  const firstLetterLastName = partesName[1]?.charAt(0)?.toUpperCase();
 
   useEffect(() =>{
     getUserId()
   },[])
+
+  function LogoOut(){
+    window.localStorage.removeItem("encibraapptoken-v2")
+    window.localStorage.removeItem("ncibraappId-v2")
+    navigate("/")
+  }
+
   return (
     <Container className="bg-white w-48 h-screen md:w-20 relative">
       <img className="md:hidden m-auto pt-5" src={Logo} alt="" />
@@ -106,9 +119,18 @@ export function Sidbar() {
           <Notebook className="m-auto" size={28} />
         </NavLink>}
       </ul>
-
-      <div className="absolute bottom-0 flex w-full p-2 md:hidden">
-        <div className="m-auto flex p-2 border border-gray-400 gap-2 items-center rounded-md cursor-pointer">
+      
+      <div className="absolute bottom-0 flex flex-col w-full p-2 md:hidden">
+      <button
+          className={`m-auto w-40 md:hidden md:w-16 md:m-auto mb-1 py-2.5 font-medium flex items-center gap-2 cursor-pointer text-gray-400 hover:bg-gold-200 hover:text-gold-400 rounded-md`}
+          onClick={() =>{
+            LogoOut()
+          }}
+        >
+          <SignOut className="ml-2" size={24} />
+          <p className="md:hidden md:m-auto">Sair</p>
+        </button>
+        <div className="m-auto w-40 flex p-2 border border-gray-400 gap-2 items-center rounded-md cursor-pointer">
           <img src="" alt="" />
           <div>
             <strong>{dataUser.name}</strong>
@@ -121,7 +143,7 @@ export function Sidbar() {
       <div className=" hidden md:block absolute bottom-0 flex w-full p-2">
         <div className="m-auto flex p-2 border border-gray-400 gap-2 items-center rounded-md cursor-pointer">
           <div>
-            <strong className="bg-gray-400 p-1 rounded-full">VH</strong>
+            <strong className="bg-gray-400 p-1 rounded-full">{firsLetterName}{firstLetterLastName}</strong>
           </div>
           <CaretRight color="#A8A8A8" size={24} weight="bold" />
         </div>
