@@ -9,6 +9,7 @@ import Pagination from '@mui/material/Pagination';
 
 // Import Swiper styles
 import "swiper/css";
+import { MapDashboard } from "./Map";
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export function Dashboard() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [filteredRoad, setFilteredRoad] = useState([]);
   const [seach, setSeach] = useState("")
+  const [activeMapa, setActiveMapa] = useState(true)
   let stretch = null;
   //responsividade do slider
   const breakpoints = {
@@ -241,7 +243,7 @@ export function Dashboard() {
   }, [seach])
 
    // criar paginação
-   function paginate(items, currentPage, itemsPerPage) {
+  function paginate(items, currentPage, itemsPerPage) {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return items.slice(startIndex, endIndex);
@@ -530,7 +532,56 @@ export function Dashboard() {
           </SwiperSlide>
         </Swiper>
       </nav>
-      <div className="py-4 flex justify-end pr-5">
+      <header className="w-full p-4 flex justify-center gap-3 text-gray-400">
+        <div className="flex justify-center gap-3 border py-2 px-6 rounded border-gray-400">
+          {activeMapa === true ? 
+            <button
+              className="text-gold-400 font-bold border-b-2 hover:text-gold-400" 
+              onClick={() =>{
+                setActiveMapa(true)
+              }}
+            >
+              Mapa
+            </button>
+            :
+            <button 
+            className="hover:text-gold-400"
+              onClick={() =>{
+                setActiveMapa(true)
+              }}
+            >
+              Mapa
+            </button> 
+          }
+          {activeMapa === true ?
+            <button
+            className="hover:text-gold-400"
+            onClick={() =>{
+              setActiveMapa(false)
+            }}
+          >
+            Tabela
+          </button>
+          :
+          <button
+          className="text-gold-400 font-bold border-b-2" 
+          onClick={() =>{
+            setActiveMapa(false)
+          }}
+        >
+        Tabela
+      </button>
+        }
+        </div>
+      </header>
+      
+      {/**Mapa */}
+      {activeMapa && <div className="pr-5">
+        <MapDashboard/>
+      </div>}
+      {!activeMapa &&  
+        <>
+           <div className="py-4 flex justify-end pr-5">
       <label className="flex items-center" htmlFor="">
         <MagnifyingGlass size={22} className="relative left-8 text-gray-400"/>
           <input
@@ -624,6 +675,8 @@ export function Dashboard() {
           <Pagination className="mt-2.5" count={filteredRoad.length > 0 ? totalPagesFilter : totalPages} onChange={goToPage}  shape="rounded" />
         </div>
       </div>
+        </>
+      }
     </section>
   );
 }

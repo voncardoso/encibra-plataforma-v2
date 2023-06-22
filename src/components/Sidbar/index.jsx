@@ -7,7 +7,8 @@ import {
   CaretRight,
   Users,
   Browser,
-  SignOut
+  SignOut,
+  User
 } from "@phosphor-icons/react";
 import Logo from "../../assets/Logo-sidbar.svg";
 import LogoMobile from "../../assets/LogoSidbarMin.svg";
@@ -136,12 +137,11 @@ export function Sidbar() {
         </button>
         
         <div className="m-auto w-40 flex p-2 border border-gray-400 gap-2 items-center rounded-md cursor-pointer">
-          <img src="" alt="" />
+          <User color="#A8A8A8" size={24} weight="duotone" />
           <div>
             <strong>{dataUser.name}</strong>
             <p className="text-xs">{dataUser?.position}</p>
           </div>
-          <CaretRight color="#A8A8A8" weight="bold" />
         </div>
       </div>
       {/** */}
@@ -155,7 +155,7 @@ export function Sidbar() {
           <div>
             <strong className="bg-gray-400 p-1 rounded-full">{firsLetterName}{firstLetterLastName}</strong>
           </div>
-          <CaretRight color="#A8A8A8" size={24} weight="bold" />
+          {/**<CaretRight color="#A8A8A8" size={24} weight="bold" /> */}
         </div>
       </div>
     </Container>
