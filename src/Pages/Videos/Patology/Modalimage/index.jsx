@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { api } from "../../../../lib/api";
 import { useParams } from "react-router-dom";
-import { TrashSimple, X } from "@phosphor-icons/react";
+import { TrashSimple, X } from "@phosphor-icons/react";0
 
 export function Modalimage(props) {
   const [preview, setPreview] = useState(null);
