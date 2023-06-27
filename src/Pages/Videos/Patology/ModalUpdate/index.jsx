@@ -233,6 +233,7 @@ export function ModalUpdate(props) {
     );
 
     if (response.status === 200) {
+      props.arrayUpdate(response.data)
       window.alert("Patologia atualizada com sucesso");
     }
   }

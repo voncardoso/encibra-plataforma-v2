@@ -312,6 +312,7 @@ export function Patology() {
                         sags={sags}
                         otherDefects={otherDefects}
                         id={patology.id}
+                        arrayUpdate={arrayUpdate}
                       />
                     </Dialog>
 
