@@ -8,12 +8,13 @@ import ReactMapGL, {
   FullscreenControl,
   NavigationControl,
   ScaleControl,
-  Popup,
   Map
 } from "react-map-gl";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../../../../lib/api';
-import { HouseLine, MapPin } from '@phosphor-icons/react';
+import { MapPin } from '@phosphor-icons/react';
+import ParaGeoJson from "../../../../GeoJson/Para.json";
+import NR01 from "../../../../GeoJson/NR-01.json";
 
 export function MapDashboard(){
   const navigate = useNavigate();
@@ -21,11 +22,7 @@ export function MapDashboard(){
   const [start, setStart] = useState({ latitude: 0, longitude: 0});
   const [end, setEnd] = useState({ latitude: -0.5845891, longitude: -47.6525196 });
   const [route, setRoute] = useState(null);
-  const [viewport, setViewport] = useState({
-    latitude: -1.1203796,
-    longitude: -48.3873969,
-    zoom: 12
-  });
+  const [activeSigla, setActiveSigla] = useState(false);
   let strech = null;
   // faz a requisição ao banco de dados
   useEffect(() => {
@@ -39,8 +36,16 @@ export function MapDashboard(){
     GetRoads();
   }, []);
 
+  const layerStylePara = {
+    id: "maine0",
+    type: "fill",
+    source: "maine",
+    layout: {},
+    paint: {
+      "fill-opacity": 0.1,
+    },
+  };
 
-   console.log("data mapa",data)
 
     return(
         <div className="mb-5">
@@ -48,7 +53,7 @@ export function MapDashboard(){
           initialViewState={{
             longitude: -53.066844,
             latitude:  -4.066257,
-            zoom: 4.5
+            zoom: 5
           }}
           cooperativeGestures={true}
           style={{width: '100%', height: '600px', borderRadius: "6px"}}
@@ -73,6 +78,20 @@ export function MapDashboard(){
       )}
           {data.map((item, index) =>{
             strech = JSON.parse(item?.stretch);
+            {activeSigla && <Marker
+              key={index}
+              latitude={Number(strech?.initialLatitude)}
+              longitude={Number(strech?.initialLongitude)}
+            >
+            <div className="bg-white p-2 rounded-md cursor-pointer hover:bg-gray-200">
+              <div onClick={() => {
+              navigate(`/rodovias/information/${item.id}`);
+            }} className="flex items-center text-sm  gap-1 rounded-md">
+                <MapPin className="text-sky-600" weight="fill" size={24}/>
+                {item?.acronym}
+              </div>
+            </div>
+          </Marker>}
             return(
               <Marker
                     key={index}
@@ -90,6 +109,18 @@ export function MapDashboard(){
                 </Marker>
             )
           })}
+
+
+            <ul className="relative z-30">
+              sigla
+            </ul>
+
+
+          <Source id="my-data11" type="geojson" data={ParaGeoJson}>
+            <Layer {...layerStylePara} />
+          </Source>
+
+          
 
           <GeolocateControl position="top-right" />
           <FullscreenControl position="top-right" />
