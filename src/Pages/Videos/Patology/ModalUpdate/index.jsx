@@ -223,7 +223,8 @@ export function ModalUpdate(props) {
         }),
         latitude: data.latitude,
         longitude: data.longitude,
-        observation: data.observation
+        observation: data.observation,
+        videoTime: data.videoTime
       },
       {
         headers: {
