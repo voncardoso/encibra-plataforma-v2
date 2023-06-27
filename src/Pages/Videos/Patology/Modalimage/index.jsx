@@ -94,8 +94,8 @@ export function Modalimage(props) {
 
   return (
     <DialogPortal>
-      <DialogOverlay className=" fixed inset-0 bg-black bg-opacity-50 " />
-      <DialogContent className=" z-30 w-3/4 h-3/4 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-lg p-4">
+      <DialogOverlay className=" z-20 fixed inset-0 bg-black bg-opacity-50 " />
+      <DialogContent className=" z-20 w-3/4 h-3/4 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-lg p-4">
         {preview ? (
           <img className="w-full h-full " src={preview} alt="" />
         ) : (

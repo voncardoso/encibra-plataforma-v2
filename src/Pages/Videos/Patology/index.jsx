@@ -369,11 +369,11 @@ export function Patology() {
       {strech && (
         <div className="mb-5">
           <ReactMapGL
-            key={`${start?.latitude}-${start?.longitude}`}
+            key={`${+start?.latitude}-${+start?.longitude}`}
             initialViewState={{
               latitude: +strech?.initialLatitude,
               longitude: +strech?.initialLongitude,
-              zoom: 10,
+              zoom: 8,
             }}
             cooperativeGestures={true}
             style={{ width: "100%", height: "500px", borderRadius: "6px" }}
