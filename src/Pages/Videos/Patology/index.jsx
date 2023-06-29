@@ -5,6 +5,7 @@ import {
   Image,
   Lock,
   LockOpen,
+  MagnifyingGlass,
   MapPin,
   PencilLine,
   PlusCircle,
@@ -37,6 +38,8 @@ export function Patology() {
   const [lock, setLock] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [filteredRoad, setFilteredRoad] = useState([]);
+  const [seach, setSeach] = useState("")
 
   // variavel mapa
   const [showPopup, setShowPopup] = useState(null);
@@ -196,12 +199,20 @@ export function Patology() {
       if (response.status === 200) {
         // function para deleter o imtem do array dataCity
         setDataPatology(
-          dataPatology.filter((item) => item.id !== response.data.id)
+          dataPatology?.filter((item) => item.id !== response.data.id)
         );
         window.alert("Muncípio deletado com sucesso");
       }
     }
   }
+
+  useEffect(() =>{
+    if(seach.length > 0){
+      setFilteredRoad(dataPatology.filter((item) => item.km.toLocaleUpperCase().includes(seach.toLocaleUpperCase())))
+    }else if(seach.length === 0){
+      setFilteredRoad([])
+    }
+  }, [seach])
 
   // criar paginação
   function paginate(items, currentPage, itemsPerPage) {
@@ -220,9 +231,19 @@ export function Patology() {
 
   return (
     <div className="mt-5 flex flex-col justify-center">
-      <header className="flex justify-end ">
+      <header className="flex justify-between items-center mb-2">
+      <label className="flex items-center" htmlFor="">
+          <input
+            type="text"
+            className="w-60 bg-gray-input rounded-md p-1.5 "
+            placeholder="Buscar quilometro"
+            value={seach}
+            onChange={(event) => setSeach(event.target.value)}
+          />
+           <MagnifyingGlass size={22} className="relative right-8 text-gray-400"/>
+        </label>
         <NavLink
-          className="mb-5 flex items-center gap-1 hover:text-gold-400 hover:underline"
+          className=" flex items-center gap-1 hover:text-gold-400 hover:underline"
           to={`/rodovias/videos/${id}/patology/${video}/register`}
         >
           <PlusCircle className="text-gold-400" size={22} />
@@ -253,7 +274,107 @@ export function Patology() {
           </tr>
         </thead>
         <tbody>
-          {paginatedData?.map((patology) => {
+          {filteredRoad.length !== 0 ? 
+          filteredRoad?.map((patology) => {
+            const roadSide = JSON.parse(patology.roadSide);
+            const cracks = JSON.parse(patology.cracks);
+            const sags = JSON.parse(patology.sags);
+            const otherDefects = JSON.parse(patology.otherDefects);
+
+            return (
+              <tr
+                key={patology.id}
+                className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
+              >
+                <td className="p-2  ">
+                  {roadSide.BD && "BD "}
+                  {roadSide.BE && "BE "}
+                  {roadSide.EIXO && "EIXO "}
+                  {roadSide.PISTA && "PISTA "}
+                </td>
+                <td className="p-2  ">
+                  {sags.ALC && "ALC "}
+                  {sags.ALP && "ALP "}
+                  {sags.ATC && "ATC "}
+                  {sags.ATP && "ATP "}
+                  {otherDefects.D && "D "}
+                  {otherDefects.E && "E "}
+                  {otherDefects.EX && "EX "}
+                  {otherDefects.O && "O "}
+                  {otherDefects.P && "P "}
+                  {otherDefects.R && "R "}
+                  {cracks.FI && "FI "}
+                  {cracks.J && "J "}
+                  {cracks.JE && "JE "}
+                  {cracks.TB && "TB "}
+                  {cracks.TBE && "TBE "}
+                  {cracks.TLC && "TLC "}
+                  {cracks.TTL && "TTL "}
+                  {cracks.TRR && "TRR "}
+                  {cracks.TTC && "TTC "}
+                  {cracks.TLL && "TLL "}
+                </td>
+                <td className="p-2  w-48 ">
+                  <p className="truncate w-48">{patology.descrption}</p>
+                </td>
+                <td className="p-2  ">{patology.km}</td>
+                <td className="p-2  ">{patology.videoTime}</td>
+                <td className="p-2  ">{patology.latitude}</td>
+                <td className="p-2  ">{patology.longitude}</td>
+                <td className="p-2">
+                  <div className="flex justify-end gap-4 items-center h-auto">
+                    <Dialog>
+                      <DialogTrigger className="flex text-sm justify-center items-center gap-1 p-1 text-sm text-sky-600 border rounded border-sky-600 hover:bg-sky-600 hover:text-white">
+                        <PencilLine size={18} />
+                      </DialogTrigger>
+                      <ModalUpdate
+                        data={patology}
+                        roadSide={roadSide}
+                        cracks={cracks}
+                        sags={sags}
+                        otherDefects={otherDefects}
+                        id={patology.id}
+                        arrayUpdate={arrayUpdate}
+                      />
+                    </Dialog>
+
+                    {patology.screenshotUrl ? (
+                      <Dialog>
+                        <DialogTrigger className="">
+                          <Image size={24} color={"#56A899"} />
+                        </DialogTrigger>
+                        <Modalimage
+                          image={patology.screenshotUrl}
+                          id={patology.id}
+                          arrayUpdate={arrayUpdate}
+                        />
+                      </Dialog>
+                    ) : (
+                      <Dialog>
+                        <DialogTrigger className="">
+                          <Image size={24} color={"#6b7280"} />
+                        </DialogTrigger>
+                        <Modalimage
+                          image={patology.screenshotUrl}
+                          id={patology.id}
+                          arrayUpdate={arrayUpdate}
+                        />
+                      </Dialog>
+                    )}
+                    {lock && (
+                      <TrashSimple
+                        size={24}
+                        color={"#e64a33"}
+                        onClick={() => {
+                          deletePatology(patology.id);
+                        }}
+                      />
+                    )}
+                  </div>
+                </td>
+              </tr>
+            );
+          }):  paginatedData?.map((patology) => {
             const roadSide = JSON.parse(patology.roadSide);
             const cracks = JSON.parse(patology.cracks);
             const sags = JSON.parse(patology.sags);
