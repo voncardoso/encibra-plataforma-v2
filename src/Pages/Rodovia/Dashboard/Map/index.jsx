@@ -27,8 +27,7 @@ export function MapDashboard(){
   const [seach, setSeach] = useState("")
   const [activeName, setActiveName] = useState(true)
   let strech = null;
-  console.log("teste")
-  // faz a requisição ao banco de dados
+
   useEffect(() => {
     async function GetRoads() {
       const token = window.localStorage.getItem("encibraapptoken-v2");
