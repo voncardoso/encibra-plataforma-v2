@@ -251,7 +251,7 @@ export function Patology() {
           <input
             type="text"
             className="w-60 bg-gray-input rounded-md p-1.5 "
-            placeholder="Buscar quilometro"
+            placeholder="Buscar Km"
             value={seach}
             onChange={(event) => setSeach(event.target.value)}
           />
