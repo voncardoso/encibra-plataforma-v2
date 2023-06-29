@@ -127,7 +127,7 @@ export function Patology() {
       });
     }
     getCoordenadas();
-  }, [dataRoad]);
+  }, [dataRoad, strech]);
 
   //function para redenrizar o traçado da rodovia
   useEffect(() => {
@@ -152,7 +152,7 @@ export function Patology() {
           pitch: 0,
         });
       });
-  }, [startPatology, params.id]);
+  }, [startPatology]);
 
   function arrayUpdate(object){
     const newArray = [...dataPatology];
@@ -366,7 +366,7 @@ export function Patology() {
           shape="rounded"
         />
       </div>
-      {strech && (
+      {strech || startPatology.latitude ? (
         <div className="mb-5">
           <ReactMapGL
             key={`${+start?.latitude}-${+start?.longitude}`}
@@ -425,8 +425,7 @@ export function Patology() {
                     }}
                   >
                     {item.screenshotUrl !== "" && item.observation === "" && <MapPin className="text-sky-600 cursor-pointer" size={50} weight="duotone"/>}
-                  
-                    {item.screenshotUrl === "" && <MapPin className="text-red-500 cursor-pointer" size={50} weight="duotone"/>}
+                    {item.screenshotUrl === "" && item.observation === "" && <MapPin className="text-red-500 cursor-pointer" size={50} weight="duotone"/>}
                     {item.observation === "Vila" && <HouseLine className="text-emerald-500 cursor-pointer" size={50} weight="duotone"/>}
                   </Marker>
                 </section>
@@ -475,7 +474,7 @@ export function Patology() {
             <ScaleControl />
           </ReactMapGL>
         </div>
-      )}
+      ): ""}
     </div>
   );
 }
