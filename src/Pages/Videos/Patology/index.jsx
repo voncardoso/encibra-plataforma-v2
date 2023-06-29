@@ -152,7 +152,7 @@ export function Patology() {
           pitch: 0,
         });
       });
-  }, [startPatology]);
+  }, [startPatology, params.id]);
 
   function arrayUpdate(object){
     const newArray = [...dataPatology];

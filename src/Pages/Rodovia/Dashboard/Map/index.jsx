@@ -12,7 +12,7 @@ import ReactMapGL, {
 } from "react-map-gl";
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../../../lib/api';
-import { MapPin } from '@phosphor-icons/react';
+import { MagnifyingGlass, MapPin } from '@phosphor-icons/react';
 import ParaGeoJson from "../../../../GeoJson/Para.json";
 import NR01 from "../../../../GeoJson/NR-01.json";
 
@@ -23,6 +23,9 @@ export function MapDashboard(){
   const [end, setEnd] = useState({ latitude: -0.5845891, longitude: -47.6525196 });
   const [route, setRoute] = useState(null);
   const [activeSigla, setActiveSigla] = useState(false);
+  const [filteredRoad, setFilteredRoad] = useState([]);
+  const [seach, setSeach] = useState("")
+  const [activeName, setActiveName] = useState(true)
   let strech = null;
   // faz a requisição ao banco de dados
   useEffect(() => {
@@ -46,7 +49,15 @@ export function MapDashboard(){
     },
   };
 
+  useEffect(() =>{
+    if(seach.length > 0){
+      setFilteredRoad(data.filter((item) => item.acronym.toLocaleUpperCase().includes(seach.toLocaleUpperCase())))
+    }else if(seach.length === 0){
+      setFilteredRoad([])
+    }
+  }, [seach])
 
+  console.log("ativar nome", activeName)
     return(
         <div className="mb-5">
         <Map
@@ -67,16 +78,65 @@ export function MapDashboard(){
       <Marker latitude={end.latitude} longitude={end.longitude} offsetLeft={-20} offsetTop={-10}>
         <div className="marker" />
       </Marker>
-      {route && (
-        <Source type="geojson" data={route.geometry}>
-          <Layer
-            id="route"
-            type="line"
-            paint={{ 'line-color': '#0070f3', 'line-width': 4 }}
-          />
-        </Source>
-      )}
-          {data.map((item, index) =>{
+          {route && (
+            <Source type="geojson" data={route.geometry}>
+              <Layer
+                id="route"
+                type="line"
+                paint={{ 'line-color': '#0070f3', 'line-width': 4 }}
+              />
+            </Source>
+          )}
+          {filteredRoad.length === 0 ?
+            data.map((item, index) =>{
+            strech = JSON.parse(item?.stretch);
+            
+            {activeSigla && 
+              <Marker
+              key={index}
+              latitude={Number(strech?.initialLatitude)}
+              longitude={Number(strech?.initialLongitude)}
+            >
+            <div className="bg-white p-2 rounded-md cursor-pointer hover:bg-gray-200">
+              <div onClick={() => {
+              navigate(`/rodovias/information/${item.id}`);
+            }} className="flex items-center text-sm  gap-1 rounded-md">
+                <MapPin className="text-sky-600" weight="fill" size={24}/>
+                {item?.acronym}
+              </div>
+            </div>
+              </Marker>
+            }
+            return(
+              <Marker
+                    key={index}
+                    latitude={Number(strech?.initialLatitude)}
+                    longitude={Number(strech?.initialLongitude)}
+                  >
+                  <div className=" rounded-md cursor-pointer hover:text-lg">
+                    {activeName ? <div onClick={() => {
+                      navigate(`/rodovias/information/${item.id}`);
+                      }
+                     } 
+                     className="bg-white p-2 flex items-center text-sm  gap-1 rounded-md"
+                    >
+                      <MapPin className="text-sky-600" weight="fill" size={24}/>
+                      {item?.acronym}
+                    </div> 
+                    : 
+                    <div onClick={() => {
+                      navigate(`/rodovias/information/${item.id}`);
+                      }
+                     } 
+                     className="flex items-center text-sm  gap-1 rounded-md"
+                    >
+                      <MapPin className="text-sky-600" weight="fill" size={30}/>
+                    </div>}
+                  </div>
+                </Marker>
+            )
+          }):
+            filteredRoad.map((item, index) =>{
             strech = JSON.parse(item?.stretch);
             {activeSigla && <Marker
               key={index}
@@ -111,9 +171,31 @@ export function MapDashboard(){
           })}
 
 
-            <ul className="relative z-30">
-              sigla
-            </ul>
+            
+          <label className='flex items-center rounded-md relative z-20  w-44 m-4 mb-2 bg-white text-base'>
+            <input  
+              className='p-2 w-full rounded-md focus:outline-none' 
+              type="text" 
+              placeholder='Buscar rodovia'
+              value={seach}
+              onChange={(event) => setSeach(event.target.value)}
+            />
+            <MagnifyingGlass className='relative z-40 mr-2 text-gray-400' size={30}/>
+          </label>
+               
+            
+          <ul className="flex rounded-md gap-2 items-center relative z-30 bg-white z-20 p-4 w-44 m-4 mt-0">
+            <input  
+              className=" rounded-md focus:outline-none" 
+              type="checkbox" 
+              placeholder='Buscar rodovia'
+              defaultChecked={activeName}
+              onChange={(event) =>{
+                activeName ? setActiveName(false) : setActiveName(true)
+              }}
+            />
+            <strong>Nome da Rodovia</strong>
+          </ul>
 
 
           <Source id="my-data11" type="geojson" data={ParaGeoJson}>
