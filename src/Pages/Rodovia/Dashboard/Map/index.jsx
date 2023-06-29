@@ -27,6 +27,7 @@ export function MapDashboard(){
   const [seach, setSeach] = useState("")
   const [activeName, setActiveName] = useState(true)
   let strech = null;
+  console.log("teste")
   // faz a requisição ao banco de dados
   useEffect(() => {
     async function GetRoads() {
@@ -90,7 +91,7 @@ export function MapDashboard(){
           {filteredRoad.length === 0 ?
             data.map((item, index) =>{
             strech = JSON.parse(item?.stretch);
-            
+
             {activeSigla && 
               <Marker
               key={index}
