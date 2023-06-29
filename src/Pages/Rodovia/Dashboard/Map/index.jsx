@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { api } from '../../../../lib/api';
 import { MagnifyingGlass, MapPin } from '@phosphor-icons/react';
 import ParaGeoJson from "../../../../GeoJson/Para.json";
-import NR01 from "../../../../GeoJson/NR-01.json";
+
 
 export function MapDashboard(){
   const navigate = useNavigate();
