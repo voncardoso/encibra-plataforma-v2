@@ -229,6 +229,21 @@ export function Patology() {
     setCurrentPage(pageNumber);
   }
 
+  // criar paginação para o filtro
+  function paginateFiltered(items, currentPage, itemsPerPage) {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return items.slice(startIndex, endIndex);
+  }
+
+  const paginatedDataFiltered = paginate(filteredRoad, currentPage, itemsPerPage);
+  const totalPagesFiltered = Math.ceil(filteredRoad.length / itemsPerPage);
+
+  function goToPageFiltered(event, pageNumber) {
+
+    setCurrentPage(pageNumber);
+  }
+
   return (
     <div className="mt-5 flex flex-col justify-center">
       <header className="flex justify-between items-center mb-2">
@@ -275,7 +290,7 @@ export function Patology() {
         </thead>
         <tbody>
           {filteredRoad.length !== 0 ? 
-          filteredRoad?.map((patology) => {
+          paginatedDataFiltered?.map((patology) => {
             const roadSide = JSON.parse(patology.roadSide);
             const cracks = JSON.parse(patology.cracks);
             const sags = JSON.parse(patology.sags);
@@ -480,12 +495,26 @@ export function Patology() {
         </tbody>
       </table>
       <div className="mx-auto flex items-center">
-        <Pagination
-          className="mt-2.5 mb-3"
-          count={totalPages}
-          onChange={goToPage}
-          shape="rounded"
-        />
+        {filteredRoad.length !== 0 ? 
+          (
+            <Pagination
+              className="mt-2.5 mb-3"
+              count={totalPagesFiltered}
+              onChange={goToPageFiltered}
+              shape="rounded"
+            />
+          )
+        : 
+          (
+            <Pagination
+              className="mt-2.5 mb-3"
+              count={totalPages}
+              onChange={goToPage}
+              shape="rounded"
+            />
+          )
+        }
+        
       </div>
       {strech || startPatology.latitude ? (
         <div className="mb-5">
