@@ -64,7 +64,7 @@ export function RoadCore() {
   }
 
   return (
-    <section className="w-full overflow-y-scroll ">
+    <section className="ml-5 w-full overflow-y-scroll ">
       {/**Navegação */}
       <header className="flex justify-between pr-5 pt-5 pb-8 items-center">
         <nav>    

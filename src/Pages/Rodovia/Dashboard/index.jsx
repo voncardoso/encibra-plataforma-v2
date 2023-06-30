@@ -1,14 +1,12 @@
 import { useKeenSlider } from "keen-slider/react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { CaretRight, MagnifyingGlass, PlusCircle } from "@phosphor-icons/react";
-import "../../../Global/slider.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { api } from "../../../lib/api";
 import Pagination from '@mui/material/Pagination';
 
-// Import Swiper styles
-import "swiper/css";
+import 'swiper/swiper.min.css'; 
 import { MapDashboard } from "./Map";
 
 export function Dashboard() {
@@ -22,28 +20,39 @@ export function Dashboard() {
   let stretch = null;
   //responsividade do slider
   const breakpoints = {
+    autoHeight: true,
     // Largura mínima de 640 pixels
     240: {
-      slidesPerView: 1.3,
+      slidesPerView: 5.5,
+      
     },
     440: {
-      slidesPerView: 1.5,
+      slidesPerView: 5.5,
+     
     },
     640: {
-      slidesPerView: 2.5,
+      slidesPerView: 5.5,
+     
     },
     // Largura maior que 640 pixels
     1000: {
-      slidesPerView: 3.5,
+      slidesPerView: 5.5,
+     
     },
 
     1200: {
-      slidesPerView: 3.8,
+      slidesPerView: 5.5,
+     
     },
 
     1800: {
-      slidesPerView: 6.5,
+      slidesPerView: 5.5,
+     
     },
+  };
+
+  const slideStyle = {
+    height: '200px', // Altura desejada para o slide
   };
 
   // faz a requisição ao banco de dados
@@ -252,431 +261,284 @@ export function Dashboard() {
   const totalPagesFilter = Math.ceil(filteredRoad.length / itemsPerPage);
   
   function goToPage(event, pageNumber) {
-
     setCurrentPage(pageNumber);
   }
 
-  
+
+  let setHeightSlider = 0
+
+    function teste(){
+      console.log(window.innerHeight)
+      if(window.innerHeight > 810){
+        setHeightSlider =6
+      }
+      if(window.innerHeight < 810){
+        setHeightSlider =5
+      }
+      if(window.innerHeight < 670){
+        setHeightSlider =4
+      }
+      if(window.innerHeight <= 545){
+        setHeightSlider =3
+      }
+
+      if(window.innerHeight <= 400){
+        setHeightSlider =25
+      }
+
+      if(window.innerHeight <= 322){
+        setHeightSlider =2
+      }
+    }
+    teste()
+
+  console.log(setHeightSlider)
+
   return (
     <section className="w-full overflow-y-scroll ">
-      <header className="flex justify-between pr-5 pt-5 pb-8 items-center">
-        <strong className="text-2xl">Rodovias</strong>
-        <NavLink
-          className="flex items-center gap-1 hover:text-gold-400 hover:underline"
-          to="/rodovias/registro"
-        >
-          <PlusCircle className="text-gold-400" size={22} />
-          Cadastrar Rodovia
-        </NavLink>
-      </header>
+       
 
-      {/**Slider */}
-      <nav className="pr-5">
-        <Swiper
-          spaceBetween={20}
-          slidesPerView={4.5}
-          breakpoints={breakpoints}
-          className=" mb-8 cursor-pointer pr-5"
-        >
-          {/**total */}
-          <SwiperSlide
-            width={200}
-            className="w-72 bg-gray-300 min-w-52 p-4 rounded-lg text-center text-text-100 border-b-4 border-white rounded-md  border-b-8 "
-          >
-            <h1 className="text-xl font-bold">Total de Rodovias</h1>
-            <h2 className="pt-2.5 text-3xl font-bold">
-              {someRoadRegional.total}
-            </h2>
-            <p className="mb-2.5">Total</p>
-            <div className="flex justify-center gap-8">
-              <p className="flex flex-col">
-                {" "}
-                <span>{someRoadRegional.totalEstadual}</span>{" "}
-                <span>Estaduais</span>
-              </p>
-              <p className="flex flex-col">
-                {" "}
-                <span>{someRoadRegional.totalFeferal}</span>{" "}
-                <span>Federais</span>
-              </p>
-            </div>
-          </SwiperSlide>
+      <div className="w-full flex justify-between h-screen">
+          <div className="w-full">
+              {/**Mapa */}
+              {activeMapa && <div className="w-full h-full fixed">
+                  <MapDashboard/>
+              </div>}
+              {!activeMapa &&  
+                <>
+                  <div className="py-4 flex justify-end">
+                    <label className="flex items-center" htmlFor="">
+                      <MagnifyingGlass size={22} className="relative left-8 text-gray-400"/>
+                        <input
+                          type="text"
+                          className="w-60 bg-gray-input rounded-md p-2 pl-10"
+                          placeholder="Buscar rodovia"
+                          value={seach}
+                          onChange={(event) => setSeach(event.target.value)}
+                        />
+                    </label>
+                  </div>
+                    <div className="pr-5 mb-5 flex flex-col">
+                        <table className="w-full text-center">
+                          <thead>
+                            <tr className="bg-gray-300 ">
+                              <th className="p-2 pl-4 rounded-ss-md text-left ">Rodovia</th>
+                              <th className="p-2">Malha</th>
+                              <th className="p-2">Extensão</th>
+                              <th className="p-2">Latitude</th>
+                              <th className="p-2">Longitude</th>
+                              <th className="p-2">UF</th>
+                              <th className="p-2 rounded-se-md text-center"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                           {filteredRoad.length > 0 ?  
+                           paginatedDataFilter.sort(function (a, b) {
+                            return a.acronym < b.acronym ? -1 : a.acronym > b.acronym ? 1 : 0;
+                          }).map((road) => {
+                              stretch = JSON.parse(road?.stretch);
+                              return (
+                                <tr
+                                  key={road.id}
+                                  onClick={() => {
+                                    navigate(`/rodovias/information/${road.id}`);
+                                  }}
+                                  className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
+                                >
+                                  <td className="p-2 pl-4  text-left">{road.acronym}</td>
+                                  <td className="p-2  ">{road.mesh}</td>
+                                  <td className="p-2  ">{road.extention}</td>
+                                  <td className="p-2  ">{stretch?.initialLatitude}</td>
+                                  <td className="p-2  ">{stretch?.initialLongitude}</td>
+                                  <td className="p-2  ">{road.uf}</td>
+                                  <td className="p-2  ">
+                                    <Link
+                                      className="flex justify-center"
+                                      to={``}
+                                    >
+                                      <CaretRight size={20} />
+                                    </Link>
+                                  </td>
+                                </tr>
+                              );
+                            }) :  
+                            paginatedData.sort(function (a, b) {
+                              return a.acronym < b.acronym ? -1 : a.acronym > b.acronym ? 1 : 0;
+                            }).map((road) => {
+                              stretch = JSON.parse(road?.stretch);
+                              return (
+                                <tr
+                                  key={road.id}
+                                  onClick={() => {
+                                    navigate(`/rodovias/information/${road.id}`);
+                                  }}
+                                  className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
+                                >
+                                  <td className="p-2 pl-4 text-left">{road.acronym}</td>
+                                  <td className="p-2  ">{road.mesh}</td>
+                                  <td className="p-2  ">{road.extention}</td>
+                                  <td className="p-2  ">{stretch?.initialLatitude}</td>
+                                  <td className="p-2  ">{stretch?.initialLongitude}</td>
+                                  <td className="p-2  ">{road.uf}</td>
+                                  <td className="p-2  ">
+                                    <Link
+                                      className="flex justify-center"
+                                      to={``}
+                                    >
+                                      <CaretRight size={20} />
+                                    </Link>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                            <tr className=" bg-gray-300 border-b-2 border-gray-200 ">
+                              <td colSpan={7} className="p-2 rounded-ee-md rounded-es-md"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div className="mx-auto flex items-center">
+                          <Pagination className="mt-2.5" count={filteredRoad.length > 0 ? totalPagesFilter : totalPages} onChange={goToPage}  shape="rounded" />
+                        </div>
+                    </div>
+                </>
+                }
+                </div>
+                {/**Slider */}
+              <nav className="pr-1 mb-2">
+                <Swiper
+                  spaceBetween={20}
+                  slidesPerView={setHeightSlider}
 
-          {/**01 */}
-          <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg  border-b-4 rounded-md text-center border-b-8 border-gray-300">
-            <NavLink to={`/rodovias/nucleo/${1}`}>
-              <h1 className="text-xl font-bold">Núcleo Regional 01</h1>
-              <h2 className="pt-2.5 text-3xl font-bold">
-                {someRoadRegional.reginal01}
-              </h2>
-              <p className="mb-2.5">Total</p>
-              <div className="flex justify-center gap-8">
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshEstadual01}</span>{" "}
-                  <span>Estaduais</span>
-                </p>
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshFederal01}</span>{" "}
-                  <span>Federais</span>
-                </p>
-              </div>
-            </NavLink>
-          </SwiperSlide>
-
-          {/**02 */}
-          <SwiperSlide className="text-gray-400  w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
-            <NavLink to={`/rodovias/nucleo/${2}`}>
-              <h1 className="text-xl font-bold">Núcleo Regional 02</h1>
-              <h2 className="pt-2.5 text-3xl font-bold">
-                {someRoadRegional.reginal02}
-              </h2>
-              <p className="mb-2.5">Total</p>
-              <div className="flex justify-center gap-8">
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshEstadual02}</span>{" "}
-                  <span>Estaduais</span>
-                </p>
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshFederal02}</span>{" "}
-                  <span>Federais</span>
-                </p>
-              </div>
-            </NavLink>
-          </SwiperSlide>
-
-          {/**03 */}
-          <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
-            <NavLink to={`/rodovias/nucleo/${3}`}>
-              <h1 className="text-xl font-bold">Núcleo Regional 03</h1>
-              <h2 className="pt-2.5 text-3xl font-bold">
-                {someRoadRegional.reginal03}
-              </h2>
-              <p className="mb-2.5">Total</p>
-              <div className="flex justify-center gap-8">
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshEstadual03}</span>{" "}
-                  <span>Estaduais</span>
-                </p>
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshFederal03}</span>{" "}
-                  <span>Federais</span>
-                </p>
-              </div>
-            </NavLink>
-          </SwiperSlide>
-
-          {/**04 */}
-          <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
-            <NavLink to={`/rodovias/nucleo/${4}`}>
-              <h1 className="text-xl font-bold">Núcleo Regional 04</h1>
-              <h2 className="pt-2.5 text-3xl font-bold">
-                {someRoadRegional.reginal04}
-              </h2>
-              <p className="mb-2.5">Total</p>
-              <div className="flex justify-center gap-8">
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshEstadual04}</span>{" "}
-                  <span>Estaduais</span>
-                </p>
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshFederal04}</span>{" "}
-                  <span>Federais</span>
-                </p>
-              </div>
-            </NavLink>
-          </SwiperSlide>
-
-          {/**05 */}
-          <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
-            <NavLink to={`/rodovias/nucleo/${5}`}>
-              <h1 className="text-xl font-bold">Núcleo Regional 05</h1>
-              <h2 className="pt-2.5 text-3xl font-bold">
-                {someRoadRegional.reginal05}
-              </h2>
-              <p className="mb-2.5">Total</p>
-              <div className="flex justify-center gap-8">
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshEstadual05}</span>{" "}
-                  <span>Estaduais</span>
-                </p>
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshFederal05}</span>{" "}
-                  <span>Federais</span>
-                </p>
-              </div>
-            </NavLink>
-          </SwiperSlide>
-
-          {/**06 */}
-          <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
-            <NavLink to={`/rodovias/nucleo/${6}`}>
-              <h1 className="text-xl font-bold">Núcleo Regional 06</h1>
-              <h2 className="pt-2.5 text-3xl font-bold">
-                {someRoadRegional.reginal06}
-              </h2>
-              <p className="mb-2.5">Total</p>
-              <div className="flex justify-center gap-8">
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshEstadual06}</span>{" "}
-                  <span>Estaduais</span>
-                </p>
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshFederal06}</span>{" "}
-                  <span>Federais</span>
-                </p>
-              </div>
-            </NavLink>
-          </SwiperSlide>
-
-          {/**07 */}
-          <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
-            <NavLink to={`/rodovias/nucleo/${7}`}>
-              <h1 className="text-xl font-bold">Núcleo Regional 07</h1>
-              <h2 className="pt-2.5 text-3xl font-bold">
-                {someRoadRegional.reginal07}
-              </h2>
-              <p className="mb-2.5">Total</p>
-              <div className="flex justify-center gap-8">
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshEstadual07}</span>{" "}
-                  <span>Estaduais</span>
-                </p>
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshFederal07}</span>{" "}
-                  <span>Federais</span>
-                </p>
-              </div>
-            </NavLink>
-          </SwiperSlide>
-
-          {/**08 */}
-          <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
-            <NavLink to={`/rodovias/nucleo/${8}`}>
-              <h1 className="text-xl font-bold">Núcleo Regional 08</h1>
-              <h2 className="pt-2.5 text-3xl font-bold">
-                {someRoadRegional.reginal08}
-              </h2>
-              <p className="mb-2.5">Total</p>
-              <div className="flex justify-center gap-8">
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshEstadual08}</span>{" "}
-                  <span>Estaduais</span>
-                </p>
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshFederal08}</span>{" "}
-                  <span>Federais</span>
-                </p>
-              </div>
-            </NavLink>
-          </SwiperSlide>
-
-          {/**09 */}
-          <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
-            <NavLink to={`/rodovias/nucleo/${9}`}>
-              <h1 className="text-xl font-bold">Núcleo Regional 09</h1>
-              <h2 className="pt-2.5 text-3xl font-bold">
-                {someRoadRegional.reginal09}
-              </h2>
-              <p className="mb-2.5">Total</p>
-              <div className="flex justify-center gap-8">
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshEstadual09}</span>{" "}
-                  <span>Estaduais</span>
-                </p>
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshEstadual09}</span>{" "}
-                  <span>Federais</span>
-                </p>
-              </div>
-            </NavLink>
-          </SwiperSlide>
-
-          <SwiperSlide className="text-gray-400 w-72 bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
-            <NavLink to={`/rodovias/nucleo/${10}`}>
-              <h1 className="text-xl font-bold">Núcleo Regional 10</h1>
-              <h2 className="pt-2.5 text-3xl font-bold">
-                {someRoadRegional.reginal10}
-              </h2>
-              <p className="mb-2.5">Total</p>
-              <div className="flex justify-center gap-8">
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshEstadual10}</span>{" "}
-                  <span>Estaduais</span>
-                </p>
-                <p className="flex flex-col">
-                  {" "}
-                  <span>{someRoadRegional.meshFederal10}</span>{" "}
-                  <span>Federais</span>
-                </p>
-              </div>
-            </NavLink>
-          </SwiperSlide>
-        </Swiper>
-      </nav>
-      <header className="w-full p-4 flex justify-center gap-3 text-gray-400">
-        <div className="flex justify-center gap-3 border py-2 px-6 rounded border-gray-400">
-          {activeMapa === true ? 
-            <button
-              className="text-gold-400 font-bold border-b-2 hover:text-gold-400" 
-              onClick={() =>{
-                setActiveMapa(true)
-              }}
-            >
-              Mapa
-            </button>
-            :
-            <button 
-            className="hover:text-gold-400"
-              onClick={() =>{
-                setActiveMapa(true)
-              }}
-            >
-              Mapa
-            </button> 
-          }
-          {activeMapa === true ?
-            <button
-            className="hover:text-gold-400"
-            onClick={() =>{
-              setActiveMapa(false)
-            }}
-          >
-            Tabela
-          </button>
-          :
-          <button
-          className="text-gold-400 font-bold border-b-2" 
-          onClick={() =>{
-            setActiveMapa(false)
-          }}
-        >
-        Tabela
-      </button>
-        }
-        </div>
-      </header>
-      
-      {/**Mapa */}
-      {activeMapa && <div className="pr-5">
-        <MapDashboard/>
-      </div>}
-      {!activeMapa &&  
-        <>
-           <div className="py-4 flex justify-end pr-5">
-      <label className="flex items-center" htmlFor="">
-        <MagnifyingGlass size={22} className="relative left-8 text-gray-400"/>
-          <input
-            type="text"
-            className="w-60 bg-gray-input rounded-md p-2 pl-10"
-            placeholder="Buscar rodovia"
-            value={seach}
-            onChange={(event) => setSeach(event.target.value)}
-          />
-        </label>
-      </div>
-      <div className="pr-5 mb-5 flex flex-col">
-        <table className="w-full text-center">
-          <thead>
-            <tr className="bg-gray-300 ">
-              <th className="p-2 pl-4 rounded-ss-md text-left ">Rodovia</th>
-              <th className="p-2">Malha</th>
-              <th className="p-2">Extensão</th>
-              <th className="p-2">Latitude</th>
-              <th className="p-2">Longitude</th>
-              <th className="p-2">UF</th>
-              <th className="p-2 rounded-se-md text-center"></th>
-            </tr>
-          </thead>
-          <tbody>
-           {filteredRoad.length > 0 ?  
-           paginatedDataFilter.sort(function (a, b) {
-            return a.acronym < b.acronym ? -1 : a.acronym > b.acronym ? 1 : 0;
-          }).map((road) => {
-              stretch = JSON.parse(road?.stretch);
-              return (
-                <tr
-                  key={road.id}
-                  onClick={() => {
-                    navigate(`/rodovias/information/${road.id}`);
-                  }}
-                  className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
+                  direction="vertical"
+                  autoHeight={true}
+                  className=" mb-8 cursor-pointer  h-screen"
                 >
-                  <td className="p-2 pl-4  text-left">{road.acronym}</td>
-                  <td className="p-2  ">{road.mesh}</td>
-                  <td className="p-2  ">{road.extention}</td>
-                  <td className="p-2  ">{stretch?.initialLatitude}</td>
-                  <td className="p-2  ">{stretch?.initialLongitude}</td>
-                  <td className="p-2  ">{road.uf}</td>
-                  <td className="p-2  ">
-                    <Link
-                      className="flex justify-center"
-                      to={``}
-                    >
-                      <CaretRight size={20} />
-                    </Link>
-                  </td>
-                </tr>
-              );
-            }) :  
-            paginatedData.sort(function (a, b) {
-              return a.acronym < b.acronym ? -1 : a.acronym > b.acronym ? 1 : 0;
-            }).map((road) => {
-              stretch = JSON.parse(road?.stretch);
-              return (
-                <tr
-                  key={road.id}
-                  onClick={() => {
-                    navigate(`/rodovias/information/${road.id}`);
-                  }}
-                  className=" bg-white hover:bg-gray-200 cursor-pointer border-b-2 border-gray-200"
-                >
-                  <td className="p-2 pl-4 text-left">{road.acronym}</td>
-                  <td className="p-2  ">{road.mesh}</td>
-                  <td className="p-2  ">{road.extention}</td>
-                  <td className="p-2  ">{stretch?.initialLatitude}</td>
-                  <td className="p-2  ">{stretch?.initialLongitude}</td>
-                  <td className="p-2  ">{road.uf}</td>
-                  <td className="p-2  ">
-                    <Link
-                      className="flex justify-center"
-                      to={``}
-                    >
-                      <CaretRight size={20} />
-                    </Link>
-                  </td>
-                </tr>
-              );
-            })}
-            <tr className=" bg-gray-300 border-b-2 border-gray-200 ">
-              <td colSpan={7} className="p-2 rounded-ee-md rounded-es-md"></td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="mx-auto flex items-center">
-          <Pagination className="mt-2.5" count={filteredRoad.length > 0 ? totalPagesFilter : totalPages} onChange={goToPage}  shape="rounded" />
-        </div>
+                  {/**total */}
+                  <SwiperSlide
+                    className="w-52 mt-4 bg-gray-300 p-4 rounded-lg text-center text-text-100 border-b-4 border-white rounded-md  border-b-8 "
+                  >
+                    <h1 className="text-lg font-bold">Total de Rodovias</h1>
+                    <h2 className="pt-2 text-2xl font-bold">
+                      {someRoadRegional.total}
+                    </h2>
+                    <p className="mb-2.5">Total</p>
+                    
+                    
+                  </SwiperSlide>
+
+                  {/**01 */}
+                  <SwiperSlide  className=" text-gray-400 w-52  bg-white min-w-52 p-4 rounded-lg  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+                  <NavLink to={`/rodovias/nucleo/${1}`}>
+                    <h1 className="text-lg font-bold">Núcleo Regional 01</h1>
+                    <h2 className="pt-2 text-2xl font-bold">
+                      {someRoadRegional.reginal01}
+                    </h2>
+                    <p className="mb-2.5">Total</p>
+                  </NavLink>
+                  </SwiperSlide>
+
+                  {/**02 */}
+                  <SwiperSlide 
+                   style={slideStyle}
+                  className="flex justify-center  items-centertext-gray-400  w-52  bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+                  <NavLink to={`/rodovias/nucleo/${2}`}>
+                    <h1 className="text-lg font-bold">Núcleo Regional 02</h1>
+                    <h2 className="pt-2 text-2xl font-bold">
+                      {someRoadRegional.reginal02}
+                    </h2>
+                    <p className="mb-2.5">Total</p>
+                  </NavLink>
+                  </SwiperSlide>
+
+                  {/**03 */}
+                  <SwiperSlide className="text-gray-400 w-52  bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+                  <NavLink to={`/rodovias/nucleo/${3}`}>
+                    <h1 className="text-lg font-bold">Núcleo Regional 03</h1>
+                    <h2 className="pt-2 text-2xl font-bold">
+                      {someRoadRegional.reginal03}
+                    </h2>
+                    <p className="mb-2.5">Total</p>
+                  </NavLink>
+                  </SwiperSlide>
+
+                  {/**04 */}
+                  <SwiperSlide className="text-gray-400 w-52  bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+                  <NavLink to={`/rodovias/nucleo/${4}`}>
+                    <h1 className="text-lg font-bold">Núcleo Regional 04</h1>
+                    <h2 className="pt-2 text-2xl font-bold">
+                      {someRoadRegional.reginal04}
+                    </h2>
+                    <p className="mb-2.5">Total</p>
+                  </NavLink>
+                  </SwiperSlide>
+
+                  {/**05 */}
+                  <SwiperSlide className="text-gray-400 w-52  bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+                  <NavLink to={`/rodovias/nucleo/${5}`}>
+                    <h1 className="text-lg font-bold">Núcleo Regional 05</h1>
+                    <h2 className="pt-2 text-2xl font-bold">
+                      {someRoadRegional.reginal05}
+                    </h2>
+                    <p className="mb-2.5">Total</p>
+                  </NavLink>
+                  </SwiperSlide>
+
+                  {/**06 */}
+                  <SwiperSlide className="text-gray-400 w-52  bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+                  <NavLink to={`/rodovias/nucleo/${6}`}>
+                    <h1 className="text-lg font-bold">Núcleo Regional 06</h1>
+                    <h2 className="pt-2 text-2xl font-bold">
+                      {someRoadRegional.reginal06}
+                    </h2>
+                    <p className="mb-2.5">Total</p>
+                  </NavLink>
+                  </SwiperSlide>
+
+                  {/**07 */}
+                  <SwiperSlide className="text-gray-400 w-52  bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+                  <NavLink to={`/rodovias/nucleo/${7}`}>
+                    <h1 className="text-lg font-bold">Núcleo Regional 07</h1>
+                    <h2 className="pt-2 text-2xl font-bold">
+                      {someRoadRegional.reginal07}
+                    </h2>
+                    <p className="mb-2.5">Total</p>
+                  </NavLink>
+                  </SwiperSlide>
+
+                  {/**08 */}
+                  <SwiperSlide className="text-gray-400 w-52  bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+                  <NavLink to={`/rodovias/nucleo/${8}`}>
+                    <h1 className="text-lg font-bold">Núcleo Regional 08</h1>
+                    <h2 className="pt-2.5 text-2xl font-bold">
+                      {someRoadRegional.reginal08}
+                    </h2>
+                    <p className="mb-2">Total</p>
+                  </NavLink>
+                  </SwiperSlide>
+
+                  {/**09 */}
+                  <SwiperSlide className="text-gray-400 w-52  bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+                  <NavLink to={`/rodovias/nucleo/${9}`}>
+                    <h1 className="text-lg font-bold">Núcleo Regional 09</h1>
+                    <h2 className="pt-2.5 text-2xl font-bold">
+                      {someRoadRegional.reginal09}
+                    </h2>
+                    <p className="mb-2">Total</p>
+                  </NavLink>
+                  </SwiperSlide>
+
+                  <SwiperSlide className="mb-4 text-gray-400 w-52  bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+                  <NavLink to={`/rodovias/nucleo/${10}`}>
+                    <h1 className="text-lg font-bold">Núcleo Regional 10</h1>
+                    <h2 className="pt-2 text-2xl font-bold">
+                      {someRoadRegional.reginal10}
+                    </h2>
+                    <p className="mb-2.5">Total</p>
+                  </NavLink>
+                  </SwiperSlide>
+                  </Swiper>
+              </nav>
       </div>
-        </>
-      }
     </section>
   );
 }

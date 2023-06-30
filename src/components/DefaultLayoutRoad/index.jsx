@@ -19,7 +19,7 @@ export function DefaultLayoutRoad() {
 
   if(dataRoad){
     return (
-      <section className="gap-5 bg-background h-screen overflow-y-scroll w-full pr-5 ">
+      <section className="ml-5 gap-5 bg-background h-screen overflow-y-scroll w-full pr-5 ">
         <div>
           <header className="flex justify-between pr-5 pt-5 pb-5 items-center text-text-100">
             <nav>

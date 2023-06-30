@@ -10,9 +10,9 @@ import ReactMapGL, {
   ScaleControl,
   Map
 } from "react-map-gl";
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { api } from '../../../../lib/api';
-import { MagnifyingGlass, MapPin } from '@phosphor-icons/react';
+import { MagnifyingGlass, MapPin, PlusCircle } from '@phosphor-icons/react';
 import ParaGeoJson from "../../../../GeoJson/Para.json";
 
 
@@ -59,15 +59,15 @@ export function MapDashboard(){
 
   console.log("ativar nome", activeName)
     return(
-        <div className="mb-5">
+        <div className="mb-5 w-full h-full">
         <Map
           initialViewState={{
-            longitude: -53.066844,
-            latitude:  -4.066257,
+            longitude: -46.264673,
+            latitude:  -3.359856,
             zoom: 5
           }}
           cooperativeGestures={true}
-          style={{width: '100%', height: '600px', borderRadius: "6px"}}
+          style={{width: '100%', height: '100%', borderRadius: "6px"}}
           mapStyle="mapbox://styles/mapbox/streets-v11"
           mapboxAccessToken="pk.eyJ1Ijoidm9uMzQiLCJhIjoiY2w5NzJkaTI0MnJ6eTNub2l1dXA4M3YxeCJ9.Z0GAMbATYKVCN_esIi7lFw"
         >
@@ -182,6 +182,16 @@ export function MapDashboard(){
             />
             <MagnifyingGlass className='relative z-40 mr-2 text-gray-400' size={30}/>
           </label>
+
+          <ul className="flex rounded-md gap-2 items-center relative z-30 bg-white z-20 p-4 w-44 m-4 mb-2 mt-0">
+            <NavLink
+              className="flex items-center gap-1 hover:text-gold-400 hover:underline"
+              to="/rodovias/registro"
+            >
+              <PlusCircle className="text-gold-400" size={22} />
+              Cadastrar Rodovia
+            </NavLink>
+          </ul>
                
             
           <ul className="flex rounded-md gap-2 items-center relative z-30 bg-white z-20 p-4 w-44 m-4 mt-0">
@@ -195,9 +205,9 @@ export function MapDashboard(){
               }}
             />
             <strong>Nome da Rodovia</strong>
+            
           </ul>
-
-
+          
           <Source id="my-data11" type="geojson" data={ParaGeoJson}>
             <Layer {...layerStylePara} />
           </Source>
