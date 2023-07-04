@@ -269,8 +269,6 @@ export function Dashboard() {
   const teste78 = useMedia()
   function exibirAlturaDaTela() {
     var altura = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-    console.log("altura",altura)
     if(teste78 > 810){
       setHeightSlider = 6
       console.log("foi")
