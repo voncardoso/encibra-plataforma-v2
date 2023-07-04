@@ -8,6 +8,7 @@ import Pagination from '@mui/material/Pagination';
 
 import 'swiper/swiper.min.css'; 
 import { MapDashboard } from "./Map";
+import { useMedia } from "../../../Hook/useMedia";
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export function Dashboard() {
   const [seach, setSeach] = useState("")
   const [activeMapa, setActiveMapa] = useState(true)
   let stretch = null;
+  let setHeightSlider = 0
   //responsividade do slider
   const breakpoints = {
     autoHeight: true,
@@ -263,36 +265,41 @@ export function Dashboard() {
   function goToPage(event, pageNumber) {
     setCurrentPage(pageNumber);
   }
+  
+  const teste78 = useMedia()
+  function exibirAlturaDaTela() {
+    var altura = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-
-  let setHeightSlider = 0
-
-    function teste(){
-      console.log(window.innerHeight)
-      if(window.innerHeight > 810){
-        setHeightSlider =6
-      }
-      if(window.innerHeight < 810){
-        setHeightSlider =5
-      }
-      if(window.innerHeight < 670){
-        setHeightSlider =4
-      }
-      if(window.innerHeight <= 545){
-        setHeightSlider =3
-      }
-
-      if(window.innerHeight <= 400){
-        setHeightSlider =25
-      }
-
-      if(window.innerHeight <= 322){
-        setHeightSlider =2
-      }
+    console.log("altura",altura)
+    if(teste78 > 810){
+      setHeightSlider = 6
+      console.log("foi")
     }
-    teste()
+    if(teste78 <= 810){
+      setHeightSlider = 5
+    }
+    if(teste78 < 670){
+      setHeightSlider = 4
+    }
+    if(teste78 <= 545){
+      setHeightSlider = 3
+    }
 
-  console.log(setHeightSlider)
+    if(teste78 <= 400){
+      setHeightSlider = 25
+    }
+
+    if(teste78 <= 322){
+      setHeightSlider = 2
+    }
+  }
+  exibirAlturaDaTela();
+  window.addEventListener('resize', exibirAlturaDaTela);
+  console.log("setHeightSlider",setHeightSlider)
+
+
+
+  console.log("teste78 ", teste78 )
 
   return (
     <section className="w-full overflow-y-scroll ">
