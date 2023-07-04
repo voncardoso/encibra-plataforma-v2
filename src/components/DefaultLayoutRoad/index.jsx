@@ -9,17 +9,39 @@ export function DefaultLayoutRoad() {
   const params = useParams();
   const { Roads, dataRoad, setIdReloadRoad } = useContext(UserContextRoad);
   const {pathname} = useLocation();
-  
+  const [dataVideos, setDataVideos] = useState([]);
+
   useEffect(() => {
     Roads(params.id);
     setIdReloadRoad(params.id)
   }, [pathname]);
 
+  useEffect(() => {
+    async function getVideo() {
+      const token = window.localStorage.getItem("encibraapptoken-v2");
+      const videoUpdate = {};
+      const response = await api.put(
+        `/road/${params.id}/videos/${params.video}/findUnique`,
+        videoUpdate,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setDataVideos(response.data);
+    }
+    getVideo();
+  }, [pathname]);
 
+
+  console.log("params", params)
+  console.log("pathname",pathname)
+  console.log("data video",dataVideos)
 
   if(dataRoad){
     return (
-      <section className="gap-5 bg-background h-screen overflow-y-scroll w-full pr-5 ">
+      <section className="ml-5 gap-5 bg-background h-screen overflow-y-scroll w-full pr-5 ">
         <div>
           <header className="flex justify-between pr-5 pt-5 pb-5 items-center text-text-100">
             <nav>
@@ -32,7 +54,10 @@ export function DefaultLayoutRoad() {
               <strong className="text-2xl"> | </strong>
               <NavLink to={`#`}>
                 <strong className="text-2xl hover:underline">
-                  {dataRoad.acronym}
+                  {dataRoad.acronym} 
+                  {pathname === `/rodovias/videos/${params?.id}/information/${params?.video}` && ` | Trecho: ${dataVideos.stretch}`} 
+                  {pathname === `/rodovias/videos/${params?.id}/patology/${params?.video}` && ` | Trecho: ${dataVideos.stretch}`}
+                  {pathname === `/rodovias/videos/${params?.id}/subtrecho/${params?.video}` && ` | Trecho: ${dataVideos.stretch}`}
                 </strong>
               </NavLink>
             </nav>

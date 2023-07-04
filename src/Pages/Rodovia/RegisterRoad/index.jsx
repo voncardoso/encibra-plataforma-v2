@@ -97,7 +97,7 @@ export function RegisterRoad() {
   }
 
   return (
-    <section className="h-screen  flex items-center bg-white overflow-auto w-screen  border-t-8 border-b-8 border-background">
+    <section className="ml-5 h-screen  flex items-center bg-white overflow-auto w-screen  border-t-8 border-b-8 border-background">
       <form
         className="ml-0 h-screen w-screen  bg-white mr-5 mt-5 rounded-xl p-5 grid grid-cols-3 gap-5 "
         onSubmit={handleSubmit(handleRegister)}
