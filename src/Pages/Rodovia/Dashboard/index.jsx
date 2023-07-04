@@ -297,7 +297,6 @@ export function Dashboard() {
 
 
 
-  console.log("teste78 ", teste78 )
 
   return (
     <section className="w-full overflow-y-scroll ">
