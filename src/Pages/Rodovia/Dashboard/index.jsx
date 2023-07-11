@@ -444,7 +444,7 @@ export function Dashboard() {
                   {/**02 */}
                   <SwiperSlide 
                    style={slideStyle}
-                  className="flex justify-center  items-centertext-gray-400  w-52  bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
+                  className="flex justify-center  items-center text-gray-400  w-52  bg-white min-w-52 p-4 rounded-lg text-center  border-b-4 rounded-md text-center border-b-8 border-gray-300">
                   <NavLink to={`/rodovias/nucleo/${2}`}>
                     <h1 className="text-lg font-bold">Núcleo Regional 02</h1>
                     <h2 className="pt-2 text-2xl font-bold">

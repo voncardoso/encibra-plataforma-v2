@@ -190,6 +190,24 @@ export function RegisterPatology() {
     return true;
   };
 
+  const LatitudeValidation = (value) => {
+    const pattern =
+    /^-?([1-8]?[0-9]|[1-9]0)\.{1}\d{1,9}$/;
+    if (!pattern.test(value)) {
+      return "Latitude invalida.";
+    }
+    return true;
+  };
+  
+  const LongitudeValidation = (value) => {
+    const pattern =
+    /^-?((1[0-7][0-9])|([1-9]?[0-9]))\.{1}\d{1,9}$/;
+    if (!pattern.test(value)) {
+      return "Longitude invalida.";
+    }
+    return true;
+  };
+
   useEffect(() => {
     function handleDescrptionPatology() {
       if (watch("FI") === true) {
@@ -291,24 +309,53 @@ export function RegisterPatology() {
               {...register("km", { required: true })}
             />
           </label>
-          <label htmlFor="latitude">
-            Latitude
-            <input
-              id="latitude"
-              type="text"
-              className="bg-gray-input w-full rounded-md p-2"
-              {...register("latitude", { required: true })}
-            />
-          </label>
-          <label htmlFor="longitude">
-            Longitude
-            <input
-              id="longitude"
-              type="text"
-              className="bg-gray-input w-full rounded-md p-2"
-              {...register("longitude", { required: true })}
-            />
-          </label>
+          <Controller
+            name="latitude"
+            control={control}
+            rules={{ required: true, validate: LatitudeValidation }}
+            render={({ field }) => (
+              <div>
+                <label htmlFor="latitude">
+                  Latitude
+                  <input
+                    id="latitude"
+                    type="text"
+                    className="bg-gray-input w-full rounded-md p-2"
+                    {...field}
+                  />
+                </label>
+                {errors.latitude && (
+                  <span className="error text-sm mt-1 text-red-500">
+                    {errors.latitude.message}
+                  </span>
+                )}
+              </div>
+            )}
+          />
+
+          <Controller
+            name="longitude"
+            control={control}
+            rules={{ required: true, validate: LongitudeValidation }}
+            render={({ field }) => (
+              <div>
+                <label htmlFor="longitude">
+                  longitude
+                  <input
+                    id="longitude"
+                    type="text"
+                    className="bg-gray-input w-full rounded-md p-2"
+                    {...field}
+                  />
+                </label>
+                {errors.longitude && (
+                  <span className="error text-sm mt-1 text-red-500">
+                    {errors.longitude.message}
+                  </span>
+                )}
+              </div>
+            )}
+          />
         </div>
 
         <h2 className="border-b-2 border-gray-300 w-full col-span-3 mt-5 mb-3 text-lg font-bold text-text-100">
