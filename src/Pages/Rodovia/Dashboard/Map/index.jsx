@@ -214,9 +214,9 @@ export function MapDashboard(){
 
           
 
-          <GeolocateControl position="top-right" />
-          <FullscreenControl position="top-right" />
-          <NavigationControl position="top-right" />
+          <GeolocateControl position="bottom-left" />
+          <FullscreenControl position="bottom-left" />
+          <NavigationControl position="bottom-left" />
           <ScaleControl />
         </Map>
       </div>
