@@ -311,7 +311,7 @@ export function RegisterPatology() {
               {...register("km", { 
                 required: true, 
                 pattern: {
-                value: /^(?:\d{1,3}\.\d{3}|\d{2}\.\d{3})$/,
+                value: /^(?:\d{1,3}\.\d{3}|\d{2}\.\d{3}|\d{1,3}\.\d{3},\d{1,3})$/,
                 message: "Quilometragem invalida"
               } })}
             />
