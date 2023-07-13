@@ -208,6 +208,8 @@ export function RegisterPatology() {
     return true;
   };
 
+  
+
   useEffect(() => {
     function handleDescrptionPatology() {
       if (watch("FI") === true) {
@@ -306,8 +308,18 @@ export function RegisterPatology() {
               id="km"
               type="text"
               className="bg-gray-input w-full rounded-md p-2"
-              {...register("km", { required: true })}
+              {...register("km", { 
+                required: true, 
+                pattern: {
+                value: /^(?:\d{1,3}\.\d{3}|\d{2}\.\d{3})$/,
+                message: "Quilometragem invalida"
+              } })}
             />
+             {errors.km && (
+                  <span className="error text-sm mt-1 text-red-500">
+                    {errors.km.message}
+                  </span>
+                )}
           </label>
           <Controller
             name="latitude"

@@ -236,13 +236,15 @@ export function Patology() {
     return items.slice(startIndex, endIndex);
   }
 
-  const paginatedDataFiltered = paginate(filteredRoad, currentPage, itemsPerPage);
+  const paginatedDataFiltered = paginateFiltered(filteredRoad, currentPage, itemsPerPage);
   const totalPagesFiltered = Math.ceil(filteredRoad.length / itemsPerPage);
 
   function goToPageFiltered(event, pageNumber) {
 
     setCurrentPage(pageNumber);
   }
+
+  console.log("TESTE",paginatedDataFiltered)
 
   return (
     <div className="mt-5 flex flex-col justify-center">
@@ -289,7 +291,7 @@ export function Patology() {
           </tr>
         </thead>
         <tbody>
-          {filteredRoad.length !== 0 ? 
+          {paginatedDataFiltered.length !== 0 ? 
           paginatedDataFiltered?.map((patology) => {
             const roadSide = JSON.parse(patology.roadSide);
             const cracks = JSON.parse(patology.cracks);
